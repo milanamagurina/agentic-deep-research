@@ -1,0 +1,166 @@
+SESSION_STARTED            'Does Acme Fleet have strong product-market fit?' (depth=standard, SYNTHETIC DEMO)
+QUESTION_ANALYZED          entities=['Acme Fleet'] scope=fiscal year 2025 to 2026 assumptions=['revenue growth alone does not establish product-market fit']
+HYPOTHESIS_CREATED         H1 Acme Fleet has strong, genuine product-market fit (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H2 Acme Fleet's growth is primarily discount-driven (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H3 Acme Fleet's growth is primarily acquisition-driven (M&A) (heuristic prior 0.20)
+HYPOTHESIS_CREATED         H4 Acme Fleet's growth is real but customer retention is weak (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H5 Public information is insufficient to establish Acme Fleet's product-market fit (heuristic prior 0.20)
+REQUIREMENT_CREATED        H1.R1 for H1: independent customer retention / churn data (importance 1.0)
+REQUIREMENT_CREATED        H1.R2 for H1: revenue growth figures (importance 1.0)
+REQUIREMENT_CREATED        H1.R3 for H1: organic (non-discounted) customer acquisition (importance 0.6)
+REQUIREMENT_CREATED        H1.R4 for H1: pricing power at renewal (importance 0.6)
+REQUIREMENT_CREATED        H2.R1 for H2: share of new customers acquired through discounts (importance 1.0)
+REQUIREMENT_CREATED        H2.R2 for H2: churn after discount periods end (importance 1.0)
+REQUIREMENT_CREATED        H3.R1 for H3: acquisitions made by Acme Fleet in 2025 (importance 1.0)
+REQUIREMENT_CREATED        H4.R1 for H4: independent customer retention / churn data (importance 1.0)
+REQUIREMENT_CREATED        H4.R2 for H4: revenue growth figures (importance 0.6)
+SEARCH_EXECUTED            'Acme Fleet revenue growth 2025' → 5 result(s)
+SOURCE_FOUND               S_114e02b136 business-registry.example: Acme Fleet GmbH: annual accounts 2025 (regulator, tavily=0.78, diversity_penalty=0.00)
+SOURCE_FOUND               S_c315c04e06 acmefleet.example: Acme Fleet reports record FY2025 results (company, tavily=0.92, diversity_penalty=0.00)
+SOURCE_FOUND               S_900d18c910 fleetnews.example: Acme Fleet posts record year (company, tavily=0.85, diversity_penalty=0.00)
+SOURCE_FOUND               S_063e7f2bb7 logistics-times.example: Route-planning start-up Acme Fleet says revenue jumped 70% (major_news, tavily=0.83, diversity_penalty=0.00)
+SOURCE_FOUND               S_51c37b97e5 dailyfreight-blog.example: Acme Fleet: 70% growth! (blog, tavily=0.8, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Acme Fleet annual accounts 2025' → 1 result(s)
+SEARCH_EXECUTED            'Acme Fleet customers' → 3 result(s)
+SOURCE_FOUND               S_b8e8464534 freight-journal.example: Profile: Acme Fleet (major_news, tavily=0.6, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Acme Fleet product market fit' → 2 result(s)
+SOURCE_SELECTED            S_114e02b136 selected for extraction: https://business-registry.example/acme-fleet-gmbh/annual-accounts-2025
+SOURCE_SELECTED            S_c315c04e06 selected for extraction: https://acmefleet.example/press/fy2025-results
+SOURCE_SELECTED            S_900d18c910 selected for extraction: https://fleetnews.example/2026/02/acme-fleet-record-year
+SOURCE_SELECTED            S_063e7f2bb7 selected for extraction: https://logistics-times.example/acme-fleet-growth
+SOURCE_SELECTED            S_b8e8464534 selected for extraction: https://freight-journal.example/2022/acme-fleet-profile
+SOURCE_SELECTED            S_51c37b97e5 selected for extraction: https://dailyfreight-blog.example/acme-fleet-70-percent
+SOURCE_EXTRACTED           S_114e02b136 extracted (366 chars)
+SOURCE_EXTRACTED           S_c315c04e06 extracted (525 chars)
+SOURCE_EXTRACTED           S_900d18c910 extracted (427 chars)
+SOURCE_EXTRACTED           S_063e7f2bb7 extracted (394 chars)
+SOURCE_EXTRACTED           S_b8e8464534 extracted (161 chars)
+SOURCE_EXTRACTED           S_51c37b97e5 extracted (330 chars)
+CLAIM_CREATED              C_294c7b4974 [fact] Acme Fleet revenue grew 70% in fiscal year 2025
+CLAIM_CREATED              C_d391b908f5 [fact] Acme Fleet revenue in fiscal year 2025 was EUR 47,512,000
+CLAIM_CREATED              C_bd2869744d [fact] Acme Fleet granted EUR 9,140,000 in sales discounts and promotional credits in 2025
+CLAIM_CREATED              C_4b19d50a85 [fact] Acme Fleet had 4,800 customers at the end of fiscal year 2025
+CLAIM_CREATED              C_5b93e6c990 [fact] Acme Fleet retained 95% of its customers in 2025
+CLAIM_CREATED              C_e0c0616da6 [attribution] Mara Lind, Acme Fleet CEO stated that customers are adopting Acme Fleet faster than ever
+CLAIM_CREATED              C_938ba5291e [fact] Customers are adopting Acme Fleet faster than ever
+CLAIM_CREATED              C_dac44956b2 [attribution] Acme Fleet stated that acme Fleet revenue grew 70% in fiscal year 2025
+CLAIM_CREATED              C_6fe585ec9d [attribution] Acme Fleet stated that acme Fleet retained 95% of its customers in 2025
+CLAIM_CREATED              C_b6b0311872 [fact] Acme Fleet had about 900 customers at the end of 2021
+CLAIM_MERGED               'Acme Fleet revenue in fiscal year 2025 was EUR 47.5 million' merged into C_d391b908f5
+EVIDENCE_ATTACHED          E_3aee543673 → C_294c7b4974 STANCE: SUPPORTS p=0.95 directness=1.00 from S_114e02b136
+EVIDENCE_ATTACHED          E_fcc754666f → C_d391b908f5 STANCE: SUPPORTS p=0.95 directness=1.00 from S_114e02b136
+EVIDENCE_ATTACHED          E_563b4f1c31 → C_bd2869744d STANCE: SUPPORTS p=0.95 directness=1.00 from S_114e02b136
+EVIDENCE_ATTACHED          E_6f0bbd0a61 → C_294c7b4974 STANCE: SUPPORTS p=0.95 directness=1.00 from S_c315c04e06
+EVIDENCE_ATTACHED          E_860bf30787 → C_d391b908f5 STANCE: SUPPORTS p=0.95 directness=1.00 from S_c315c04e06
+EVIDENCE_ATTACHED          E_aabcb0b677 → C_4b19d50a85 STANCE: SUPPORTS p=0.95 directness=1.00 from S_c315c04e06
+EVIDENCE_ATTACHED          E_e216c1ca38 → C_5b93e6c990 STANCE: SUPPORTS p=0.95 directness=1.00 from S_c315c04e06
+EVIDENCE_ATTACHED          E_5e0769def8 → C_e0c0616da6 STANCE: SUPPORTS p=0.95 directness=1.00 from S_c315c04e06
+EVIDENCE_ATTACHED          E_028f41d80b → C_938ba5291e STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_c315c04e06
+EVIDENCE_ATTACHED          E_93e4cc0519 → C_dac44956b2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_900d18c910
+EVIDENCE_ATTACHED          E_b683008093 → C_294c7b4974 STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_900d18c910
+EVIDENCE_ATTACHED          E_5ddcd8dfb6 → C_dac44956b2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_063e7f2bb7
+EVIDENCE_ATTACHED          E_1f425cb445 → C_294c7b4974 STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_063e7f2bb7
+EVIDENCE_ATTACHED          E_4d13ba33ae → C_6fe585ec9d STANCE: SUPPORTS p=0.95 directness=1.00 from S_063e7f2bb7
+EVIDENCE_ATTACHED          E_8c030a1d2b → C_5b93e6c990 STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_063e7f2bb7
+EVIDENCE_ATTACHED          E_620eaa1de5 → C_b6b0311872 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b8e8464534
+EVIDENCE_ATTACHED          E_6c028d999b → C_dac44956b2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_51c37b97e5
+EVIDENCE_ATTACHED          E_9393c2d141 → C_294c7b4974 STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_51c37b97e5
+CLAIM_POSTERIOR_UPDATED    C_294c7b4974 posterior 0.50 → 0.97, sufficiency 0.00 → 0.97 (5 raw source(s), 5 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d391b908f5 posterior 0.50 → 0.94, sufficiency 0.00 → 0.75 (2 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_bd2869744d posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_4b19d50a85 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5b93e6c990 posterior 0.50 → 0.71, sufficiency 0.00 → 0.75 (2 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_e0c0616da6 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_938ba5291e posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_dac44956b2 posterior 0.50 → 0.98, sufficiency 0.00 → 0.88 (3 raw source(s), 3 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6fe585ec9d posterior 0.50 → 0.80, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_b6b0311872 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+HYPOTHESIS_UPDATED         H5 posterior 0.20 → 0.58 (sufficiency 1.00, active)
+SOURCE_DEPENDENCY_DETECTED S_063e7f2bb7 derives from S_c315c04e06 (p=0.82: child attributes content to parent publisher / press release; text reuse: 28% of 6-word phrases shared; 1 identical quotation(s); published within 10 days after parent)
+SOURCE_DEPENDENCY_DETECTED S_51c37b97e5 derives from S_c315c04e06 (p=0.87: text reuse: 65% of 6-word phrases shared; 1 identical quotation(s); published within 10 days after parent)
+SOURCE_DEPENDENCY_DETECTED S_900d18c910 derives from S_c315c04e06 (p=0.97: explicit link to parent URL; child attributes content to parent publisher / press release; text reuse: 52% of 6-word phrases shared; 1 identical quotation(s); published within 10 days after parent)
+CLAIM_POSTERIOR_UPDATED    C_294c7b4974 posterior 0.97 → 0.95, sufficiency 0.97 → 0.75 (5 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5b93e6c990 posterior 0.71 → 0.67, sufficiency 0.75 → 0.50 (2 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_dac44956b2 posterior 0.98 → 0.91, sufficiency 0.88 → 0.50 (3 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.58 → 0.70 (sufficiency 1.00, active)
+TEMPORAL_VERSION_DETECTED  C_4b19d50a85 (2025-12-31 → 2025-12-31) supersedes C_b6b0311872 (2021-12-31 → 2021-12-31): not a contradiction
+INFERENCE_PROPOSED         I_528956a95b: C_294c7b4974 ⇒ supports H1 (inductive): 70% revenue growth indicates strong product-market fit
+INFERENCE_PROPOSED         I_ea105cee31: C_294c7b4974 ⇒ supports H4 (inductive): Growth is real: revenue grew 70%
+INFERENCE_PROPOSED         I_cc8eb032ec: C_5b93e6c990 ⇒ supports H1 (inductive): 95% customer retention indicates strong product-market fit
+INFERENCE_PROPOSED         I_b36257a175: C_bd2869744d ⇒ supports H2 (inductive): EUR 9.1m of discounts suggests discount-driven growth
+INFERENCE_REJECTED         I_528956a95b rejected (weak): Revenue growth is consistent with PMF but also with discounting or M&A; retention is not established.; missing: independent customer retention data, organic customer growth
+INFERENCE_ACCEPTED         I_ea105cee31 accepted (plausible, score 0.65)
+INFERENCE_REJECTED         I_cc8eb032ec rejected (plausible): Retention bears on PMF if the figure is reliable.; R2: all premises rest on one interested source (self-reported)
+INFERENCE_REJECTED         I_b36257a175 rejected (weak): Absolute discount volume says nothing about the share of growth it drove.
+HYPOTHESIS_UPDATED         H4 posterior 0.35 → 0.52 (sufficiency 0.67, active)
+HYPOTHESIS_UPDATED         H5 posterior 0.70 → 0.33 (sufficiency 1.00, weakened)
+RESEARCH_SCHEDULED         adversarial search against leading hypothesis H4: ['Acme Fleet churn complaints', 'Acme Fleet discount cancellations renewal price']
+SEARCH_EXECUTED            'Acme Fleet churn complaints' → 1 result(s)
+SOURCE_FOUND               S_ab67bdf197 fleet-reviews.example: Acme Fleet reviews (company, tavily=0.74, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Acme Fleet discount cancellations renewal price' → 1 result(s)
+SOURCE_SELECTED            S_ab67bdf197 selected for extraction: https://fleet-reviews.example/acme-fleet
+SOURCE_EXTRACTED           S_ab67bdf197 extracted (397 chars)
+CLAIM_CREATED              C_3f2d5bbab4 [attribution] Acme Fleet reviewers stated that acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount
+CLAIM_CREATED              C_e5e830f2c6 [fact] Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount
+EVIDENCE_ATTACHED          E_d3e1569d78 → C_3f2d5bbab4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_ab67bdf197
+EVIDENCE_ATTACHED          E_fd126455f0 → C_e5e830f2c6 STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_ab67bdf197
+EVIDENCE_ATTACHED          E_afc204ed32 → C_5b93e6c990 STANCE: CONTRADICTS p=0.60 directness=0.50 from S_ab67bdf197
+CONTRADICTION_FOUND        S_ab67bdf197 contradicts C_5b93e6c990: "Great routing, but many couriers in our network churned after the first year."
+CLAIM_POSTERIOR_UPDATED    C_5b93e6c990 posterior 0.67 → 0.62, sufficiency 0.50 → 0.75 (3 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3f2d5bbab4 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.33 → 0.25 (sufficiency 1.00, weakened)
+RESEARCH_GAP_CREATED       G_67d31dd479 [NO_INDEPENDENT_SOURCE] C_4b19d50a85: no independent confirmation of 'Acme Fleet had 4,800 customers at the end of fiscal year 2025' (value 0.19)
+RESEARCH_GAP_CREATED       G_7df32fae14 [NO_INDEPENDENT_SOURCE] C_b6b0311872: no independent confirmation of 'Acme Fleet had about 900 customers at the end of 2021' (value 0.19)
+RESEARCH_GAP_CREATED       G_24ec5595b7 [NO_PRIMARY_SOURCE] C_b6b0311872: no primary source for 'Acme Fleet had about 900 customers at the end of 2021' (value 0.17)
+RESEARCH_GAP_CREATED       G_a728a530c3 [NO_INDEPENDENT_SOURCE] C_bd2869744d: no independent confirmation of 'Acme Fleet granted EUR 9,140,000 in sales discounts and promotional credits in 2025' (value 0.11)
+RESEARCH_GAP_CREATED       G_c178848e7c [NO_INDEPENDENT_SOURCE] C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount' (value 0.80)
+RESEARCH_GAP_CREATED       G_8559821f5d [NO_PRIMARY_SOURCE] C_e5e830f2c6: no primary source for 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount' (value 0.70)
+RESEARCH_GAP_CREATED       G_72f052b26a [MISSING_REQUIRED_DIMENSION] H1.R4 (H1): no evidence yet on 'pricing power at renewal' (value 0.23)
+RESEARCH_GAP_CREATED       G_f9210d04b6 [MISSING_REQUIRED_DIMENSION] H3.R1 (H3): no evidence yet on 'acquisitions made by Acme Fleet in 2025' (value 0.22)
+RESEARCH_GAP_CREATED       G_f40906bcdb [WEAK_INFERENCE] I_528956a95b → H1: needs evidence on 'independent customer retention data' (value 0.50)
+RESEARCH_GAP_CREATED       G_10ff181886 [WEAK_INFERENCE] I_528956a95b → H1: needs evidence on 'organic customer growth' (value 0.30)
+STOP_DECISION              CONTINUE: 4 critical claim(s) below sufficiency, 0 open contradiction(s), 10 researchable gap(s); new independent roots this round: 4
+RESEARCH_SCHEDULED         searching because of G_c178848e7c [NO_INDEPENDENT_SOURCE]: C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
+RESEARCH_SCHEDULED         searching because of G_f40906bcdb [WEAK_INFERENCE]: I_528956a95b → H1: needs evidence on 'independent customer retention data'
+RESEARCH_SCHEDULED         searching because of G_72f052b26a [MISSING_REQUIRED_DIMENSION]: H1.R4 (H1): no evidence yet on 'pricing power at renewal'
+SEARCH_EXECUTED            'Acme Fleet discount share of new customers' → 3 result(s)
+SEARCH_EXECUTED            'Acme Fleet customer retention 2025' → 1 result(s)
+SOURCE_FOUND               S_a92afe4598 industry-analyst.example: Route optimisation software benchmark 2026 (analyst, tavily=0.81, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Acme Fleet pricing at renewal' → 1 result(s)
+SOURCE_SELECTED            S_a92afe4598 selected for extraction: https://industry-analyst.example/route-optimisation-benchmark-2026
+SOURCE_EXTRACTED           S_a92afe4598 extracted (377 chars)
+CLAIM_CREATED              C_3b7fea686b [fact] Acme Fleet's gross logo retention was 81% in 2025, below the segment median of 90%
+CLAIM_CREATED              C_52ed1e545f [fact] Around 45% of Acme Fleet's new customers in 2025 joined through a 50% first-year discount promotion
+EVIDENCE_ATTACHED          E_cbef3b4007 → C_3b7fea686b STANCE: SUPPORTS p=0.95 directness=1.00 from S_a92afe4598
+EVIDENCE_ATTACHED          E_58d6a800c3 → C_52ed1e545f STANCE: SUPPORTS p=0.95 directness=1.00 from S_a92afe4598
+EVIDENCE_ATTACHED          E_7bc4339137 → C_5b93e6c990 STANCE: CONTRADICTS p=0.95 directness=1.00 from S_a92afe4598
+CONTRADICTION_FOUND        S_a92afe4598 contradicts C_5b93e6c990: "Acme Fleet's gross logo retention was 81% in 2025, below the segment median of 90%."
+CLAIM_POSTERIOR_UPDATED    C_5b93e6c990 posterior 0.62 → 0.45, sufficiency 0.75 → 0.88 (4 raw source(s), 3 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3b7fea686b posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_52ed1e545f posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+HYPOTHESIS_UPDATED         H5 posterior 0.25 → 0.21 (sufficiency 1.00, weakened)
+INFERENCE_PROPOSED         I_a4ce194068: C_3b7fea686b ⇒ supports H4 (statistical): 81% logo retention, below the 90% segment median, indicates weak retention
+INFERENCE_PROPOSED         I_cbd8dd268c: C_3b7fea686b ⇒ contradicts H1 (statistical): Below-median retention is inconsistent with strong product-market fit
+INFERENCE_PROPOSED         I_f9a341e290: C_52ed1e545f ⇒ supports H2 (statistical): 45% of new customers came through a 50% discount promotion
+INFERENCE_ACCEPTED         I_a4ce194068 accepted (valid, score 0.90)
+INFERENCE_ACCEPTED         I_cbd8dd268c accepted (valid, score 0.90)
+INFERENCE_ACCEPTED         I_f9a341e290 accepted (plausible, score 0.65)
+HYPOTHESIS_UPDATED         H1 posterior 0.35 → 0.12 (sufficiency 0.48, rejected)
+HYPOTHESIS_UPDATED         H2 posterior 0.35 → 0.52 (sufficiency 0.42, active)
+HYPOTHESIS_UPDATED         H4 posterior 0.52 → 0.81 (sufficiency 0.59, active)
+HYPOTHESIS_UPDATED         H5 posterior 0.21 → 0.41 (sufficiency 1.00, active)
+RESEARCH_GAP_CREATED       G_bea9ea2061 [NO_INDEPENDENT_SOURCE] C_3b7fea686b: no independent confirmation of 'Acme Fleet's gross logo retention was 81% in 2025, below the segment median of 90%' (value 0.53)
+RESEARCH_GAP_CREATED       G_4d38f18888 [NO_PRIMARY_SOURCE] C_3b7fea686b: no primary source for 'Acme Fleet's gross logo retention was 81% in 2025, below the segment median of 90%' (value 0.47)
+RESEARCH_GAP_CREATED       G_1578f4b8ba [NO_INDEPENDENT_SOURCE] C_52ed1e545f: no independent confirmation of 'Around 45% of Acme Fleet's new customers in 2025 joined through a 50% first-year discount promotion' (value 0.53)
+RESEARCH_GAP_CREATED       G_d7b37e1494 [NO_PRIMARY_SOURCE] C_52ed1e545f: no primary source for 'Around 45% of Acme Fleet's new customers in 2025 joined through a 50% first-year discount promotion' (value 0.47)
+RESEARCH_GAP_CREATED       G_29dcf1647a [CONTRADICTORY_EVIDENCE] C_5b93e6c990: independent sources disagree on 'Acme Fleet retained 95% of its customers in 2025' (value 0.38)
+STOP_DECISION              CONTINUE: 6 critical claim(s) below sufficiency, 1 open contradiction(s), 15 researchable gap(s); new independent roots this round: 1
+RESEARCH_SCHEDULED         searching because of G_c178848e7c [NO_INDEPENDENT_SOURCE]: C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
+RESEARCH_SCHEDULED         searching because of G_bea9ea2061 [NO_INDEPENDENT_SOURCE]: C_3b7fea686b: no independent confirmation of 'Acme Fleet's gross logo retention was 81% in 2025, below the segment median of 90%'
+RESEARCH_SCHEDULED         searching because of G_1578f4b8ba [NO_INDEPENDENT_SOURCE]: C_52ed1e545f: no independent confirmation of 'Around 45% of Acme Fleet's new customers in 2025 joined through a 50% first-year discount promotion'
+RESEARCH_GAP_UNRESOLVABLE  G_c178848e7c unresolvable with public data after 2 attempts: C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
+STOP_DECISION              STOP (DIMINISHING_RETURNS): last research round produced no new independent evidence root; new independent roots this round: 0
+STATEMENT_REJECTED         report sentence dropped (no claim ids: unsupported factual statement): Acme Fleet is the clear market leader in European route optimisation.
+STATEMENT_REJECTED         report sentence dropped (number '85%' not found in referenced claims): Revenue grew 85% year over year.
+REPORT_GENERATED           report: LIKELY, 3 verified sentence(s), 2 rejected, 8 citation(s)
+REPORT_GENERATED           final review passed: 3 statement(s), all cited

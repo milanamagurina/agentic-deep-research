@@ -6,8 +6,10 @@ venv/
 __pycache__/
 *.pyc
 .pytest_cache/
-runs/
+data/
+*.sqlite
 .ipynb_checkpoints/
+play_groud.ipynb
 .DS_Store
 .vscode/
 .idea/

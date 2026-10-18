@@ -1,82 +1,108 @@
-"""Deep research CLI: a question in, a cited and audited report out.
+"""CLI entrypoint.
 
-    python app.py "your research question"
+    python app.py "Does Company X have strong product-market fit?" --depth standard
+    python app.py --demo                       # offline synthetic run, no API keys
+    python app.py "question" --baseline        # simple search -> one-shot synthesis, for comparison
+    python app.py --check                      # Token Factory + Tavily connectivity checks
 
-stdout carries only the report (prefixed with ``Deep research report:``);
-the live decision trace goes to stderr, and every run is saved under runs/.
+stdout: the report (Markdown). stderr: the live research trace.
 """
 
 from __future__ import annotations
 
 import argparse
+import asyncio
+import logging
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
-from deep_research import agents
-from deep_research.config import DEFAULT_QUESTION, ConfigError, Settings
-from deep_research.runner import run_research
-from deep_research.trace import RunTrace, SourceLedger
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-REPORT_PREFIX = "Deep research report:"
+from evidence_research.config import ConfigError, Depth, Settings, load_dotenv_if_present  # noqa: E402
+from evidence_research.observability.events import EventType, format_event  # noqa: E402
 
-
-def _load_dotenv() -> None:
-    try:
-        from dotenv import load_dotenv
-    except ImportError:
-        return
-    load_dotenv(override=False)  # real environment variables win over .env
-
-
-def parse_args(argv: list[str] | None) -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Multi-agent deep research on Nebius Token Factory + Tavily.")
-    p.add_argument("question", nargs="?", default=DEFAULT_QUESTION, help="research question (default: a demo question)")
-    p.add_argument("--quiet", action="store_true", help="do not stream the decision trace to stderr")
-    p.add_argument("--no-save", action="store_true", help="do not write run artifacts under runs/")
-    return p.parse_args(argv)
+QUIET = {EventType.MODEL_CALL, EventType.PHASE_CHANGED, EventType.SOURCE_REJECTED, EventType.SEARCH_PLANNED}
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
-    _load_dotenv()
+    p = argparse.ArgumentParser(description="Probabilistic evidence deep research (Nebius Token Factory + Tavily)")
+    p.add_argument("question", nargs="?", help="research question (omit with --demo)")
+    p.add_argument("--depth", choices=[d.value for d in Depth], default="standard")
+    p.add_argument("--demo", action="store_true", help="offline SYNTHETIC scenario: scripted model + fictional corpus")
+    p.add_argument("--baseline", action="store_true", help="naive baseline: Tavily search + one LLM synthesis")
+    p.add_argument("--check", action="store_true", help="verify Token Factory and Tavily connectivity")
+    p.add_argument("--json", type=Path, help="also write the report as JSON to this path")
+    p.add_argument("--md", type=Path, help="also write the report as Markdown to this path")
+    p.add_argument("-v", "--verbose", action="store_true", help="show every event, including model calls")
+    args = p.parse_args(argv)
+
+    logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
+    load_dotenv_if_present()
     try:
         settings = Settings.from_env()
     except ConfigError as e:
         print(f"Configuration error: {e}", file=sys.stderr)
         return 2
 
-    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir: Path | None = None if args.no_save else settings.runs_dir / run_id
-    trace = RunTrace(run_dir / "trace.jsonl" if run_dir else None, stream=None if args.quiet else sys.stderr)
-    ledger = SourceLedger()
+    if args.check:
+        return _check(settings)
 
-    lead = agents.build_model(settings, settings.lead_model)
-    worker = lead if settings.worker_model == settings.lead_model else agents.build_model(settings, settings.worker_model)
-    checker = lead if settings.checker_model == settings.lead_model else agents.build_model(settings, settings.checker_model)
-    agent = agents.build_agent(
-        lead,
-        agents.build_tools(),
-        trace,
-        ledger,
-        worker_model=worker,
-        checker_model=checker,
-        max_parallel=settings.max_parallel_researchers,
-    )
+    from evidence_research.demo.scenario import QUESTION
+
+    question = args.question or (QUESTION if args.demo else None)
+    if not question:
+        p.error("a question is required (or use --demo)")
 
     try:
-        result = run_research(args.question, agent, ledger, trace, run_dir, settings.recursion_limit)
+        if args.baseline:
+            from evidence_research.evaluation.baseline import run_baseline
+
+            settings.require_live()
+            print(asyncio.run(run_baseline(question, settings)))
+            return 0
+
+        from evidence_research.runtime import research
+        from evidence_research.synthesis.serializer import to_json, to_markdown
+
+        def on_event(e) -> None:
+            if args.verbose or e.type not in QUIET:
+                print(format_event(e), file=sys.stderr, flush=True)
+
+        result = asyncio.run(research(question, settings, Depth(args.depth), demo=args.demo, on_event=on_event))
+    except ConfigError as e:
+        print(f"Configuration error: {e}", file=sys.stderr)
+        return 2
     except Exception as e:  # surface the failure; never print a fabricated report
         print(f"Research run failed: {type(e).__name__}: {e}", file=sys.stderr)
         return 1
 
-    print(REPORT_PREFIX)
-    print(result.report)
-    print()
-    print(result.audit.to_markdown())
-    if run_dir:
-        print(f"\nRun artifacts: {run_dir}/", file=sys.stderr)
+    md = to_markdown(result.report)
+    print(md)
+    if args.json:
+        args.json.write_text(to_json(result.report), encoding="utf-8")
+    if args.md:
+        args.md.write_text(md, encoding="utf-8")
     return 0
+
+
+def _check(settings: Settings) -> int:
+    from evidence_research.llm.gateway import _ping as nebius_ping
+    from evidence_research.retrieval.tavily_client import _ping as tavily_ping
+
+    ok = True
+    for name, missing, fn in (("Token Factory", settings.nebius_api_key is None, nebius_ping),
+                              ("Tavily", settings.tavily_api_key is None, tavily_ping)):
+        if missing:
+            print(f"{name}: SKIPPED (key not set)")
+            ok = False
+            continue
+        try:
+            result = asyncio.run(fn(settings))
+            print(f"{name}: OK {result or ''}")
+        except Exception as e:
+            print(f"{name}: FAILED {type(e).__name__}: {e}")
+            ok = False
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

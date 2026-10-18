@@ -1,23 +1,21 @@
 FROM python:3.13-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    STREAMLIT_SERVER_HEADLESS=true DATA_DIR=/app/data PYTHONPATH=/app/src
 
 WORKDIR /app
+COPY pyproject.toml README.md ./
+COPY src/ src/
+RUN pip install . pytest
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY app.py .
-COPY deep_research/ deep_research/
+COPY app.py ./
+COPY ui/ ui/
 COPY tests/ tests/
+COPY examples/ examples/
 
-# Run as an unprivileged user; run artifacts go to /app/runs (mount it to keep them).
-RUN useradd --create-home --uid 10001 researcher && mkdir -p /app/runs && chown researcher /app/runs
+RUN useradd --create-home --uid 10001 researcher && mkdir -p /app/data && chown researcher /app/data
 USER researcher
 
-# Credentials come from the environment at run time (docker run --env-file .env), never from the image.
-ENTRYPOINT []
-CMD ["python", "app.py"]
+EXPOSE 8501
+# Credentials only at run time: docker run --env-file .env ...
+CMD ["streamlit", "run", "ui/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
