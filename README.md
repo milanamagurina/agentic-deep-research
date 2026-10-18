@@ -1,4 +1,7 @@
-# Probabilistic Evidence Research
+# Agentic Deep Research 
+
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/d78250e2-93fc-46d9-b7e8-d5130e6b29f1" />
+
 
 Most deep-research agents ask:
 
