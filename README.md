@@ -1,4 +1,4 @@
-# Agentic Deep Research. 
+# Agentic Deep Research
 
 The Deep Research app deployed on Streamlit local host
 
