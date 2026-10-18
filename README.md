@@ -34,9 +34,16 @@ Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 uv sync
 cp .env.example .env              # fill NEBIUS_API_KEY and TAVILY_API_KEY
 
-uv run pytest                     # 81 offline tests: stubbed model and Tavily, real pipeline
+uv run pytest                     # 85 offline tests: stubbed model and Tavily, real pipeline
 uv run python app.py --check      # live connectivity: one Token Factory call, one Tavily search + extract
-uv run streamlit run ui/streamlit_app.py
+uv run streamlit run ui/streamlit_app.py          # the jury demo
+uv run jupyter lab notebooks/debug.ipynb          # developer debug view of the same engine
+```
+
+Re-check every citation of a saved report against the live web pages (the judges' test, done for all of them):
+
+```bash
+uv run python -m evidence_research.verification.citation_audit report.json
 ```
 
 No keys? Two **synthetic** offline scenarios (fictional entities, scripted model, fake corpus, labelled as such in
@@ -313,7 +320,8 @@ independent roots (with URLs and families). A live trace streams while the run e
 
 | tab | contents |
 |---|---|
-| Overview | conclusion with its citation chain, main and counter-hypothesis, biggest contradiction, research debt, why research stopped |
+| Overview | **Minto pyramid**: the answer first, then MECE reasons, then the facts under each; caveats, what would change our mind, and the decision trace |
+| Citation Check | **every** cited source and **every** quote the report relies on, each link opening the page at that text; a one-click button re-fetches all pages and confirms each quote is still there |
 | Hypotheses | prior and posterior history, deletion-test results, accepted and rejected inferences |
 | Claims & Evidence | per claim: posterior, sufficiency, inference validity, raw sources vs roots, support, contradiction, missing; every evidence line with its quality dimensions |
 | Scientific Studies | versions, design, n, peer review, quality, replication graph, verified results, methodological notes |
@@ -331,11 +339,26 @@ docker run --rm -e EVIDENCE_NO_DOTENV=1 evidence-research pytest -q     # tests,
 docker run --rm evidence-research python app.py --demo science
 ```
 
+## Shared engine, two front-ends
+
+No business logic lives in either front-end; both call `evidence_research.runtime.research`.
+
+```
+         core Python package (evidence_research)
+          same research engine, one source of truth
+             /                               \
+   notebooks/debug.ipynb              ui/streamlit_app.py
+   developer debugging                the jury demo
+   (search, claims, graph,            (answer, live trace, claims,
+    Bayesian steps, lineage)           clickable + re-checkable citations)
+```
+
 ## Layout
 
 ```
 app.py                       CLI: live, --demo business|science, --baseline, --check
-ui/streamlit_app.py          8-tab demo UI
+ui/streamlit_app.py          9-tab jury demo UI (incl. Citation Check)
+notebooks/debug.ipynb        developer debug notebook (same engine)
 src/evidence_research/
   config.py models.py runtime.py
   orchestration/  orchestrator, policy (agent bids), state_machine, budget (synthesis reserve), stop_policy
@@ -346,13 +369,14 @@ src/evidence_research/
                   source_classifier, lineage, temporal
   science/        resolver (versions of one work), quality (study + replication), reviewer (Document/Study/Result)
   graph/          evidence_graph (vault, NetworkX), active (working context), repository (SQLite), queries (UI)
-  verification/   entailment (stance judge), inference_verifier, necessity (deletion test), contradiction, citation_verifier
+  verification/   entailment (stance judge), inference_verifier, necessity (deletion test), contradiction,
+                  citation_verifier, citation_audit (live re-check of every quote)
   probability/    evidence_score, bayesian, uncertainty, engine (recompute + evidence-quality breakdown)
   synthesis/      report, serializer
   observability/  events (audit trail)
   demo/           base, business, science (SYNTHETIC)
   evaluation/     baseline, benchmark
-tests/            81 offline tests
+tests/            85 offline tests
 examples/         sample questions, synthetic reports and traces, live run notes
 ```
 

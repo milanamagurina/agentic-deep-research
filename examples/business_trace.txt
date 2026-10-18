@@ -180,7 +180,7 @@ RESEARCH_TASK_CREATED      T_0e4275dfd3 IndependenceResearcher: [NO_INDEPENDENT_
 SEARCH_EXECUTED            'Acme Fleet independent benchmark retention' → 1 result(s)
 RESEARCH_TASK_CREATED      T_8167db1e7a PrimarySourceResearcher: [NO_PRIMARY_SOURCE] C_e5e830f2c6: no primary source for 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount' → queries []
 STOP_DECISION              STOP (DIMINISHING_RETURNS): last research round produced no new independent evidence root; new independent roots this round: 0
-STATEMENT_REJECTED         report sentence dropped (no claim ids: unsupported factual statement): Acme Fleet is the clear market leader in European route optimisation.
-STATEMENT_REJECTED         report sentence dropped (number '85%' not found in referenced claims): Revenue grew 85% year over year.
-REPORT_GENERATED           report: LIKELY, 3 verified sentence(s), 2 rejected, 7 citation(s)
-REPORT_GENERATED           final review passed: 3 statement(s), each → claim → evidence → excerpt → source
+STATEMENT_REJECTED         support point dropped (number '85%' not found in referenced claims): Revenue grew 85% year over year.
+STATEMENT_REJECTED         support point dropped (no claim ids: unsupported factual statement): Acme Fleet is the clear market leader in European route optimisation.
+REPORT_GENERATED           report: LIKELY, 7 verified sentence(s), 2 rejected, 7 citation(s)
+REPORT_GENERATED           final review passed: 7 statement(s), each → claim → evidence → excerpt → source

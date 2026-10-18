@@ -585,13 +585,21 @@ class ImpactOutput(ModelOutput):
     impacts: dict[str, Literal["low", "medium", "high"]]
 
 
-class SynthesisSentence(ModelOutput):
+class PyramidPoint(ModelOutput):
     text: str
-    claim_ids: list[str]
+    claim_ids: list[str] = Field(default_factory=list)
+
+
+class KeyLine(ModelOutput):
+    text: str = Field(description="one reason that directly supports the governing thought")
+    claim_ids: list[str] = Field(default_factory=list)
+    support: list[PyramidPoint] = Field(default_factory=list, description="1-3 facts proving this key line")
 
 
 class SynthesisOutput(ModelOutput):
-    conclusion: list[SynthesisSentence]
+    """Minto pyramid: answer first, then MECE key lines, then the facts under each."""
+    governing_thought: PyramidPoint
+    key_lines: list[KeyLine]
     what_would_change_our_mind: list[str]
 
 

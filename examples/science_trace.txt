@@ -182,6 +182,6 @@ SEARCH_EXECUTED            'MemoLoop replication Lind et al. 2024' → 2 result(
 RESEARCH_TASK_CREATED      T_5475f74fdd IndependenceResearcher: [NO_INDEPENDENT_SOURCE] C_5e82fb0de7: no independent confirmation of 'MemoLoop had no statistically significant effect on final exam scores in a preregistered direct replication (0.02 SD, n=640)' → queries ['MemoLoop independent preregistered study']
 SEARCH_EXECUTED            'MemoLoop independent preregistered study' → 4 result(s)
 STOP_DECISION              STOP (DIMINISHING_RETURNS): last research round produced no new independent evidence root; new independent roots this round: 0
-STATEMENT_REJECTED         report sentence dropped (no claim ids: unsupported factual statement): MemoLoop is used by over a million students worldwide.
-REPORT_GENERATED           report: LIKELY, 3 verified sentence(s), 1 rejected, 8 citation(s)
-REPORT_GENERATED           final review passed: 3 statement(s), each → claim → evidence → excerpt → source
+STATEMENT_REJECTED         support point dropped (no claim ids: unsupported factual statement): Adoption keeps growing every semester.
+REPORT_GENERATED           report: LIKELY, 6 verified sentence(s), 1 rejected, 8 citation(s)
+REPORT_GENERATED           final review passed: 6 statement(s), each → claim → evidence → excerpt → source

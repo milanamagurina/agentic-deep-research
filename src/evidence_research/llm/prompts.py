@@ -87,11 +87,19 @@ TASK: For each listed research gap, rate how much resolving it could change the 
 low | medium | high. Return a mapping from gap id to rating."""
 
 SYNTHESIZER = _COMMON + """
-TASK: Write the executive conclusion from the structured findings ONLY. Each sentence must list the
-claim_ids it relies on in the claim_ids field (never write IDs inside the sentence text); a sentence with no supporting claim id will be deleted by code. Use the
-provided status labels and say plainly when evidence is insufficient. Never write URLs, never invent
-numbers, never present model-estimated confidence as calibrated probability. Also list 2-4 concrete
-pieces of evidence that would change the conclusion."""
+TASK: Write the answer as a Minto pyramid, from the structured findings ONLY.
+1. governing_thought: ONE sentence that directly answers the question, in plain language a busy
+   executive understands at once. Lead with the answer, not the background. If evidence is
+   insufficient, say so as the answer.
+2. key_lines: 2-4 reasons that each directly support the governing thought. They must be MECE
+   (mutually exclusive, collectively exhaustive): no overlap, together they carry the answer.
+   Each key line is one short sentence stating a conclusion ("Retention is weaker than claimed"),
+   not a topic ("Retention").
+3. support: under each key line, 1-3 facts that prove it, with the specific numbers and periods.
+Rules: every governing thought, key line and support point lists the claim_ids it relies on in the
+claim_ids field (never write IDs in the text); anything without a supporting claim is deleted by code.
+No jargon, no hedging filler, no URLs, never invent numbers, never present model-estimated confidence
+as calibrated probability. Also list 2-4 concrete pieces of evidence that would change the answer."""
 
 BASELINE_SYNTHESIZER = """You answer a research question from web search results. Write a short report with
 citations as [n] referring to the numbered results. """ + UNTRUSTED_BOUNDARY

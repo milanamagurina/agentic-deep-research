@@ -18,6 +18,7 @@ from evidence_research.graph.queries import focus_nodes, to_dot  # noqa: E402
 from evidence_research.observability.events import EventType, format_event  # noqa: E402
 from evidence_research.runtime import research  # noqa: E402
 from evidence_research.synthesis.serializer import to_markdown  # noqa: E402
+from evidence_research.verification.citation_audit import audit, summary  # noqa: E402
 
 st.set_page_config(page_title="Probabilistic Evidence Research", page_icon="🔎", layout="wide")
 load_dotenv_if_present()
@@ -94,42 +95,77 @@ cols[3].metric("Independent evidence roots", rep.independent_root_count, f"{rep.
                delta_color="off")
 cols[4].metric("Critical unresolved gaps", sum(1 for x in rep.gaps if x.level == "HIGH"))
 
-tabs = st.tabs(["Overview", "Hypotheses", "Claims & Evidence", "Scientific Studies", "Source Lineage", "Research Trace", "Evidence DAG", "Sources"])
+TAB_NAMES = ["Overview", "Citation Check", "Hypotheses", "Claims & Evidence", "Scientific Studies", "Source Lineage", "Research Trace",
+             "Evidence DAG", "Sources"]
+tabs = dict(zip(TAB_NAMES, st.tabs(TAB_NAMES)))
 
-with tabs[0]:
-    if lead:
-        st.markdown(f"**Main surviving hypothesis — {lead.id}:** {lead.text}")
-    if rep.counter_hypothesis:
-        ch = hyp[rep.counter_hypothesis]
-        st.markdown(f"**Strongest counter-hypothesis — {ch.id}:** {ch.text} ({ch.posterior:.0%})")
-    st.markdown("**Conclusion** (every sentence → claim → evidence → excerpt → source)")
-    for s in rep.conclusion:
-        st.markdown(f"- {s.text} " + "".join(f"`[{n}]`" for n in s.citations))
+with tabs["Overview"]:
+    # Minto pyramid: answer first, then MECE reasons, then the facts under each.
+    g0 = rep.governing_thought
+    st.markdown(f"### {g0.text} " + "".join(f"`[{n}]`" for n in g0.citations))
+    if rep.governing_is_system_summary:
+        st.caption("System summary: no model-written answer passed citation verification.")
+    st.markdown("#### Why")
+    for i, kl in enumerate(rep.key_lines, 1):
+        st.markdown(f"**{i}. {kl.statement.text}** " + "".join(f"`[{n}]`" for n in kl.statement.citations))
+        for sp in kl.support:
+            st.markdown(f"&nbsp;&nbsp;&nbsp;&nbsp;- {sp.text} " + "".join(f"`[{n}]`" for n in sp.citations))
     if rep.rejected_statements:
-        with st.expander(f"{len(rep.rejected_statements)} draft sentence(s) removed by the citation verifier"):
+        with st.expander(f"{len(rep.rejected_statements)} draft statement(s) removed by the citation verifier"):
             for x in rep.rejected_statements:
-                st.markdown(f"- ~~{x['text']}~~ — *{x['reason']}*")
+                st.markdown(f"- ~~{x['text']}~~ — *{x.get('level', 'statement')}: {x['reason']}*")
     a, b = st.columns(2)
     with a:
-        contested = [c for c in rep.critical_claims if c.against]
-        if contested:
-            c = max(contested, key=lambda c: len(c.against))
-            st.markdown("**Biggest contradiction**")
-            st.markdown(f"{c.text} — posterior {' → '.join(f'{p:.2f}' for p in c.history)}")
-            st.caption(f"“{c.against[0].excerpt}” [{c.against[0].citation}]")
-        st.markdown("**Why research stopped**")
-        for w in rep.why_stopped:
-            st.markdown(f"- {w}")
-    with b:
-        st.markdown("**Critical unresolved gaps (research debt)**")
-        for x in rep.gaps[:6]:
-            st.markdown(f"- **{x.level}** [{x.gap_type}] {x.description}" + (" — *unresolvable with public data*" if x.unresolvable else ""))
-        st.markdown("**What would change our mind**")
+        st.markdown("#### Caveats")
+        for c in rep.caveats:
+            st.markdown(f"- {c}")
+        st.markdown("#### What would change our mind")
         for i, w in enumerate(rep.what_would_change, 1):
             st.markdown(f"{i}. {w}")
+    with b:
+        st.markdown("#### Sources cited")
+        st.caption("Every quote, with a link that opens the page at it: see the **Citation Check** tab.")
+        for c in rep.citations:
+            st.markdown(f"**[{c.n}]** [{c.title[:70]}]({c.url}) — {len(c.uses)} quote(s)")
+    with st.expander("How the agent decided (decisions made by code, in order)", expanded=True):
+        for i, d in enumerate(rep.decision_trace, 1):
+            st.markdown(f"{i}. {d}")
+    st.caption(f"Stop reason: **{rep.stop_reason}** — {rep.stop_explanation}")
     st.download_button("Download report (Markdown)", to_markdown(rep), file_name="evidence_report.md")
 
-with tabs[1]:
+with tabs["Citation Check"]:
+    uses = [(c, u) for c in rep.citations for u in c.uses]
+    st.markdown(f"**All {len(rep.citations)} cited sources and all {len(uses)} quotes this report relies on.** "
+                "Each quote link opens the source page at that exact text (Chrome / Edge text fragments).")
+    st.dataframe(pd.DataFrame([{"#": c.n, "stance": u["stance"], "claim": u["claim"], "quote (verbatim)": " ".join(u["excerpt"].split()),
+                                "open at quote": u["deep_link"], "source": c.url} for c, u in uses]),
+                 hide_index=True, width="stretch",
+                 column_config={"open at quote": st.column_config.LinkColumn("open at quote", display_text="open ↗"),
+                                "source": st.column_config.LinkColumn("source")})
+    st.markdown("**Re-check every citation now.** Fetches each cited page again and confirms every quote is still on it.")
+    if st.button("Re-check all citations", key="audit"):
+        if rep.synthetic:
+            from evidence_research.demo import FakeSearch, get_scenario
+
+            sc = next(n for n in ("business", "science") if get_scenario(n).question == rep.question)
+            client = FakeSearch(get_scenario(sc).pages)
+            st.caption("Synthetic run: pages come from the fictional corpus.")
+        else:
+            from evidence_research.retrieval.tavily_client import TavilyResearchClient
+
+            client = TavilyResearchClient(settings)
+        with st.spinner("Fetching every cited page…"):
+            checks = asyncio.run(audit(rep.model_dump(mode="json"), client))
+        st.session_state.audit_result = checks
+    if "audit_result" in st.session_state:
+        checks = st.session_state.audit_result
+        ok = all(c.status.startswith("found") for c in checks)
+        (st.success if ok else st.warning)(summary(checks))
+        st.dataframe(pd.DataFrame([{"#": c.citation, "status": c.status, "stance": c.stance, "quote": " ".join(c.excerpt.split())[:200],
+                                    "url": c.url} for c in checks]), hide_index=True, width="stretch",
+                     column_config={"url": st.column_config.LinkColumn("url")})
+
+with tabs["Hypotheses"]:
     st.dataframe(pd.DataFrame([{"ID": h.id, "Hypothesis": h.text, "Prior": h.prior, "Posterior": h.posterior, "Sufficiency": h.sufficiency,
                                 "Inference validity": h.inference_validity, "Status": h.status} for h in rep.hypotheses]),
                  hide_index=True, width="stretch",
@@ -150,7 +186,7 @@ with tabs[1]:
                 for i in h.rejected_inferences:
                     st.markdown(f"- ❌ {i}")
 
-with tabs[2]:
+with tabs["Claims & Evidence"]:
     for c in rep.critical_claims:
         with st.expander(f"{c.id} · {c.text}", expanded=c is rep.critical_claims[0]):
             m = st.columns(5)
@@ -177,7 +213,7 @@ with tabs[2]:
                 for x in c.missing:
                     st.markdown(f"- {x}")
 
-with tabs[3]:
+with tabs["Scientific Studies"]:
     if not rep.studies:
         st.info("No scientific studies among the sources.")
     for s in rep.studies:
@@ -201,7 +237,7 @@ with tabs[3]:
                 for w in s.warnings:
                     st.markdown(f"- {w}")
 
-with tabs[4]:
+with tabs["Source Lineage"]:
     c1, c2, c3 = st.columns(3)
     c1.metric("URLs with evidence", rep.raw_source_count)
     c2.metric("Publication families", rep.publication_family_count)
@@ -213,7 +249,7 @@ with tabs[4]:
     for cl in rep.clusters:
         st.markdown(f"- Root `{cl['root']}` ({cl['root_title'][:60]}): {len(cl['members'])} sources")
 
-with tabs[5]:
+with tabs["Research Trace"]:
     types = sorted({e.type.value for e in r.events.events})
     default = [t for t in types if t not in ("MODEL_CALL", "PHASE_CHANGED", "SOURCE_REJECTED", "SEARCH_PLANNED", "SOURCE_FOUND")]
     chosen = st.multiselect("Event types", types, default=default)
@@ -225,7 +261,7 @@ with tabs[5]:
         st.dataframe(pd.DataFrame([{"round": it, "agent": b.agent_type, "utility": b.utility, "reason": b.reasons[0] if b.reasons else ""}
                                    for it, bids in g.bids for b in bids]), hide_index=True, width="stretch")
 
-with tabs[6]:
+with tabs["Evidence DAG"]:
     c1, c2, c3 = st.columns([2, 1, 1])
     ids = [h.id for h in rep.hypotheses]
     hid = c1.selectbox("Hypothesis", [None] + ids, format_func=lambda x: "All" if x is None else x,
@@ -236,7 +272,7 @@ with tabs[6]:
     st.caption("green = supports · red = contradicts · dotted = provenance (derived from) · diamond = verified inference. "
                "Semantic links are never drawn as proof.")
 
-with tabs[7]:
+with tabs["Sources"]:
     rows = []
     for s in g.sources.values():
         a, scr = g.assessments.get(s.id), g.screening.get(s.id)

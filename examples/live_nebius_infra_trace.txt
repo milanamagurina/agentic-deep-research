@@ -1,0 +1,691 @@
+SESSION_STARTED            'What factors beyond GPU model most influence real-world AI infrastructure performance, and how does Nebius address them across compute, networking, storage, and software?' (depth=standard)
+QUESTION_ANALYZED          entities=['Nebius', 'GPU model', 'AI infrastructure', 'compute', 'networking', 'storage', 'software stack', 'real-world performance'] scope=Current state of Nebius's AI infrastructure offerings (as of the most recent publicly available information, circa 2024–2025); no historical trend analysis required. assumptions=['GPU model is already a known / controlled variable and is not the differentiator under examination.', 'Real-world performance is meaningfully distinct from peak theoretical / benchmark performance.', 'Nebius has a coherent, integrated stack spanning compute, networking, storage, and software rather than purely GPU resale.', "A single vendor's approach can be meaningfully compared across all four layers.", 'Performance is the primary evaluation lens (vs. cost, sustainability, or compliance).']
+HYPOTHESIS_CREATED         H1 Real-world AI infrastructure performance is primarily constrained by east-west network bandwidth, latency, topology, and RDMA/congestion behavior; Nebius's performance is best explained by how its network fabric is designed and configured. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H2 Real-world AI infrastructure performance is primarily constrained by storage throughput, IOPS, latency, data locality, and caching/tiering; Nebius's performance is best explained by its storage architecture and data-path design. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H3 Real-world AI infrastructure performance is primarily constrained by orchestration, scheduling, driver/kernel/compiler optimization, MLOps tooling, and serving software; Nebius's performance is best explained by its software-layer capabilities and optimizations. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H4 Real-world AI infrastructure performance is not determined by any single layer but by co-design across compute, networking, storage, and software; Nebius's performance is best explained by integration and joint optimization across these layers. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H5 Publicly available information is insufficient to rank the non-GPU factors most affecting real-world AI infrastructure performance or to verify how Nebius addresses them across compute, networking, storage, and software. (heuristic prior 0.35)
+REQUIREMENT_CREATED        H1.R1 for H1: Independent Nebius cluster network specifications, including bandwidth, latency, topology, RDMA/InfiniBand or Ethernet support, and congestion-control behavior (importance 1.0)
+REQUIREMENT_CREATED        H1.R2 for H1: Distributed communication benchmarks such as NCCL all-reduce or all-gather across multiple node counts (importance 1.0)
+REQUIREMENT_CREATED        H1.R3 for H1: Scaling-efficiency curves showing training throughput as GPU or node count increases (importance 1.0)
+REQUIREMENT_CREATED        H1.R4 for H1: Evidence that compute-host and storage layers are not the limiting factors in the same benchmarked workloads (importance 0.6)
+REQUIREMENT_CREATED        H2.R1 for H2: Nebius storage architecture details across object, block, and parallel file systems, including throughput, IOPS, latency, and caching or tiering behavior (importance 1.0)
+REQUIREMENT_CREATED        H2.R2 for H2: Data-loading, checkpoint-save, and checkpoint-restore benchmarks under realistic dataset sizes and model sizes (importance 1.0)
+REQUIREMENT_CREATED        H2.R3 for H2: GPU utilization measurements during training while storage throughput is varied or constrained (importance 1.0)
+REQUIREMENT_CREATED        H2.R4 for H2: Evidence that network and compute-host layers are not the limiting factors in the same workloads (importance 0.6)
+REQUIREMENT_CREATED        H3.R1 for H3: Documentation of Nebius software components, including orchestration, scheduling, drivers, kernels, compilers, MLOps tooling, and model-serving platform (importance 1.0)
+REQUIREMENT_CREATED        H3.R2 for H3: Scheduling efficiency, job startup time, queueing behavior, and cluster utilization metrics under realistic multi-tenant workloads (importance 1.0)
+REQUIREMENT_CREATED        H3.R3 for H3: Evidence of kernel, compiler, framework, or runtime optimizations and their measured impact on training or inference throughput (importance 1.0)
+REQUIREMENT_CREATED        H3.R4 for H3: End-to-end inference latency and throughput measurements under realistic request patterns and model-serving configurations (importance 0.6)
+REQUIREMENT_CREATED        H4.R1 for H4: Architecture documentation showing explicit co-design or integration among compute, networking, storage, and software layers in Nebius's stack (importance 1.0)
+REQUIREMENT_CREATED        H4.R2 for H4: Ablation or comparative benchmarks isolating the effect of integrated stack changes versus individual-layer changes (importance 1.0)
+REQUIREMENT_CREATED        H4.R3 for H4: Cross-layer metrics such as data locality, pipeline overlap, checkpoint orchestration, and end-to-end time-to-result (importance 1.0)
+REQUIREMENT_CREATED        H4.R4 for H4: Workload case studies demonstrating performance outcomes that cannot be attributed to a single layer alone (importance 0.6)
+AGENT_BIDS                 GeneralResearcher 0.95 · PrimarySourceResearcher 0.00 · IndependenceResearcher 0.00 · ContradictionResearcher 0.00 · GapResearcher 0.00 · ReplicationResearcher 0.00 · Synthesis 0.00
+AGENT_SELECTED             Next agent: GeneralResearcher (utility 0.95). Reason: no evidence collected yet: broad discovery first
+RESEARCH_TASK_CREATED      T_5030d3e11e GeneralResearcher: no evidence collected yet: broad discovery first → queries ['Nebius AI infrastructure cluster network topology InfiniBand RDMA bandwidth latency specifications 2024 2025', 'Nebius storage architecture object block parallel file system throughput IOPS AI training 2024 2025', 'Nebius AI cloud software stack orchestration scheduling MLOps serving platform documentation 2024 2025', 'Nebius AI infrastructure scaling efficiency NCCL all-reduce benchmark training throughput 2024 2025']
+SEARCH_EXECUTED            'Nebius AI infrastructure cluster network topology InfiniBand RDMA bandwidth latency specifications 2024 2025' → 8 result(s)
+SOURCE_FOUND               S_b9d968a7d4 nebius.com: InfiniBand™ networking for Compute virtual machines with GPUs - Nebius (company, tavily=0.61196244, diversity_penalty=0.00)
+SOURCE_FOUND               S_ad62464e42 nebius.com: InfiniBand in focus: bandwidth, speeds and high-performance networking (company, tavily=0.5457947, diversity_penalty=0.15)
+SOURCE_FOUND               S_1ec1fdf90e vitextech.com: InfiniBand vs Ethernet for AI Clusters: GPU Networks – Vitex Direct LL (other, tavily=0.5674818, diversity_penalty=0.00)
+SOURCE_FOUND               S_1dcb66ffc7 naddod.com: Introducing InfiniBand for AI Clusters Infrastructure: High Bandwidth  (other, tavily=0.5617203, diversity_penalty=0.00)
+SOURCE_FOUND               S_f4e2bf24c8 investing.com: Nebius Group to open first US GPU cluster in 2025 By Investing.com (other, tavily=0.55391616, diversity_penalty=0.00)
+SOURCE_FOUND               S_35a29734ed l-p.com: AI Cluster Networking: Architecture, RDMA, and Optics Guide (other, tavily=0.48177138, diversity_penalty=0.00)
+SOURCE_FOUND               S_c3efdfeb3a weka.io: NVIDIA InfiniBand: Architecture and Role in AI | WEKA (other, tavily=0.44840267, diversity_penalty=0.00)
+SOURCE_FOUND               S_b0715e8141 investing.com: Nebius Group to open first US GPU cluster in 2025 (other, tavily=0.46482924, diversity_penalty=0.15)
+SEARCH_EXECUTED            'Nebius storage architecture object block parallel file system throughput IOPS AI training 2024 2025' → 8 result(s)
+SOURCE_FOUND               S_7e0de3d977 nebius.com: We’re launching a new Nebius platform built from the ground up (company, tavily=0.55478466, diversity_penalty=0.00)
+SOURCE_FOUND               S_cc58d9c63a nebius.com: Types of storage volumes in Compute - Nebius AI Cloud (company, tavily=0.5510187, diversity_penalty=0.15)
+SOURCE_FOUND               S_183c9a2882 weka.io: Nebius Case Study: 2PB NeuralMesh AI Storage - WEKA (other, tavily=0.50241756, diversity_penalty=0.00)
+SOURCE_FOUND               S_ee9c600fd1 blocksandfiles.com: DDN storing data for Nebius AI's GPU server farm (other, tavily=0.50227106, diversity_penalty=0.00)
+SOURCE_FOUND               S_d1df958fd7 ddn.com: DDN and Nebius Collaborate to Power Next-Generation AI Infrastructure (other, tavily=0.48718598, diversity_penalty=0.00)
+SOURCE_FOUND               S_6ee8164304 nebius.com: Scalable Storage for AI Workloads | Nebius AI Cloud (company, tavily=0.53181785, diversity_penalty=0.30)
+SOURCE_FOUND               S_76ec3e97ba youtube.com: High Performance Storage for HPC & AI: File Systems vs Object Storage (social, tavily=0.55883324, diversity_penalty=0.00)
+SOURCE_FOUND               S_ad40bd61b8 nebius.com: MLPerf® Storage v3.0 results: Leading RetinaNet training on Nebius Obj (company, tavily=0.52948296, diversity_penalty=0.45)
+SEARCH_EXECUTED            'Nebius AI cloud software stack orchestration scheduling MLOps serving platform documentation 2024 2025' → 8 result(s)
+SOURCE_FOUND               S_53436755d4 nebius.com: Q1 2025: Nebius AI Cloud updates (company, tavily=0.7950386, diversity_penalty=0.00)
+SOURCE_FOUND               S_61dd870944 sec.gov: NEBIUS GROUP N.V._December 31, 2025 (company_filing, tavily=0.8232293, diversity_penalty=0.00)
+SOURCE_FOUND               S_90651928f4 nebius.com: Nebius and Saturn Cloud launch first-in-class AI MLOps cloud with supp (company, tavily=0.7657514, diversity_penalty=0.15)
+SOURCE_FOUND               S_a40fdf1570 stocktitan.net: First-in-Class AI MLOps Cloud Launches with NVIDIA Enterprise Support  (other, tavily=0.77893573, diversity_penalty=0.00)
+SOURCE_FOUND               S_7174971695 tradingkey.com: Nebius: The AI Cloud Nobody's Pricing Right (other, tavily=0.7451949, diversity_penalty=0.00)
+SOURCE_FOUND               S_71ef694314 yahoo.com: Nebius and Saturn Cloud Launch First-in-Class AI MLOps Cloud with Supp (other, tavily=0.7062922, diversity_penalty=0.00)
+SOURCE_FOUND               S_41df1a3603 yahoo.com: Nebius and Saturn Cloud Launch First-in-Class AI MLOps Cloud with Supp (other, tavily=0.68723184, diversity_penalty=0.15)
+SOURCE_FOUND               S_be1459b475 youtube.com: How Nebius build cloud for AI workloads (social, tavily=0.6854659, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Nebius AI infrastructure scaling efficiency NCCL all-reduce benchmark training throughput 2024 2025' → 8 result(s)
+SOURCE_FOUND               S_5c31d5b986 nebius.com: Q2 2025: Nebius AI Cloud updates (company, tavily=0.9377661, diversity_penalty=0.00)
+SOURCE_FOUND               S_a95e408133 nebius.com: Nebius monthly digest: July 2025 (company, tavily=0.644248, diversity_penalty=0.15)
+SOURCE_FOUND               S_fab08ff860 microsoft.com: Performance at Scale: The Role of Interconnects in Azure HPC & AI Infr (other, tavily=0.5515985, diversity_penalty=0.00)
+SOURCE_FOUND               S_7492eac1d7 archive.org: Zettascale in Practice: OSU and NCCL Benchmark on NVIDIA H100 GPU Clus (other, tavily=0.52802294, diversity_penalty=0.00)
+SOURCE_FOUND               S_be4699fd57 nebius.com: Nebius AI Studio Q2 2025 updates (company, tavily=0.61251885, diversity_penalty=0.30)
+SOURCE_FOUND               S_763e2392f5 youtube.com: Scaling AI Inference Performance in the Cloud with Nebius (social, tavily=0.63452125, diversity_penalty=0.00)
+SOURCE_FOUND               S_561646df0f nebius.com: Running the all-reduce NCCL performance test in Soperator clusters - N (company, tavily=0.59880555, diversity_penalty=0.45)
+SOURCE_FOUND               S_fab68daeac youtube.com: Scaling AI Inference Performance in the Cloud with Nebius (social, tavily=0.63098115, diversity_penalty=0.15)
+SOURCE_SCREENED            S_41df1a3603: EXCLUDE [unknown] (rule) — duplicate source: same title on the same site as S_71ef694314
+SOURCE_SCREENED            S_fab68daeac: EXCLUDE [unknown] (rule) — duplicate source: same title on the same site as S_763e2392f5
+SOURCE_SCREENED            S_5c31d5b986: INCLUDE [blog] (model) — Directly reports Nebius AI infrastructure performance benchmarks (MLPerf Training v5.0) demonstrating scaling across compute clusters; Relevant to compute and networking performance factors
+SOURCE_SCREENED            S_53436755d4: INCLUDE [blog] (model) — Describes Nebius software/integration ecosystem (Metaflow, Outerbounds) relevant to software stack discussion
+SOURCE_SCREENED            S_61dd870944: INCLUDE [company_filing] (model) — Nebius SEC 20-F filing describing full-stack AI cloud service offerings and customer segments; Authoritative source on Nebius infrastructure positioning
+SOURCE_SCREENED            S_90651928f4: INCLUDE [company_press_release] (model) — Official Nebius press release on MLOps partnership with NVIDIA AI Enterprise support; Relevant to software stack and compute offerings
+SOURCE_SCREENED            S_b9d968a7d4: INCLUDE [company_whitepaper] (model) — Nebius official documentation on GPU clusters with InfiniBand networking; Directly addresses networking factor in AI infrastructure
+SOURCE_SCREENED            S_a40fdf1570: EXCLUDE [news_article] (model) — Duplicate of S_90651928f4 (same Nebius/Saturn Cloud announcement); Stock news syndication of press release
+SOURCE_SCREENED            S_7e0de3d977: INCLUDE [blog] (model) — Nebius blog describing new platform with faster storage, new GPUs, ML services, observability; Covers compute, storage, and software factors
+SOURCE_SCREENED            S_7174971695: INCLUDE [industry_report] (model) — Third-party analysis describing Nebius's full-stack vertically integrated AI infrastructure approach; Relevant to overall architecture discussion
+SOURCE_SCREENED            S_71ef694314: EXCLUDE [news_article] (model) — Duplicate of S_90651928f4 (same Nebius/Saturn Cloud press release); Paid press release syndication
+SOURCE_SCREENED            S_a95e408133: INCLUDE [blog] (model) — Nebius monthly digest covering HGX B200 availability, Kubernetes networking, VM lifecycle; Covers compute, networking, and platform updates
+SOURCE_SCREENED            S_cc58d9c63a: INCLUDE [company_whitepaper] (model) — Nebius official documentation on storage volume types and bandwidth specifications; Directly addresses storage performance factor
+SOURCE_SCREENED            S_ad62464e42: INCLUDE [blog] (model) — Nebius blog explaining InfiniBand networking technology and its role in AI infrastructure; Relevant to networking factor
+SOURCE_SCREENED            S_1ec1fdf90e: EXCLUDE [blog] (model) — Third-party blog comparing InfiniBand vs Ethernet for AI clusters; Not specific to Nebius; general industry commentary
+SOURCE_SCREENED            S_1dcb66ffc7: EXCLUDE [blog] (model) — General InfiniBand technology overview from NADDOD; Not specific to Nebius infrastructure
+SOURCE_SCREENED            S_f4e2bf24c8: EXCLUDE [news_article] (model) — News article about Nebius US GPU cluster expansion; Geographic/business expansion news, not infrastructure performance factors
+SOURCE_SCREENED            S_fab08ff860: EXCLUDE [blog] (model) — Microsoft Azure HPC blog about interconnects; Not about Nebius; competitor infrastructure
+SOURCE_SCREENED            S_7492eac1d7: EXCLUDE [blog] (model) — Oracle Cloud Infrastructure benchmark blog; Not about Nebius; competitor infrastructure
+SOURCE_SCREENED            S_be4699fd57: INCLUDE [blog] (model) — Nebius AI Studio Q2 2025 updates covering models, fine-tuning, throughput, integrations; Relevant to software/ML platform layer
+SOURCE_SCREENED            S_183c9a2882: INCLUDE [company_whitepaper] (model) — WEKA case study describing Nebius's NeuralMesh AI storage deployment; Directly addresses Nebius storage infrastructure choice
+SOURCE_SCREENED            S_ee9c600fd1: INCLUDE [news_article] (model) — News article about DDN providing storage for Nebius AI infrastructure; Relevant to Nebius storage architecture
+SOURCE_SCREENED            S_d1df958fd7: INCLUDE [company_press_release] (model) — DDN press release on collaboration with Nebius for AI infrastructure storage; Relevant to Nebius storage infrastructure
+SOURCE_SCREENED            S_be1459b475: INCLUDE [unknown] (model) — Nebius YouTube video on hardware and software architecture powering AI applications; Directly addresses compute, networking, storage, software architecture
+SOURCE_SCREENED            S_35a29734ed: EXCLUDE [blog] (model) — General industry blog on AI cluster networking architecture; Not specific to Nebius
+SOURCE_SCREENED            S_c3efdfeb3a: EXCLUDE [blog] (model) — WEKA educational article on NVIDIA InfiniBand; General technology overview, not Nebius-specific
+SOURCE_SCREENED            S_763e2392f5: INCLUDE [unknown] (model) — NVIDIA-hosted video on Nebius inference performance with managed Kubernetes and auto-scaling; Directly addresses Nebius compute, networking, and software for inference
+SOURCE_SCREENED            S_6ee8164304: INCLUDE [company_whitepaper] (model) — Nebius official storage product page describing shared filesystem for AI workloads; Directly addresses Nebius storage offerings
+SOURCE_SCREENED            S_76ec3e97ba: EXCLUDE [unknown] (model) — Google Cloud video on file systems vs object storage; Not about Nebius; competitor content
+SOURCE_SCREENED            S_561646df0f: INCLUDE [company_whitepaper] (model) — Nebius official documentation on NCCL all-reduce performance testing in clusters; Relevant to networking and compute performance benchmarking
+SOURCE_SCREENED            S_b0715e8141: EXCLUDE [news_article] (model) — Duplicate of S_f4e2bf24c8 (same Nebius US GPU cluster news); Geographic expansion news, not infrastructure performance factors
+SOURCE_SCREENED            S_ad40bd61b8: INCLUDE [blog] (model) — Nebius blog reporting MLPerf Storage v3.0 benchmark results on Nebius Object Storage; Directly addresses storage performance factor
+SOURCE_SELECTED            S_5c31d5b986 selected for extraction: https://nebius.com/blog/posts/q2-2025-nebius-ai-cloud-updates
+SOURCE_SELECTED            S_61dd870944 selected for extraction: https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm
+SOURCE_SELECTED            S_90651928f4 selected for extraction: https://nebius.com/newsroom/nebius-and-saturn-cloud-launch-first-in-class-ai-mlops-cloud-with-support-for-nvidia-ai-enterprise
+SOURCE_SELECTED            S_b9d968a7d4 selected for extraction: https://docs.nebius.com/compute/clusters/gpu
+SOURCE_SELECTED            S_7e0de3d977 selected for extraction: https://nebius.com/blog/posts/we-launch-a-new-ai-platform
+SOURCE_SELECTED            S_a95e408133 selected for extraction: https://nebius.com/blog/posts/digest-july-2025
+SOURCE_EXTRACTED           S_5c31d5b986 extracted (9,745 chars)
+SOURCE_EXTRACTED           S_61dd870944 extracted (584,474 chars)
+SOURCE_EXTRACTED           S_90651928f4 extracted (4,609 chars)
+SOURCE_EXTRACTED           S_b9d968a7d4 extracted (28,168 chars)
+SOURCE_EXTRACTED           S_7e0de3d977 extracted (5,975 chars)
+SOURCE_EXTRACTED           S_a95e408133 extracted (5,644 chars)
+WARNING evidence_research.llm: Invalid structured output for extract_claims (attempt 1): 3 validation errors for ExtractionOutput
+claims.0.valid_from
+  Input should be a valid date or datetime, input is too short [type=date_from_datetime_parsing, input_value='2025-11', input_type=str]
+   
+CLAIM_CREATED              C_1ea9b20797 [fact] Nebius recorded a training step time of 124.5 minutes on a 128-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.
+CLAIM_CREATED              C_50c46e9165 [fact] Nebius recorded a training step time of 244.6 minutes on a 64-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.
+CLAIM_CREATED              C_cbc9955887 [fact] Nebius reported a 1.97x speedup when doubling cluster size from 64 to 128 Hopper nodes in MLPerf Training v5.0, demonstrating near-linear scaling in Q2 2025.
+CLAIM_CREATED              C_570c3bfe73 [fact] Nebius topology-aware job scheduling delivered average NVIDIA NCCL test performance improvements of 10–25%, depending on benchmark parameters, in Q2 2025.
+CLAIM_CREATED              C_a02956c2f7 [fact] Nebius topology-aware job scheduling is available for Slurm, Kubernetes, Volcano, Kueue and other job schedulers as of Q2 2025.
+CLAIM_CREATED              C_04c5a3f87c [fact] Nebius Shared Filesystem achieved 442 GB/s aggregated write performance on a 302-host production cluster in Q2 2025.
+CLAIM_CREATED              C_7bd2baea6f [fact] Nebius Shared Filesystem achieved 987 GB/s aggregated read performance on a 302-host production cluster in Q2 2025.
+CLAIM_CREATED              C_e6e9103e27 [fact] Nebius expects Shared Filesystem read throughput to exceed 1 TB/s on larger clusters, as stated in Q2 2025.
+CLAIM_CREATED              C_41c104de55 [fact] Nebius's new class of Object Storage, designed for streaming data to NVIDIA GPUs and checkpointing, offers up to 2 GiB/s write throughput per GPU in Q2 2025.
+CLAIM_CREATED              C_14e49c9c0e [fact] Nebius reported an average MTBF of 168,000 GPU hours per week on a 3,000-GPU cluster in Q2 2025.
+CLAIM_CREATED              C_6fc0f0937f [fact] Nebius Token Factory, Nebius's enterprise-grade managed inference service, was released in November 2025 and is monetized through a token-based model rather than traditional GPU-per-hour pricing.
+CLAIM_CREATED              C_5531e0f938 [fact] Nebius Token Factory supports all major open models, including DeepSeek, GPT-OSS by Open AI, Llama, NVIDIA Nemotron and Qwen, and offers customers the option to host their own models.
+CLAIM_CREATED              C_60f362cb46 [fact] In 2025, Nebius's Finland data center heat-recovery system reused almost 20 GWh of server heat, contributing to an estimated 10% reduction in household heating costs.
+CLAIM_CREATED              C_739b37a9f5 [fact] Nebius can quickly and efficiently provision compute resources on demand from a single node to thousands of nodes with high-performance storage GPU-to-GPU networking, and managed services.
+CLAIM_CREATED              C_d9017f45a4 [fact] Nebius's IaaS platform features embedded orchestration across resource usage that enables efficient scaling and fewer performance bottlenecks, supported by a unified control plane that enables efficient scaling of distributed training and inference workloads.
+CLAIM_CREATED              C_91e495c72e [fact] Nebius's platform supports dynamic scaling of compute resources based on workload demand, enabling efficient utilization of GPU infrastructure across training and inference workloads.
+CLAIM_CREATED              C_7ca6a06f57 [fact] Through vertical integration and full-stack control, Nebius reduces energy consumption per workload, increases compute density per megawatt, lowers operating overhead, and works to secure performance and reliability across system components rather than addressing efficiency at a single layer.
+CLAIM_CREATED              C_d297f60d76 [fact] Nebius builds its infrastructure from the ground up, designing servers and racks in-house, embedding innovation in data center design and developing software for workload orchestration and optimization; its designs optimize power and cooling efficiency, lower latency, and create seamless integration with the cloud platform.
+CLAIM_CREATED              C_0f85493cc6 [fact] Nebius operates one of the few global, multi-tenant AI-specialized clouds on the market, designed to handle everything from small-scale experiments to large-scale enterprise-grade AI workloads such as model pre-training, training and data pipelines, post-training/fine-tuning, and inference at enterprise-scale.
+CLAIM_CREATED              C_744d3b4056 [fact] Nebius's AIOps layer supports the deployment and operation of AI systems in production, abstracting infrastructure complexity while providing performance, reliability, and governance, and is natively integrated into the platform to enable customers to move from infrastructure provisioning to model development and into production deployment within a single platform.
+CLAIM_CREATED              C_7ab918af7d [fact] Nebius's AI cloud platform delivers a true hyperscale cloud experience for AI innovators, with fully featured cloud software and hardware designed in-house, giving AI builders the compute, storage, managed services and tools they need to build, tune and run models and apps in one place.
+CLAIM_CREATED              C_50ecb0ca12 [fact] Nebius is a technology company building full-stack cloud infrastructure to serve the global AI industry, including large-scale GPU clusters, cloud platforms, and tools and services for developers, with a team of around 400 highly skilled hardware and software engineers and an in-house AI R&D team.
+CLAIM_CREATED              C_dfe1812489 [fact] The Nebius–Saturn Cloud offering enhances Saturn Cloud's MLOps platform with support for NVIDIA AI Enterprise software, including NVIDIA NIM microservices, NVIDIA NeMo, NVIDIA RAPIDS, and much more, all running on Nebius's high-performance infrastructure.
+CLAIM_CREATED              C_265948a00b [fact] The Nebius–Saturn Cloud joint solution is built on NVIDIA Hopper GPUs and provides on-demand access to them.
+CLAIM_CREATED              C_210077157d [fact] The Nebius–Saturn Cloud solution enables anyone to sign up instantly to use Jupyter notebooks or other IDEs, run jobs and deployments, and manage cloud resources on NVIDIA Hopper GPUs via Nebius's infrastructure.
+CLAIM_CREATED              C_679b6408e0 [fact] Companies can deploy an enterprise-grade application of Saturn Cloud in a Nebius virtual private cloud environment, compliant with enterprise IT security standards, with enterprise-grade SLAs, single sign-on (SSO), and other IT security integrations.
+CLAIM_CREATED              C_61e5abbd7f [fact] Individuals and teams can join 100,000+ users of Saturn Cloud's hosted tiers, which leverage Nebius hardware.
+CLAIM_CREATED              C_129addcb6b [fact] The Nebius–Saturn Cloud service is available at significantly lower cost than traditional cloud service providers, and capacity reservations are also possible and deliver additional cost-savings.
+CLAIM_CREATED              C_07d1c65f07 [attribution] Danila Shtan, CTO of Nebius stated that danila Shtan, CTO of Nebius, said the combination of Nebius's full-stack AI infrastructure and Saturn Cloud's MLOps platform opens up access to enterprise-grade AI capabilities for organizations of all sizes, with flexible access to highly performant, built-for-AI cloud at high levels of reliability and cost efficiency.
+CLAIM_CREATED              C_bc513f9fb9 [fact] Danila Shtan, CTO of Nebius, said the combination of Nebius's full-stack AI infrastructure and Saturn Cloud's MLOps platform opens up access to enterprise-grade AI capabilities for organizations of all sizes, with flexible access to highly performant, built-for-AI cloud at high levels of reliability and cost efficiency.
+CLAIM_CREATED              C_69a0bf68a8 [attribution] M. Sebastian Metti, CEO of Saturn Cloud stated that m. Sebastian Metti, CEO of Saturn Cloud, said that together Nebius and Saturn Cloud enable organizations to become AI-driven, and that customers previously limited by GPU economics or DevOps can now build and run scalable, GPU-accelerated AI workloads without significant financial or engineering investment.
+CLAIM_CREATED              C_6a331b71bc [fact] M. Sebastian Metti, CEO of Saturn Cloud, said that together Nebius and Saturn Cloud enable organizations to become AI-driven, and that customers previously limited by GPU economics or DevOps can now build and run scalable, GPU-accelerated AI workloads without significant financial or engineering investment.
+CLAIM_CREATED              C_bfafdf839f [fact] Each GPU in a Nebius AI Cloud GPU cluster VM is connected through a network interface card (NIC) that provides 400 Gbps.
+CLAIM_CREATED              C_a9664c79ed [fact] A Nebius AI Cloud compute VM for GPU clusters consists of 8 GPUs, giving a total per-node bandwidth of 3.2 Tbps.
+CLAIM_CREATED              C_efb8672293 [fact] Nebius AI Cloud GPU clusters use NVIDIA GPUDirect RDMA, which allows data to flow directly between each GPU and its NIC, bypassing the CPU.
+CLAIM_CREATED              C_954ad99e7f [fact] Nebius AI Cloud isolates InfiniBand traffic between GPU clusters by assigning each cluster a unique InfiniBand partition key (P-Key), preventing inter-cluster communication over InfiniBand within a shared physical fabric.
+CLAIM_CREATED              C_1d6705753f [fact] Each Nebius AI Cloud GPU cluster is created in one of the physical InfiniBand fabrics, where interconnected GPUs reside, and each fabric has limited GPU capacity.
+CLAIM_CREATED              C_2cecb09ff8 [fact] On Nebius AI Cloud, selecting the fabric-7 InfiniBand fabric restricts the cluster to NVIDIA H200 NVLink GPUs paired with Intel Sapphire Rapids CPUs.
+CLAIM_CREATED              C_23fb232122 [fact] Nebius AI Cloud recommends keeping the preselected InfiniBand fabric for a GPU cluster unless a different fabric is better suited for a different platform or the existing cluster has capacity issues.
+CLAIM_CREATED              C_b5037023eb [fact] To test InfiniBand performance in a Nebius AI Cloud Compute GPU cluster, users can run the NVIDIA Collective Communications Library (NCCL) test in the cluster.
+CLAIM_CREATED              C_547f3ae2c4 [fact] Nebius AI Cloud GPU clusters accelerate high-performance computing tasks such as training and inference that require more processing power than a single VM can provide.
+CLAIM_CREATED              C_0fcd11db8a [fact] Nebius new platform file storage delivers up to 100 GBps aggregated read throughput.
+CLAIM_CREATED              C_f4345fed0d [fact] Nebius new platform file storage delivers 1M IOPS for aggregated read operations.
+CLAIM_CREATED              C_a6c72135d6 [fact] Nebius increased filesystem throughput by removing architectural bottlenecks in its internal structure.
+CLAIM_CREATED              C_6de31387ec [fact] Nebius new platform file storage achieves higher read throughput and lower latency by extending the minimum data chunk size, which reduces IO to CPU and frees computational resources.
+CLAIM_CREATED              C_3b0be9e648 [fact] Nebius redesigned how files and their metadata are transferred to the Filestore, making it faster with parallel downloading.
+CLAIM_CREATED              C_00460eab10 [fact] Nebius new platform has optimized settings that allow for faster work with PyTorch DataLoader.
+CLAIM_CREATED              C_905a09d515 [fact] Nebius new platform storage ensures seamless data streaming during model training and prevents disruptions when saving checkpoints, uploading model code, or sharing model weights across cluster nodes.
+CLAIM_CREATED              C_5a845eedd3 [fact] The Nebius new platform allows access to NVIDIA H200 Tensor Core GPUs.
+CLAIM_CREATED              C_5aeb6f96d7 [fact] Nebius implemented several network changes defining how its cloud communicates with its physical sites, paving the way for the smooth integration of new data centers into its infrastructure.
+CLAIM_CREATED              C_f4e0c50728 [fact] Nebius recently launched two new managed services, Managed Spark and Managed MLflow, both available on the new console.
+CLAIM_CREATED              C_dfdc7cc903 [fact] Nebius new platform dashboards allow monitoring of GPU parameters including GPU utilization, memory utilization, frame buffer usage, SM clock, and memory clock.
+CLAIM_CREATED              C_9d8922c43c [fact] Nebius new platform provides an object storage dashboard displaying read requests, modify requests, traffic, object count, space by object type, and total bucket size.
+CLAIM_CREATED              C_2b007641b8 [fact] Nebius Enhanced Object Storage offers up to 10 GB/s write throughput per client.
+CLAIM_CREATED              C_ea65d05dfd [fact] Nebius Enhanced Object Storage is designed for streaming datasets and weights to GPU and for checkpointing.
+CLAIM_CREATED              C_15f01f21f1 [fact] Nebius Soperator documentation describes running an NCCL all-reduce benchmark to test distributed GPU performance in a cluster.
+CLAIM_CREATED              C_1fcc05e277 [fact] Nebius Managed Kubernetes documentation was updated with network requirements for clusters, guidance on fixing the 'Unable to allocate CIDR from the pool' error, and instructions for using non-default subnets for clusters and node groups.
+CLAIM_CREATED              C_b486cc7be4 [fact] The NVIDIA HGX B200 platform is now available on Nebius AI Cloud, with updates across related docs.
+CLAIM_CREATED              C_0915ce12dd [fact] Nebius is accepting pre-orders for NVIDIA GB200 NVL72 and NVIDIA HGX B200 clusters to be deployed in Nebius data centers in the United States and Finland from early 2025.
+CLAIM_CREATED              C_20ae8b71c9 [fact] Nebius entered a strategic partnership with Mithril (formerly Foundry) enabling Mithril customers to access Nebius AI Cloud regions through the Mithril Console for experimentation, large-scale training, and production inference workloads.
+CLAIM_CREATED              C_f59450f972 [fact] The Nebius MCP Server connects Claude by Anthropic or other AI chatbots to the Nebius AI Cloud infrastructure.
+CLAIM_CREATED              C_fed205744c [fact] Nebius AI Studio is used with CrewAI, ADK, LangChain, and more to ship scalable, observability-friendly agent workflows.
+CLAIM_CREATED              C_cbea397436 [fact] Nebius's ISEG2 is ranked #13 on the Top500 list of supercomputers.
+CLAIM_MERGED               'A Nebius AI Cloud compute VM for GPU clusters consists of 8 GPUs.' merged into C_a9664c79ed
+EVIDENCE_ATTACHED          E_21a17826c6 → C_1ea9b20797 STANCE: SUPPORTS p=0.80 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_c5da30b3d5 → C_50c46e9165 STANCE: SUPPORTS p=0.80 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_1ee9681ab3 → C_cbc9955887 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_c096f6da6e → C_570c3bfe73 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_3e26197ad8 → C_a02956c2f7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_b05c28707e → C_04c5a3f87c STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_2489d38e07 → C_7bd2baea6f STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_7332e06de8 → C_e6e9103e27 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_f9e6f322d8 → C_41c104de55 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_71d3784b1e → C_14e49c9c0e STANCE: SUPPORTS p=0.95 directness=1.00 from S_5c31d5b986
+EVIDENCE_ATTACHED          E_3fc1afff6c → C_6fc0f0937f STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_8c31a74c7a → C_5531e0f938 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_93c72a87bd → C_60f362cb46 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_9cddd36502 → C_739b37a9f5 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_6ad205ab6f → C_d9017f45a4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_0aa0eee214 → C_91e495c72e STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_8b7c3cfb99 → C_7ca6a06f57 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_4854e40bc0 → C_d297f60d76 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_a3a0deb038 → C_0f85493cc6 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_5259fa02af → C_744d3b4056 STANCE: SUPPORTS p=0.95 directness=1.00 from S_61dd870944
+EVIDENCE_ATTACHED          E_3514bf4d7c → C_7ab918af7d STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_b1731d3501 → C_50ecb0ca12 STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_52443d661b → C_dfe1812489 STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_5533e4628f → C_265948a00b STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_6c31ecc3c6 → C_210077157d STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_5df345d2e5 → C_679b6408e0 STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_ff0a323316 → C_61e5abbd7f STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_4c829d49ba → C_129addcb6b STANCE: SUPPORTS p=0.60 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_75edf41a0c → C_07d1c65f07 STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_afe3fa94a6 → C_bc513f9fb9 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_90651928f4
+EVIDENCE_ATTACHED          E_5a31f6b73b → C_69a0bf68a8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_90651928f4
+EVIDENCE_ATTACHED          E_6984335908 → C_6a331b71bc STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_90651928f4
+EVIDENCE_ATTACHED          E_033a5d6dfc → C_bfafdf839f STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_5321dc0c53 → C_a9664c79ed STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_646d5ce1e9 → C_efb8672293 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_1c035e3153 → C_954ad99e7f STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_a21500116c → C_1d6705753f STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_1dfe7258ae → C_2cecb09ff8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_0aca4207ed → C_23fb232122 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_a278ce20f6 → C_b5037023eb STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_93eada0d8b → C_547f3ae2c4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b9d968a7d4
+EVIDENCE_ATTACHED          E_b19d1c547e → C_0fcd11db8a STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_5a1fe3459c → C_f4345fed0d STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_cd41acab81 → C_a6c72135d6 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_e76d0d3f78 → C_6de31387ec STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_61e1ae764b → C_3b0be9e648 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_c87a73b33c → C_00460eab10 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_0ad24a9491 → C_905a09d515 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_d8eb722bf8 → C_5a845eedd3 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_c3d3ebfa75 → C_5aeb6f96d7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_cf4dca88ab → C_f4e0c50728 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_c2bd687d49 → C_dfdc7cc903 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_611e35b4d9 → C_9d8922c43c STANCE: SUPPORTS p=0.95 directness=1.00 from S_7e0de3d977
+EVIDENCE_ATTACHED          E_6835adea20 → C_2b007641b8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_38dbd2c75f → C_ea65d05dfd STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_f75f97d21a → C_15f01f21f1 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_56e112ce51 → C_1fcc05e277 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_8910e8e207 → C_b486cc7be4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_a161eb1629 → C_0915ce12dd STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_11b0de6bdb → C_20ae8b71c9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_c2c7454af2 → C_f59450f972 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_6eefa554b3 → C_fed205744c STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+EVIDENCE_ATTACHED          E_2546ce2242 → C_cbea397436 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a95e408133
+CLAIM_POSTERIOR_UPDATED    C_1ea9b20797 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_50c46e9165 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cbc9955887 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_570c3bfe73 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a02956c2f7 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_04c5a3f87c posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7bd2baea6f posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_e6e9103e27 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_41c104de55 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_14e49c9c0e posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6fc0f0937f posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5531e0f938 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_60f362cb46 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_739b37a9f5 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d9017f45a4 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_91e495c72e posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7ca6a06f57 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d297f60d76 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0f85493cc6 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_744d3b4056 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7ab918af7d posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_50ecb0ca12 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_dfe1812489 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_265948a00b posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_210077157d posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_679b6408e0 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_61e5abbd7f posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_129addcb6b posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_07d1c65f07 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_bc513f9fb9 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_69a0bf68a8 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6a331b71bc posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_bfafdf839f posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a9664c79ed posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_efb8672293 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_954ad99e7f posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_1d6705753f posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2cecb09ff8 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_23fb232122 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b5037023eb posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_547f3ae2c4 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0fcd11db8a posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_f4345fed0d posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a6c72135d6 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6de31387ec posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3b0be9e648 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_00460eab10 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_905a09d515 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5a845eedd3 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5aeb6f96d7 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_f4e0c50728 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_dfdc7cc903 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9d8922c43c posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2b007641b8 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_ea65d05dfd posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_15f01f21f1 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_1fcc05e277 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b486cc7be4 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0915ce12dd posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_20ae8b71c9 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_f59450f972 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_fed205744c posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cbea397436 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.35 → 0.75 (sufficiency 1.00, supported)
+SOURCE_DEPENDENCY_DETECTED S_7e0de3d977 is from the same publisher as S_5c31d5b986 (p=0.50: same publisher domain)
+SOURCE_DEPENDENCY_DETECTED S_90651928f4 is from the same publisher as S_7e0de3d977 (p=0.50: same publisher domain)
+SOURCE_DEPENDENCY_DETECTED S_a95e408133 is from the same publisher as S_7e0de3d977 (p=0.50: same publisher domain)
+SOURCE_DEPENDENCY_DETECTED S_b9d968a7d4 is from the same publisher as S_7e0de3d977 (p=0.50: same publisher domain)
+INDEPENDENCE_SUMMARY       6 URLs with evidence → 2 publication families → 2 independent evidence roots; 2 of them are interested parties (self-reported)
+INFERENCE_PROPOSED         I_262527880a: C_15f01f21f1, C_570c3bfe73, C_739b37a9f5 ⇒ supports H1 (causal): Topology-aware scheduling improved NCCL performance, Nebius documents NCCL all-reduce benchmarking, and its platform includes GPU-to-GPU networking, indicating network communication behavior is an optimizable performance factor.
+INFERENCE_PROPOSED         I_959fd58892: C_04c5a3f87c, C_0fcd11db8a, C_2b007641b8, C_41c104de55, C_6de31387ec, C_7bd2baea6f, C_905a09d515 ⇒ supports H2 (inductive): Multiple Nebius storage systems report high aggregated or per-client throughput plus data-path optimizations, indicating storage architecture is a significant performance factor.
+INFERENCE_PROPOSED         I_76c1c8c5de: C_15f01f21f1, C_570c3bfe73, C_7ab918af7d ⇒ supports H3 (inductive): Nebius evidences scheduling and cloud software capabilities, but not driver, kernel, compiler, or serving optimizations, so software-layer primacy is only weakly supported.
+INFERENCE_PROPOSED         I_104258faa2: C_739b37a9f5, C_7ab918af7d, C_7ca6a06f57 ⇒ supports H4 (abductive): Nebius describes vertical integration and full-stack control across compute, storage, networking, and managed services, supporting joint optimization rather than a single-layer explanation.
+INFERENCE_PROPOSED         I_317cabe291: C_1ea9b20797, C_50c46e9165 ⇒ supports H4 (inductive): Training step time approximately halves when doubling nodes, suggesting efficient distributed scaling that depends on integration beyond GPU count.
+INFERENCE_PROPOSED         I_b2f3015e57: C_04c5a3f87c, C_0fcd11db8a, C_2b007641b8, C_41c104de55, C_6de31387ec, C_7bd2baea6f, C_905a09d515 ⇒ contradicts H1 (inductive): The breadth of high-throughput storage and data-path claims indicates storage is also a major factor, challenging the view that performance is primarily network-bound.
+INFERENCE_REJECTED         I_262527880a needs_evidence (weak): The premises show network communication is an optimizable factor, but they do not establish that real-world AI performance is primarily network-bound or best explained by fabric design.; R3: causal/abductive inference with unexcluded confounders; missing: Comparative bottleneck attribution across compute, storage, software, and network, Evidence that RDMA/congestion behavior is the dominant limiter, Independent fabric-design details and non-network baselines
+INFERENCE_REJECTED         I_959fd58892 rejected (weak): The premises support storage as a performance factor, but throughput claims alone do not establish that storage is the primary constraint or best explanation.; missing: IOPS, latency, data locality, and caching/tiering evidence, Sustained rather than peak or aggregated throughput, Comparisons isolating storage architecture from host count and workload
+INFERENCE_REJECTED         I_76c1c8c5de rejected (weak): The premises support scheduling and general cloud software capabilities, but they do not substantiate the broader software-layer primacy claimed in the conclusion.; missing: Evidence for driver, kernel, compiler, MLOps, or serving optimizations, Comparative attribution showing software-layer dominance, Independent measurements beyond scheduling
+INFERENCE_REJECTED         I_104258faa2 needs_evidence (plausible): The premises directly describe vertical integration and full-stack control across components, supporting joint optimization, though they do not independently prove it is the best explanation.; R3: causal/abductive inference with unexcluded confounders; missing: Independent benchmarks isolating integration effects from individual components, Component-level attribution across workloads, Verification of self-reported full-stack claims
+INFERENCE_REJECTED         I_317cabe291 rejected (weak): Two step times showing near-linear scaling suggest efficient distributed execution, but they do not establish that integration across layers is the primary explanation.; missing: Scaling-efficiency metrics beyond two step times, Communication, storage, and scheduling overhead measurements, Controls for batch size, parallelism strategy, and hardware
+INFERENCE_REJECTED         I_b2f3015e57 rejected (invalid): The premises are storage-focused and challenge, rather than support, the conclusion that performance is primarily network-bound.; missing: Network-specific evidence supporting network primacy, Comparative evidence favoring network over storage, Any premise linking storage claims to network constraints
+RESEARCH_GAP_CREATED       G_7479e2e23a [NO_INDEPENDENT_SOURCE] C_04c5a3f87c: no independent confirmation of 'Nebius Shared Filesystem achieved 442 GB/s aggregated write performance on a 302-host production cluster in Q2 2025.' (value 0.43)
+RESEARCH_GAP_CREATED       G_71079b0af9 [NO_INDEPENDENT_SOURCE] C_1ea9b20797: no independent confirmation of 'Nebius recorded a training step time of 124.5 minutes on a 128-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.' (value 0.71)
+RESEARCH_GAP_CREATED       G_589bed99b0 [NO_INDEPENDENT_SOURCE] C_41c104de55: no independent confirmation of 'Nebius's new class of Object Storage, designed for streaming data to NVIDIA GPUs and checkpointing, offers up to 2 GiB/s write throughput per GPU in Q2 2025.' (value 0.43)
+RESEARCH_GAP_CREATED       G_1955978edb [NO_INDEPENDENT_SOURCE] C_50c46e9165: no independent confirmation of 'Nebius recorded a training step time of 244.6 minutes on a 64-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.' (value 0.71)
+RESEARCH_GAP_CREATED       G_3f4af6874c [NO_INDEPENDENT_SOURCE] C_570c3bfe73: no independent confirmation of 'Nebius topology-aware job scheduling delivered average NVIDIA NCCL test performance improvements of 10–25%, depending on benchmark parameters, in Q2 2025.' (value 0.43)
+RESEARCH_GAP_CREATED       G_62ac4f7686 [NO_INDEPENDENT_SOURCE] C_7bd2baea6f: no independent confirmation of 'Nebius Shared Filesystem achieved 987 GB/s aggregated read performance on a 302-host production cluster in Q2 2025.' (value 0.43)
+RESEARCH_GAP_CREATED       G_877ad60f1b [MISSING_REQUIRED_DIMENSION] H4.R2 (H4): no evidence yet on 'Ablation or comparative benchmarks isolating the effect of integrated stack changes versus individual-layer changes' (value 0.63)
+RESEARCH_GAP_CREATED       G_03079d6a62 [NO_INDEPENDENT_SOURCE] C_0fcd11db8a: no independent confirmation of 'Nebius new platform file storage delivers up to 100 GBps aggregated read throughput.' (value 0.32)
+RESEARCH_GAP_CREATED       G_21e977715a [NO_INDEPENDENT_SOURCE] C_15f01f21f1: no independent confirmation of 'Nebius Soperator documentation describes running an NCCL all-reduce benchmark to test distributed GPU performance in a cluster.' (value 0.16)
+RESEARCH_GAP_CREATED       G_796aefcc2f [NO_INDEPENDENT_SOURCE] C_2b007641b8: no independent confirmation of 'Nebius Enhanced Object Storage offers up to 10 GB/s write throughput per client.' (value 0.32)
+RESEARCH_GAP_CREATED       G_9629164f65 [NO_INDEPENDENT_SOURCE] C_6de31387ec: no independent confirmation of 'Nebius new platform file storage achieves higher read throughput and lower latency by extending the minimum data chunk size, which reduces IO to CPU and frees computational resources.' (value 0.32)
+RESEARCH_GAP_CREATED       G_de466ee8d1 [NO_INDEPENDENT_SOURCE] C_739b37a9f5: no independent confirmation of 'Nebius can quickly and efficiently provision compute resources on demand from a single node to thousands of nodes with high-performance storage GPU-to-GPU networking, and managed services.' (value 0.32)
+RESEARCH_GAP_CREATED       G_aee5a5fd2e [NO_INDEPENDENT_SOURCE] C_7ab918af7d: no independent confirmation of 'Nebius's AI cloud platform delivers a true hyperscale cloud experience for AI innovators, with fully featured cloud software and hardware designed in-house, giving AI builders the compute, storage, managed services and tools they need to build, tune and run models and apps in one place.' (value 0.16)
+RESEARCH_GAP_CREATED       G_f8d2ca7351 [NO_INDEPENDENT_SOURCE] C_7ca6a06f57: no independent confirmation of 'Through vertical integration and full-stack control, Nebius reduces energy consumption per workload, increases compute density per megawatt, lowers operating overhead, and works to secure performance and reliability across system components rather than addressing efficiency at a single layer.' (value 0.32)
+RESEARCH_GAP_CREATED       G_a1a1df3055 [NO_INDEPENDENT_SOURCE] C_905a09d515: no independent confirmation of 'Nebius new platform storage ensures seamless data streaming during model training and prevents disruptions when saving checkpoints, uploading model code, or sharing model weights across cluster nodes.' (value 0.32)
+RESEARCH_GAP_CREATED       G_48caa00ac4 [WEAK_INFERENCE] I_262527880a → H1: needs evidence on 'Comparative bottleneck attribution across compute, storage, software, and network' (value 0.50)
+RESEARCH_GAP_CREATED       G_0ebe2ab265 [WEAK_INFERENCE] I_262527880a → H1: needs evidence on 'Evidence that RDMA/congestion behavior is the dominant limiter' (value 0.50)
+RESEARCH_GAP_CREATED       G_6297396ebb [WEAK_INFERENCE] I_959fd58892 → H2: needs evidence on 'IOPS, latency, data locality, and caching/tiering evidence' (value 0.50)
+RESEARCH_GAP_CREATED       G_43add490ff [WEAK_INFERENCE] I_959fd58892 → H2: needs evidence on 'Sustained rather than peak or aggregated throughput' (value 0.50)
+RESEARCH_GAP_CREATED       G_1b7890ff67 [WEAK_INFERENCE] I_76c1c8c5de → H3: needs evidence on 'Evidence for driver, kernel, compiler, MLOps, or serving optimizations' (value 0.50)
+RESEARCH_GAP_CREATED       G_33a9a26743 [WEAK_INFERENCE] I_76c1c8c5de → H3: needs evidence on 'Comparative attribution showing software-layer dominance' (value 0.50)
+RESEARCH_GAP_CREATED       G_c7d8ae793d [WEAK_INFERENCE] I_104258faa2 → H4: needs evidence on 'Independent benchmarks isolating integration effects from individual components' (value 0.50)
+RESEARCH_GAP_CREATED       G_0ed89cd001 [WEAK_INFERENCE] I_104258faa2 → H4: needs evidence on 'Component-level attribution across workloads' (value 0.50)
+RESEARCH_GAP_CREATED       G_5ad6d958fc [WEAK_INFERENCE] I_317cabe291 → H4: needs evidence on 'Scaling-efficiency metrics beyond two step times' (value 0.50)
+RESEARCH_GAP_CREATED       G_c8dcabd092 [WEAK_INFERENCE] I_317cabe291 → H4: needs evidence on 'Communication, storage, and scheduling overhead measurements' (value 0.50)
+AGENT_BIDS                 IndependenceResearcher 1.00 · GapResearcher 1.00 · AdversarialResearcher 0.66 · GeneralResearcher 0.21 · PrimarySourceResearcher 0.00 · ContradictionResearcher 0.00 · ReplicationResearcher 0.00 · Synthesis 0.00
+AGENT_SELECTED             Next agent: IndependenceResearcher (utility 1.00). Reason: [NO_INDEPENDENT_SOURCE] C_1ea9b20797: no independent confirmation of 'Nebius recorded a training step time of 124.5 minutes on a 128-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.'
+AGENT_SELECTED             Next agent: GapResearcher (utility 1.00). Reason: [MISSING_REQUIRED_DIMENSION] H4.R2 (H4): no evidence yet on 'Ablation or comparative benchmarks isolating the effect of integrated stack changes versus individual-layer changes'
+STOP_DECISION              CONTINUE: 15 critical claim(s) below sufficiency, 0 open contradiction(s), 25 researchable gap(s); new independent roots this round: 2
+RESEARCH_TASK_CREATED      T_3dbcbfb9df IndependenceResearcher: [NO_INDEPENDENT_SOURCE] C_1ea9b20797: no independent confirmation of 'Nebius recorded a training step time of 124.5 minutes on a 128-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.' → queries ['MLPerf Training v5.0 Llama 3.1 405B results Nebius 128-node Hopper step time', 'MLPerf Training v5.0 closed division Llama 3.1 405B 64-node Hopper results independent reporting', 'Nebius Shared Filesystem 442 GB/s 302-host benchmark independent']
+SEARCH_EXECUTED            'MLPerf Training v5.0 Llama 3.1 405B results Nebius 128-node Hopper step time' → 8 result(s)
+SOURCE_FOUND               S_fa6d3d3570 nebius.com: Nebius demonstrates industry-leading AI training performance in latest (company, tavily=0.9231018, diversity_penalty=0.00)
+SOURCE_FOUND               S_1c0bc7e3f0 deepnewz.com: CoreWeave, NVIDIA, IBM Train Llama 3.1 405B in 27 Minutes With 2,496 B (other, tavily=0.8729662, diversity_penalty=0.00)
+SOURCE_FOUND               S_596f74076d nebius.com: MLPerf® Training v5.1: Leading results on NVIDIA Blackwell and Blackwe (company, tavily=0.76194656, diversity_penalty=0.15)
+SOURCE_FOUND               S_e002b400db nvidia.com: NVIDIA Blackwell Delivers Massive Performance Leaps in MLPerf Inferenc (other, tavily=0.7482976, diversity_penalty=0.00)
+SOURCE_FOUND               S_6485215bdf x.com: Nebius on X: "Nebius demonstrates industry-leading AI training perform (social, tavily=0.93525803, diversity_penalty=0.00)
+SOURCE_FOUND               S_c1a1c74b8a x.com: Wall St Engine on X: "$NBIS posts first-ever MLPerf Training v5.0 resu (social, tavily=0.87348515, diversity_penalty=0.15)
+SEARCH_EXECUTED            'MLPerf Training v5.0 closed division Llama 3.1 405B 64-node Hopper results independent reporting' → 8 result(s)
+SOURCE_FOUND               S_667c54f729 mlcommons.org: New MLCommons MLPerf Training v5.0 Benchmark Results Reflect Rapid Gro (other, tavily=0.7166357, diversity_penalty=0.00)
+SOURCE_FOUND               S_685a8ca5c5 nvidia.com: NVIDIA Blackwell Delivers up to 2.6x Higher Performance in MLPerf Trai (other, tavily=0.70336664, diversity_penalty=0.00)
+SOURCE_FOUND               S_43403f5036 techpowerup.com: MLCommons Releases New MLPerf Inference v5.0 ... (other, tavily=0.6320719, diversity_penalty=0.00)
+SOURCE_FOUND               S_606a157eed nvidia.com: NVIDIA Blackwell Architecture Sweeps MLPerf Training v5.1 Benchmarks | (other, tavily=0.67911536, diversity_penalty=0.15)
+SOURCE_FOUND               S_39c6e5a6de mlcommons.org: MLPerf Training Archives - MLCommons (other, tavily=0.595987, diversity_penalty=0.15)
+SEARCH_EXECUTED            'Nebius Shared Filesystem 442 GB/s 302-host benchmark independent' → 8 result(s)
+SOURCE_FOUND               S_b57207309e nebius.com: Terms of Use - Shared Filesystem - Nebius AI Cloud (company, tavily=0.9200291707149496, diversity_penalty=0.00)
+SOURCE_FOUND               S_5ab629bd5b github.com: nebius-rush/docs/01-nebius-platform-overview.md at master ... (other, tavily=0.9770179974874674, diversity_penalty=0.00)
+SOURCE_FOUND               S_4d15340c06 nebius.com: Managing Compute volumes - Nebius AI Cloud (company, tavily=0.9124851713415116, diversity_penalty=0.15)
+SOURCE_FOUND               S_4d0095f736 grafana.com: Nebius Shared Filesystem - Grafana Labs (other, tavily=0.919511007259096, diversity_penalty=0.00)
+SOURCE_FOUND               S_05e807c911 x.com: Nebius on X (social, tavily=0.924837256667259, diversity_penalty=0.00)
+SOURCE_SCREENED            S_fa6d3d3570: INCLUDE [company_press_release] (model) — Directly reports Nebius MLPerf training performance results, demonstrating real-world AI infrastructure performance factors (cluster scaling, training step time); Nebius-authored blog post detailing compute and networking performance outcomes
+SOURCE_SCREENED            S_b57207309e: EXCLUDE [company_whitepaper] (model) — Legal terms of use page for Shared Filesystem; only contains pricing/billing information, not technical details about performance factors
+SOURCE_SCREENED            S_5ab629bd5b: INCLUDE [unknown] (model) — Documents Nebius platform overview including shared filesystem performance specs (throughput, IOPS) relevant to storage performance factors; Third-party GitHub documentation but references Nebius platform capabilities
+SOURCE_SCREENED            S_4d15340c06: EXCLUDE [company_whitepaper] (model) — Procedural documentation on how to resize a shared filesystem; no substantive information about performance factors
+SOURCE_SCREENED            S_4d0095f736: EXCLUDE [unknown] (model) — Grafana dashboard for monitoring Nebius shared filesystem; monitoring tool, not substantive content about performance factors
+SOURCE_SCREENED            S_1c0bc7e3f0: EXCLUDE [news_article] (model) — News article focused on CoreWeave/NVIDIA/IBM MLPerf results; only tangentially mentions Nebius in passing; Wrong primary subject (CoreWeave, not Nebius)
+SOURCE_SCREENED            S_596f74076d: INCLUDE [company_press_release] (model) — Nebius blog post detailing MLPerf Training v5.1 results across multiple benchmarks, directly addressing compute performance and scaling factors; Reports seven first-place results demonstrating infrastructure efficiency
+SOURCE_SCREENED            S_e002b400db: EXCLUDE [company_press_release] (model) — NVIDIA technical blog about Blackwell MLPerf inference results; focused on NVIDIA hardware, not Nebius-specific infrastructure factors
+SOURCE_SCREENED            S_6485215bdf: EXCLUDE [social_media] (model) — Social media post (X/Twitter) duplicating content from Nebius blog post S_fa6d3d3570; Duplicate of another result
+SOURCE_SCREENED            S_05e807c911: INCLUDE [social_media] (model) — Nebius social media post about shared KV caching benchmark results with WEKA, relevant to storage/inference performance factors; Addresses software-level optimization for agentic inference
+SOURCE_SCREENED            S_667c54f729: EXCLUDE [industry_report] (model) — MLCommons official announcement about MLPerf Training v5.0 benchmark suite; general benchmark information, not Nebius-specific
+SOURCE_SCREENED            S_685a8ca5c5: EXCLUDE [company_press_release] (model) — NVIDIA technical blog about Blackwell MLPerf Training v5.0 results; focused on NVIDIA architecture, not Nebius infrastructure specifics
+SOURCE_SCREENED            S_43403f5036: EXCLUDE [forum] (model) — Forum thread about MLPerf Inference v5.0 results; general benchmark discussion, not Nebius-specific
+SOURCE_SCREENED            S_606a157eed: EXCLUDE [company_press_release] (model) — NVIDIA technical blog about Blackwell MLPerf Training v5.1 results; focused on NVIDIA hardware performance, not Nebius infrastructure
+SOURCE_SCREENED            S_c1a1c74b8a: EXCLUDE [social_media] (model) — Social media post (X/Twitter) duplicating Nebius MLPerf results already covered in S_fa6d3d3570; Duplicate of another result
+SOURCE_SCREENED            S_39c6e5a6de: EXCLUDE [industry_report] (model) — MLCommons MLPerf Training archives page; general benchmark news listing, not Nebius-specific content
+SOURCE_SELECTED            S_fa6d3d3570 selected for extraction: https://nebius.com/blog/posts/industry-leading-ai-training-performance-in-mlperf
+SOURCE_SELECTED            S_5ab629bd5b selected for extraction: https://github.com/Sprit3Dan/nebius-rush/blob/master/docs/01-nebius-platform-overview.md
+SOURCE_SELECTED            S_596f74076d selected for extraction: https://nebius.com/blog/posts/mlperf-training-v5-1-results
+SOURCE_EXTRACTED           S_fa6d3d3570 extracted (7,122 chars)
+SOURCE_EXTRACTED           S_5ab629bd5b extracted (24,837 chars)
+SOURCE_EXTRACTED           S_596f74076d extracted (11,058 chars)
+CLAIM_CREATED              C_d90da72bd2 [fact] Nebius achieved its MLPerf Training v5.0 results by training a Llama 3.1 405B model on 512 and 1,024 NVIDIA Hopper GPU clusters interconnected with NVIDIA Quantum-2 InfiniBand networking in Q2 2025.
+CLAIM_CREATED              C_372f045886 [fact] Nebius ran the MLPerf Training v5.0 Llama 3.1 405B benchmark on a 64-node cluster with 512 NVIDIA H200 GPUs in Q2 2025.
+CLAIM_CREATED              C_b23d09f75e [fact] Nebius ran the MLPerf Training v5.0 Llama 3.1 405B benchmark on a 128-node cluster with 1,024 NVIDIA H200 GPUs in Q2 2025.
+CLAIM_CREATED              C_e7dd789ff7 [fact] Nebius achieved a training step time of 244.6 minutes for Llama 3.1 405B on the 64-node cluster in MLPerf Training v5.0 in Q2 2025.
+CLAIM_CREATED              C_5cf61c1543 [fact] Nebius stated it ensures full control over the cloud stack — from proprietary firmware and custom-designed servers to optimized compute engine and unique orchestration software — in Q2 2025.
+CLAIM_CREATED              C_0baaa9d94a [fact] Nebius launched its MLPerf Training v5.0 benchmarks using Soperator, its in-house Kubernetes operator for Slurm, in Q2 2025.
+CLAIM_CREATED              C_5c05d7d3b5 [fact] Nebius stated it is an NVIDIA Cloud Partner (NCP) aligned with the latest NVIDIA technologies and reference architectures in Q2 2025.
+CLAIM_CREATED              C_61e457ddb5 [fact] Nebius's MLPerf Training v5.0 training step time results of 124.5 min and 244.6 min were verified by MLCommons Association in Q2 2025.
+CLAIM_CREATED              C_94f6cb88f9 [fact] Nebius GPU clusters use non-blocking NVIDIA Quantum-2 InfiniBand at 400 Gb/s per GPU, yielding 3.2 Tb/s per 8-GPU node.
+CLAIM_CREATED              C_bf6d4ea36c [fact] Nebius HGX H100 nodes provide 8× H100 SXM per node with 80 GB HBM3 per GPU and 4th-gen NVLink intra-node interconnect, plus FP8 Tensor Cores (Hopper).
+CLAIM_CREATED              C_97e20164ce [fact] Nebius Shared Filesystem delivers up to ~100 GB/s class throughput and ~1M IOPS on a scalable volume.
+CLAIM_CREATED              C_fd45bc87cf [fact] Nebius Shared Filesystem achieved 442 GB/s aggregate throughput on a 302-host cluster in a public benchmark.
+CLAIM_CREATED              C_85bc857d34 [fact] Nebius Managed Soperator runs Slurm inside Managed Kubernetes with preinstalled drivers, NCCL, and libraries, and provides topology-aware scheduling, health checks, and auto-recovery.
+CLAIM_CREATED              C_9c99fee75c [fact] Nebius Soperator ships Slurm with SelectType=select/cons_tres and OverSubscribe=YES, enabling sub-node GPU co-scheduling for concurrent train and serve on the same hosts.
+CLAIM_CREATED              C_ada26bcca2 [fact] Nebius Token Factory is a managed inference service (formerly AI Studio) offering an OpenAI-compatible API with 60+ hosted models on a pay-per-token pricing model.
+CLAIM_CREATED              C_4482543b4a [fact] Nebius Dedicated Endpoints provide isolated model deployment with reserved compute, a 99.9% SLA, and EU/US region choice.
+CLAIM_CREATED              C_37886d6a5c [fact] Nebius provides platform metrics and logging, node health checks, and DCGM GPU metrics (SM activity, HBM bandwidth, NVLink/IB counters) exposed to Grafana.
+CLAIM_CREATED              C_714551f6d0 [fact] Nebius states that high-bandwidth, low-latency RDMA InfiniBand keeps the communication fraction of each training step small, preserving MFU.
+CLAIM_CREATED              C_f96d0d8872 [fact] In its MLPerf Training v5.1 submission, Nebius benchmarked two systems: NVIDIA HGX B300 tested with 8 GPUs on a single host, and NVIDIA HGX B200 tested with 8 GPUs on a single host and in multi-node setups with 16 and 32 GPUs.
+CLAIM_CREATED              C_8652600a69 [fact] Nebius recorded a Llama-2-70B LoRA training time of 8.48 minutes on 8x NVIDIA HGX B300 GPUs in MLPerf Training v5.1, placing 1st.
+CLAIM_CREATED              C_76479c80b6 [fact] Nebius recorded a Llama-2-70B LoRA training time of 9.55 minutes on 8x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 2nd.
+CLAIM_CREATED              C_3bbff40a7f [fact] Nebius recorded a Llama-2-70B LoRA training time of 5.82 minutes on 16x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.
+CLAIM_CREATED              C_9eca90f52a [fact] Nebius recorded a Llama-2-70B LoRA training time of 3.10 minutes on 32x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.
+CLAIM_CREATED              C_8f6aecee52 [fact] Nebius recorded a Llama-3.1-8B training time of 75.84 minutes on 8x NVIDIA HGX B300 GPUs in MLPerf Training v5.1, placing 1st.
+CLAIM_CREATED              C_180a3b5095 [fact] Nebius recorded a Llama-3.1-8B training time of 85.37 minutes on 8x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 6th.
+CLAIM_CREATED              C_9221274fe8 [fact] Nebius recorded a Llama-3.1-8B training time of 51.83 minutes on 16x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.
+CLAIM_CREATED              C_11de55763e [fact] Nebius recorded a Llama-3.1-8B training time of 27.83 minutes on 32x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.
+CLAIM_CREATED              C_3bd36499b9 [fact] Nebius recorded a FLUX.1 training time of 93.17 minutes on 16x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.
+CLAIM_MERGED               'Nebius achieved a training step time of 124.5 minutes for Llama 3.1 40' merged into C_1ea9b20797
+CLAIM_MERGED               'Nebius reported a 1.97x increase in training speed when doubling GPU c' merged into C_cbc9955887
+EVIDENCE_ATTACHED          E_eb3f73a2d1 → C_d90da72bd2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_a9e9ad4d10 → C_372f045886 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_13607408ae → C_b23d09f75e STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_a3b3eff91d → C_1ea9b20797 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_1a82d799db → C_e7dd789ff7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_befc213b2f → C_cbc9955887 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_4e71362cde → C_5cf61c1543 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_e94ae4eeeb → C_0baaa9d94a STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_715bcdd104 → C_5c05d7d3b5 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_ee0eb99878 → C_61e457ddb5 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_c27a68505e → C_94f6cb88f9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_718d1d1104 → C_bf6d4ea36c STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_ea7631d8ef → C_97e20164ce STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_4e754c18cc → C_fd45bc87cf STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_c8714549b0 → C_85bc857d34 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_2648b8d3f4 → C_9c99fee75c STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_5f7c3d2032 → C_ada26bcca2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_7d131927db → C_4482543b4a STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_3aed4594b5 → C_37886d6a5c STANCE: SUPPORTS p=0.60 directness=0.50 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_3edc2bf6cc → C_714551f6d0 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_c146da32ec → C_f96d0d8872 STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_bd306fc282 → C_8652600a69 STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_6ae3976ddf → C_76479c80b6 STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_9c3100a542 → C_3bbff40a7f STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_12db8af242 → C_9eca90f52a STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_7c5eb06b0d → C_8f6aecee52 STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_1d2f1b3aa9 → C_180a3b5095 STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_7542d7cc3a → C_9221274fe8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_f15cba5c77 → C_11de55763e STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_de6f84a6a6 → C_3bd36499b9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_596f74076d
+EVIDENCE_ATTACHED          E_f7871d1032 → C_50c46e9165 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fa6d3d3570
+EVIDENCE_ATTACHED          E_50f1e215ad → C_04c5a3f87c STANCE: SUPPORTS p=0.95 directness=1.00 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_a2517f354c → C_6fc0f0937f STANCE: QUALIFIES p=0.05 directness=0.50 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_df62fff924 → C_570c3bfe73 STANCE: NEUTRAL p=0.05 directness=0.20 from S_5ab629bd5b
+EVIDENCE_ATTACHED          E_3c70036032 → C_cbc9955887 STANCE: CONTRADICTS p=0.60 directness=0.50 from S_596f74076d
+CONTRADICTION_FOUND        S_596f74076d contradicts C_cbc9955887: "Nebius also demonstrated excellent scaling on HGX B200 systems, increasing cluster size fr"
+EVIDENCE_ATTACHED          E_dc1203e31f → C_1ea9b20797 STANCE: NEUTRAL p=0.05 directness=0.50 from S_596f74076d
+EVIDENCE_ATTACHED          E_5bfb6cb57a → C_50c46e9165 STANCE: NEUTRAL p=0.05 directness=0.50 from S_596f74076d
+CLAIM_POSTERIOR_UPDATED    C_1ea9b20797 posterior 0.56 → 0.61, sufficiency 0.50 → 0.75 (3 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_50c46e9165 posterior 0.56 → 0.61, sufficiency 0.50 → 0.75 (3 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cbc9955887 posterior 0.56 → 0.56, sufficiency 0.50 → 0.88 (3 raw source(s), 3 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_04c5a3f87c posterior 0.56 → 0.61, sufficiency 0.50 → 0.75 (2 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d90da72bd2 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_372f045886 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b23d09f75e posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_e7dd789ff7 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5cf61c1543 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0baaa9d94a posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5c05d7d3b5 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_61e457ddb5 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_94f6cb88f9 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_bf6d4ea36c posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_97e20164ce posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_fd45bc87cf posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_85bc857d34 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_9c99fee75c posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_ada26bcca2 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_4482543b4a posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_714551f6d0 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_f96d0d8872 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8652600a69 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_76479c80b6 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3bbff40a7f posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9eca90f52a posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8f6aecee52 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_180a3b5095 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9221274fe8 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_11de55763e posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3bd36499b9 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.75 → 0.70 (sufficiency 1.00, active)
+SOURCE_DEPENDENCY_DETECTED S_5ab629bd5b derives from S_b9d968a7d4 (p=0.60: explicit link to parent URL)
+SOURCE_DEPENDENCY_DETECTED S_5c31d5b986 is from the same publisher as S_596f74076d (p=0.50: same publisher domain)
+SOURCE_DEPENDENCY_DETECTED S_fa6d3d3570 is from the same publisher as S_b9d968a7d4 (p=0.50: same publisher domain)
+INDEPENDENCE_SUMMARY       9 URLs with evidence → 3 publication families → 2 independent evidence roots; 2 of them are interested parties (self-reported)
+CLAIM_POSTERIOR_UPDATED    C_1ea9b20797 posterior 0.61 → 0.56, sufficiency 0.75 → 0.50 (3 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_50c46e9165 posterior 0.61 → 0.56, sufficiency 0.75 → 0.50 (3 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cbc9955887 posterior 0.56 → 0.51, sufficiency 0.88 → 0.50 (3 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_04c5a3f87c posterior 0.61 → 0.56, sufficiency 0.75 → 0.50 (2 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.70 → 0.75 (sufficiency 1.00, supported)
+RESEARCH_TASK_CREATED      T_7011d6c6df GapResearcher: [MISSING_REQUIRED_DIMENSION] H4.R2 (H4): no evidence yet on 'Ablation or comparative benchmarks isolating the effect of integrated stack changes versus individual-layer changes' → queries ['Nebius AI infrastructure ablation benchmark integrated stack compute networking storage software', 'Nebius RDMA congestion control AI cluster bottleneck performance benchmark', 'Nebius AI infrastructure comparative benchmark compute storage network bottleneck attribution']
+SEARCH_EXECUTED            'Nebius AI infrastructure ablation benchmark integrated stack compute networking storage software' → 8 result(s)
+SOURCE_FOUND               S_fbb78fded9 nebius.com: Nebius AI Cloud 3.1 delivers next-generation NVIDIA Blackwell Ultra co (company, tavily=0.6172364, diversity_penalty=0.00)
+SOURCE_FOUND               S_5fb338af84 weka.io: GPUaaS for AI Factories Without Training Bottlenecks (other, tavily=0.6854659, diversity_penalty=0.00)
+SOURCE_FOUND               S_8b9fe36984 ethosvad.com: Nebius AI Cloud Partner | GPU Infrastructure & AI Solutions | Ethos Te (other, tavily=0.56661874, diversity_penalty=0.00)
+SOURCE_FOUND               S_b006ff9b54 tdsynnex.com: Nebius Authorized Distributor | TD SYNNEX (other, tavily=0.5446325, diversity_penalty=0.00)
+SOURCE_FOUND               S_7553406459 saturncloud.io: Installation (Nebius) | Saturn Cloud (other, tavily=0.5122296, diversity_penalty=0.00)
+SOURCE_FOUND               S_99b6f785fd fool.com: NVIDIA and Nebius partner to scale full-stack AI cloud - Saul’s Invest (other, tavily=0.507251, diversity_penalty=0.00)
+SOURCE_FOUND               S_ba01efef58 linkedin.com: Nebius' vertically integrated stack faces portability challenges (social, tavily=0.63234437, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Nebius RDMA congestion control AI cluster bottleneck performance benchmark' → 8 result(s)
+SOURCE_FOUND               S_08bc752e5f nebius.com: Open-source NVIDIA Run:ai is now available on Nebius AI Cloud Applicat (company, tavily=0.52627033, diversity_penalty=0.00)
+SOURCE_FOUND               S_0fd1b13130 nebius.com: Nebius Rated Platinum in SemiAnalysis ClusterMAX™ | Nebius (company, tavily=0.5005133, diversity_penalty=0.15)
+SOURCE_FOUND               S_e984e94539 oracle.com: Zettascale in Practice: OSU and NCCL Benchmark on NVIDIA H100 GPU Clus (blog, tavily=0.5481178, diversity_penalty=0.00)
+SOURCE_FOUND               S_c8542e1a6f clustermax.ai: Nebius Review 2026: Gold Tier GPU Cloud | ClusterMAX by SemiAnalysis (other, tavily=0.44160134, diversity_penalty=0.00)
+SOURCE_FOUND               S_fbad4493ac nebius.com: Fault-tolerant training: How we build reliable clusters for distribute (company, tavily=0.48952848, diversity_penalty=0.30)
+SOURCE_FOUND               S_9e5c2869f4 nebius.com: The Ultimate AI Cloud (company, tavily=0.46147847, diversity_penalty=0.45)
+SEARCH_EXECUTED            'Nebius AI infrastructure comparative benchmark compute storage network bottleneck attribution' → 8 result(s)
+SOURCE_FOUND               S_1d3177d568 nebius.com: Nebius proves bare-metal-class performance for AI inference workloads  (company, tavily=0.63804686, diversity_penalty=0.00)
+SOURCE_FOUND               S_d091863f3b a10networks.com: The State of AI Infrastructure Report 2025 (other, tavily=0.66699636, diversity_penalty=0.00)
+SOURCE_FOUND               S_10b3d72560 seekingalpha.com: Nebius: The Compute Bottleneck Is Real (NASDAQ:NBIS) | Seeking Alpha (other, tavily=0.61307496, diversity_penalty=0.00)
+SOURCE_FOUND               S_2dcb39cf84 mlq.ai: Nebius Group: The AI Factory Born from Yandex's Ashes | MLQ.ai Researc (other, tavily=0.60133666, diversity_penalty=0.00)
+SOURCE_FOUND               S_3c396f5b3f weka.io: Benchmarking Augmented Memory Grid on Nebius (other, tavily=0.5973971, diversity_penalty=0.00)
+SOURCE_FOUND               S_911b4772e8 substack.com: Nebius Stock ($NBIS): The Full Deep Dive You Can’t Afford to Miss (blog, tavily=0.5457947, diversity_penalty=0.00)
+SOURCE_FOUND               S_5cb5f101af youtube.com: Nebius’s Genius Plan to Break the AI Supply Bottleneck (social, tavily=0.57837737, diversity_penalty=0.00)
+SOURCE_SCREENED            S_1d3177d568: INCLUDE [company_press_release] (model) — Directly reports Nebius AI infrastructure performance benchmarks (MLPerf Inference v5.1); Relevant to compute performance factors beyond GPU model
+SOURCE_SCREENED            S_fbb78fded9: INCLUDE [company_press_release] (model) — Directly describes Nebius AI Cloud 3.1 compute, networking (800 Gbps InfiniBand), and capacity management offerings; Core source for current Nebius infrastructure across compute and networking
+SOURCE_SCREENED            S_08bc752e5f: INCLUDE [company_press_release] (model) — Describes Nebius AI Cloud software stack (NVIDIA Run:ai) and GPU allocation/throughput performance; Relevant to software layer and compute efficiency
+SOURCE_SCREENED            S_5fb338af84: INCLUDE [company_press_release] (model) — Describes Nebius full-stack AI infrastructure including GPU clusters and cloud platform, partner integration with WEKA storage; Relevant to compute and storage factors
+SOURCE_SCREENED            S_d091863f3b: INCLUDE [industry_report] (model) — Industry report on AI infrastructure priorities including security, compute, network, storage; Provides context on factors beyond GPU model that influence AI infrastructure performance
+SOURCE_SCREENED            S_10b3d72560: EXCLUDE [news_article] (model) — Investment commentary focused on stock thesis, not infrastructure technical details; Commentary only on compute bottleneck narrative
+SOURCE_SCREENED            S_2dcb39cf84: INCLUDE [blog] (model) — Discusses power as key AI infrastructure bottleneck and Nebius's strategy around power/land acquisition; Relevant to real-world infrastructure factors beyond GPU model
+SOURCE_SCREENED            S_3c396f5b3f: INCLUDE [company_press_release] (model) — Benchmarks WEKA storage (Augmented Memory Grid) on Nebius AI Cloud; Directly relevant to storage performance factor
+SOURCE_SCREENED            S_8b9fe36984: EXCLUDE [company_press_release] (model) — Reseller/partner marketing page with no technical detail on infrastructure factors; Marketing page only
+SOURCE_SCREENED            S_0fd1b13130: INCLUDE [company_press_release] (model) — Nebius Platinum rating in SemiAnalysis ClusterMAX, references Token Factory and AI Builder Program; Relevant to software/platform offerings and third-party validation
+SOURCE_SCREENED            S_b006ff9b54: EXCLUDE [company_press_release] (model) — Distributor marketing page with no substantive technical detail; Marketing page only
+SOURCE_SCREENED            S_7553406459: INCLUDE [company_press_release] (model) — Describes Nebius GPU offerings (H100, H200, GB200) and managed AI platform capabilities; Relevant to compute and software stack
+SOURCE_SCREENED            S_99b6f785fd: INCLUDE [forum] (model) — NVIDIA-Nebius partnership details covering inference stack, software, and multi-generation infrastructure deployment; Relevant to compute, networking, and software factors
+SOURCE_SCREENED            S_e984e94539: EXCLUDE [blog] (model) — Oracle blog about RDMA networking on H100 clusters, not specific to Nebius; Wrong population (Oracle, not Nebius)
+SOURCE_SCREENED            S_911b4772e8: EXCLUDE [blog] (model) — Investment-focused Substack analysis comparing Nebius ARR to Azure; Commentary only, limited technical infrastructure detail
+SOURCE_SCREENED            S_c8542e1a6f: INCLUDE [review_site] (model) — SemiAnalysis ClusterMAX review of Nebius covering bare-metal vs VM performance, InfiniBand fabric; Relevant third-party assessment of Nebius compute and networking
+SOURCE_SCREENED            S_ba01efef58: UNCERTAIN [social_media] (model) — LinkedIn post snippet mentions planning, high-speed connectivity, network operations but limited detail visible; Potentially relevant to networking but insufficient information from snippet
+SOURCE_SCREENED            S_fbad4493ac: INCLUDE [company_press_release] (model) — Describes Nebius cluster reliability practices including thermal, power stress testing, NCCL benchmarks, fault tolerance; Relevant to real-world infrastructure reliability and performance factors
+SOURCE_SCREENED            S_5cb5f101af: UNCERTAIN [social_media] (model) — YouTube video discussing Nebius supply/power strategy and partner model; Potentially relevant to power/site factors but video format limits extractability
+SOURCE_SCREENED            S_9e5c2869f4: INCLUDE [company_press_release] (model) — Nebius homepage with key performance metrics (MTTR, MTBF, TCO comparisons) and NVIDIA Reference Platform status; Core source for current Nebius infrastructure positioning across compute, reliability, and TCO
+SOURCE_SELECTED            S_1d3177d568 selected for extraction: https://nebius.com/blog/posts/bare-metal-class-performance-mlperf-inference
+SOURCE_SELECTED            S_fbb78fded9 selected for extraction: https://nebius.com/newsroom/nebius-ai-cloud-3-1-delivers-next-generation-nvidia-blackwell-ultra-compute-with-transparent-capacity-management-for-ai-at-scale
+SOURCE_SELECTED            S_08bc752e5f selected for extraction: https://nebius.com/blog/posts/nvidia-run-ai-open-source-nebius-applications
+SOURCE_EXTRACTED           S_1d3177d568 extracted (14,198 chars)
+SOURCE_EXTRACTED           S_fbb78fded9 extracted (5,823 chars)
+SOURCE_EXTRACTED           S_08bc752e5f extracted (6,753 chars)
+WARNING evidence_research.llm: Invalid structured output for extract_claims (attempt 1): 1 validation error for ExtractionOutput
+claims.0.valid_from
+  Input should be a valid date or datetime, input is too short [type=date_from_datetime_parsing, input_value='2025-04', input_type=str]
+    
+CLAIM_CREATED              C_180229425f [fact] Nebius AI Cloud achieved a 6.7% performance increase on a one-host NVIDIA GB200 NVL72 installation running Llama 3.1 405B inference in offline mode in MLPerf Inference v5.1 compared to the best results of the previous round.
+CLAIM_CREATED              C_9c3344125a [fact] Nebius AI Cloud achieved a 14.2% performance increase on a one-host NVIDIA GB200 NVL72 installation running Llama 3.1 405B inference in server mode in MLPerf Inference v5.1 compared to the best results of the previous round.
+CLAIM_CREATED              C_1902cdcc53 [fact] Nebius runs its virtual GPU instances without virtualizing NVIDIA GPUs and NVIDIA ConnectX InfiniBand adapters, resulting in zero performance degradation and parity with bare-metal benchmarks.
+CLAIM_CREATED              C_900d636cf5 [fact] Nebius's MLPerf Inference v5.1 submission benchmarked three AI systems: NVIDIA GB200 NVL72, HGX B200, and HGX H200.
+CLAIM_CREATED              C_eeb98bc026 [fact] Nebius's MLPerf Inference v5.1 results were achieved on single-host installations.
+CLAIM_CREATED              C_6ef5621dc4 [fact] Nebius held first place among MLPerf Inference v5.1 submitters for Llama 3.1 405B on GB200 systems in both offline and server modes.
+CLAIM_CREATED              C_01d5ec0a75 [fact] Nebius's AI infrastructure is built on custom hardware, proprietary software, and energy-efficient data centers.
+CLAIM_CREATED              C_6e97d530d8 [fact] The NVIDIA GB200 NVL72 is equipped with NVFP4 precision, fifth-generation NVIDIA NVLink, NVLink Switch System, and high-speed NVIDIA InfiniBand networking for GPU-to-GPU interconnects.
+CLAIM_CREATED              C_74908d212f [fact] Nebius offers customers the ability to thoroughly test and fine-tune AI clusters for their specific machine learning setups.
+CLAIM_CREATED              C_84a9d2ef9a [fact] Nebius announced Nebius AI Cloud 3.1 on December 17, 2025.
+CLAIM_CREATED              C_8431135656 [fact] Nebius AI Cloud 3.1 runs production GB300 NVL72 systems on 800 Gbps NVIDIA Quantum-X800 InfiniBand interconnect, doubling throughput for distributed workloads.
+CLAIM_CREATED              C_8c9407dba4 [fact] Nebius AI Cloud 3.1 deploys NVIDIA HGX B300 and GB300 NVL72 systems, with Nebius being the first cloud in Europe to operate both platforms in production.
+CLAIM_CREATED              C_5938ad668a [fact] Nebius AI Cloud 3.1 achieved leading performance in MLPerf Training v5.1 benchmarks, complementing its hardware-accelerated networking and enhanced storage caching.
+CLAIM_CREATED              C_a65a2a1fa3 [fact] Nebius AI Cloud 3.1 includes hardware-accelerated networking and enhanced storage write-back caching designed to eliminate infrastructure bottlenecks.
+CLAIM_CREATED              C_21f89d6b67 [fact] Nebius AI Cloud 3.1 delivers expanded filesystem performance scaling alongside hardware-accelerated networking and storage write-back caching.
+CLAIM_CREATED              C_344f529a33 [fact] Nebius AI Cloud 3.1 introduces Capacity Blocks and a real-time Capacity Dashboard providing visibility into reserved GPU capacity and availability across all data center regions.
+CLAIM_CREATED              C_2f63c0bee0 [fact] Nebius AI Cloud 3.1 adds project-level quotas and new lifecycle object storage rules for granular control over resource allocation and costs.
+CLAIM_CREATED              C_38809cc651 [fact] Nebius AI Cloud 3.1 includes enhanced Slurm-based orchestration with Managed Soperator for developer usability.
+CLAIM_CREATED              C_eac45c8d5a [fact] Nebius AI Cloud 3.1 adds a native integration with Dstack and simplifies deployment of NVIDIA BioNeMo NIM microservices including Boltz2, Evo-2, GenMol, and MolMIM without requiring NGC keys or NVIDIA AI Enterprise licenses.
+CLAIM_CREATED              C_1cd47f53a1 [fact] The scheduling core of NVIDIA Run:ai is KAI Scheduler, which has been open source since April 2025 under Apache 2.0 and is a CNCF Sandbox project.
+CLAIM_CREATED              C_d4c229c826 [fact] KAI Scheduler provides placement and allocation capabilities including gang scheduling, hierarchical queues, quota fairness, bin-packing, preemption, and fractional-GPU-aware placement.
+CLAIM_CREATED              C_d8734f5e68 [fact] At a 0.5 GPU allocation, workloads held 77% of full-GPU throughput on Nebius AI Cloud in the joint Nebius/NVIDIA fractional allocation benchmark.
+CLAIM_CREATED              C_b63bd2dd65 [fact] At a 0.5 GPU allocation, workloads held 86% of concurrent-user capacity (8,768 users against 10,200 at full allocation) on Nebius AI Cloud.
+CLAIM_CREATED              C_c6d54853c6 [fact] On Nebius AI Cloud, co-locating chat, reasoning, and embedding models on shared GPUs served roughly 3x more total users than dedicated allocation.
+CLAIM_CREATED              C_64a87aa9c2 [fact] On Nebius AI Cloud, co-locating chat, reasoning, and embedding models on shared GPUs achieved combined throughput above 350k tokens per second.
+CLAIM_CREATED              C_970108fee2 [fact] At a 0.5 GPU allocation on Nebius AI Cloud, time to first token was under one second.
+CLAIM_CREATED              C_bc987e08a3 [fact] Over eight hours on identical NVIDIA HGX B300 hardware, WEKA NeuralMesh with Augmented Memory Grid served 2.4x more requests than HBM-only in the Nebius/WEKA distributed NVMe KV cache tier benchmark.
+CLAIM_CREATED              C_3c8ba1b71f [fact] WEKA NeuralMesh with Augmented Memory Grid held a 93% cache hit rate against 40% for HBM-only on NVIDIA HGX B300 in the Nebius/WEKA benchmark.
+CLAIM_CREATED              C_19c4d16d6d [fact] WEKA NeuralMesh with Augmented Memory Grid kept median time to first token near one second on NVIDIA HGX B300 in the Nebius/WEKA benchmark.
+EVIDENCE_ATTACHED          E_814da5d162 → C_180229425f STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_7d61405cf0 → C_9c3344125a STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_647d5eae30 → C_1902cdcc53 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_9669a5a251 → C_900d636cf5 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_0e0cef4904 → C_eeb98bc026 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_ea24c3c6b3 → C_6ef5621dc4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_0919725b95 → C_01d5ec0a75 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_20b08aa62a → C_6e97d530d8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_8f2e1a9b2a → C_74908d212f STANCE: SUPPORTS p=0.95 directness=1.00 from S_1d3177d568
+EVIDENCE_ATTACHED          E_a0c649a0a2 → C_84a9d2ef9a STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_632dc5828d → C_8431135656 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_0234a0be63 → C_8c9407dba4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_c579571c97 → C_5938ad668a STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_4825d9ec8c → C_a65a2a1fa3 STANCE: QUALIFIES p=0.05 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_1022e22fb1 → C_21f89d6b67 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_bffb722ee3 → C_344f529a33 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_f1988138aa → C_2f63c0bee0 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_5f18007571 → C_38809cc651 STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_d6da242aa8 → C_eac45c8d5a STANCE: SUPPORTS p=0.95 directness=1.00 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_fb96d7d1a1 → C_1cd47f53a1 STANCE: SUPPORTS p=0.95 directness=1.00 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_35a98ea849 → C_d4c229c826 STANCE: SUPPORTS p=0.95 directness=1.00 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_1a4c38546d → C_d8734f5e68 STANCE: SUPPORTS p=0.95 directness=1.00 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_05bf635c69 → C_b63bd2dd65 STANCE: SUPPORTS p=0.95 directness=1.00 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_f3d556d440 → C_c6d54853c6 STANCE: SUPPORTS p=0.95 directness=1.00 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_275b5eff9b → C_64a87aa9c2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_1095966808 → C_970108fee2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_710a961469 → C_bc987e08a3 STANCE: SUPPORTS p=0.80 directness=0.50 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_42669b0953 → C_3c8ba1b71f STANCE: SUPPORTS p=0.80 directness=0.50 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_8791079612 → C_19c4d16d6d STANCE: SUPPORTS p=0.80 directness=0.50 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_dbbdcd9568 → C_6fc0f0937f STANCE: NEUTRAL p=0.05 directness=0.20 from S_1d3177d568
+EVIDENCE_ATTACHED          E_09efe1f8de → C_1ea9b20797 STANCE: NEUTRAL p=0.05 directness=0.20 from S_1d3177d568
+EVIDENCE_ATTACHED          E_201f0caa30 → C_50c46e9165 STANCE: NEUTRAL p=0.05 directness=0.20 from S_1d3177d568
+EVIDENCE_ATTACHED          E_df81319f75 → C_cbc9955887 STANCE: NEUTRAL p=0.05 directness=0.20 from S_1d3177d568
+EVIDENCE_ATTACHED          E_baad381c1d → C_6fc0f0937f STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_f8b7706c40 → C_04c5a3f87c STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_5d837faf7f → C_7bd2baea6f STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_764bb6d891 → C_41c104de55 STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_6412495673 → C_1ea9b20797 STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_94605c3326 → C_50c46e9165 STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_e8e7b9fff9 → C_cbc9955887 STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_09633937b3 → C_570c3bfe73 STANCE: NEUTRAL p=0.05 directness=0.20 from S_fbb78fded9
+EVIDENCE_ATTACHED          E_3ffb310a04 → C_6fc0f0937f STANCE: NEUTRAL p=0.05 directness=0.50 from S_08bc752e5f
+EVIDENCE_ATTACHED          E_62d87655a5 → C_570c3bfe73 STANCE: NEUTRAL p=0.05 directness=0.20 from S_08bc752e5f
+CLAIM_POSTERIOR_UPDATED    C_180229425f posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9c3344125a posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_1902cdcc53 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_900d636cf5 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_eeb98bc026 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6ef5621dc4 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_01d5ec0a75 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6e97d530d8 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_74908d212f posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_84a9d2ef9a posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8431135656 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8c9407dba4 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5938ad668a posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_21f89d6b67 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_344f529a33 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2f63c0bee0 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_38809cc651 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_eac45c8d5a posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_1cd47f53a1 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d4c229c826 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d8734f5e68 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b63bd2dd65 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_c6d54853c6 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_64a87aa9c2 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_970108fee2 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_bc987e08a3 posterior 0.50 → 0.56, sufficiency 0.00 → 0.38 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3c8ba1b71f posterior 0.50 → 0.56, sufficiency 0.00 → 0.38 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_19c4d16d6d posterior 0.50 → 0.56, sufficiency 0.00 → 0.38 (1 raw source(s), 1 independent root(s), primary source)
+SOURCE_DEPENDENCY_DETECTED S_1d3177d568 is from the same publisher as S_08bc752e5f (p=0.50: same publisher domain)
+SOURCE_DEPENDENCY_DETECTED S_596f74076d is from the same publisher as S_08bc752e5f (p=0.50: same publisher domain)
+SOURCE_DEPENDENCY_DETECTED S_fbb78fded9 is from the same publisher as S_b9d968a7d4 (p=0.50: same publisher domain)
+INDEPENDENCE_SUMMARY       12 URLs with evidence → 3 publication families → 2 independent evidence roots; 2 of them are interested parties (self-reported)
+INFERENCE_PROPOSED         I_f5431a8eaa: C_04c5a3f87c, C_0fcd11db8a, C_1cd47f53a1, C_2b007641b8, C_3c8ba1b71f ⇒ contradicts H1 (abductive): Documented storage throughput and caching plus scheduling software indicate that non-network layers also substantially influence Nebius performance, weakening network fabric design as the primary explanation.
+INFERENCE_PROPOSED         I_a41c4dab43: C_15f01f21f1, C_1902cdcc53, C_1cd47f53a1 ⇒ contradicts H2 (abductive): NCCL all-reduce benchmarking, bare-metal InfiniBand passthrough, and scheduling software indicate that network and software layers also matter, weakening storage architecture as the primary explanation.
+INFERENCE_PROPOSED         I_34d5a3b188: C_04c5a3f87c, C_0fcd11db8a, C_15f01f21f1, C_1902cdcc53 ⇒ contradicts H3 (abductive): Network benchmarking and passthrough together with storage throughput indicate that non-software layers also matter, weakening software-layer capabilities as the primary explanation.
+INFERENCE_PROPOSED         I_641535cb52: C_04c5a3f87c, C_15f01f21f1, C_1902cdcc53, C_1cd47f53a1, C_3c8ba1b71f ⇒ supports H4 (abductive): Evidence spanning NCCL networking, bare-metal GPU and InfiniBand passthrough, storage throughput, scheduling software, and storage caching jointly supports co-design across layers rather than a single-layer explanation.
+INFERENCE_REJECTED         I_f5431a8eaa needs_evidence (invalid): The premises document storage throughput, caching, and scheduling capabilities, not network fabric dominance; they do not establish that network design is the primary constraint or best explanation.; R3: causal/abductive inference with unexcluded confounders; missing: direct measurements of east-west network bandwidth, latency, topology, RDMA, or congestion behavior, comparative attribution showing the network layer dominates storage, caching, and scheduling effects, controlled bottleneck or ablation analysis isolating network fabric effects, independent validation of the network-related claims
+INFERENCE_REJECTED         I_a41c4dab43 needs_evidence (invalid): The premises concern NCCL networking, bare-metal GPU/InfiniBand passthrough, and scheduling software, not storage dominance; they do not establish storage architecture as the primary constraint or best explanation.; R3: causal/abductive inference with unexcluded confounders; missing: storage throughput, IOPS, latency, data locality, or caching/tiering evidence, comparative attribution showing storage dominates network and software effects, controlled bottleneck or ablation analysis isolating storage architecture effects, independent validation of storage-related claims
+INFERENCE_REJECTED         I_34d5a3b188 needs_evidence (invalid): The premises document storage throughput and network benchmarking/passthrough, not software-layer dominance; they do not establish software capabilities as the primary constraint or best explanation.; R3: causal/abductive inference with unexcluded confounders; missing: orchestration, scheduling, driver, kernel, compiler, MLOps, or serving software optimization evidence, comparative attribution showing software dominates storage and network effects, controlled bottleneck or ablation analysis isolating software-layer effects, independent validation of software-related claims
+INFERENCE_REJECTED         I_641535cb52 needs_evidence (weak): The premises show capabilities across several layers, but they do not demonstrate integration, joint optimization, or relative contribution; concluding co-design is an unsupported leap.; R3: causal/abductive inference with unexcluded confounders; missing: evidence of cross-layer integration or joint optimization, ablation or bottleneck analysis showing no single layer dominates, independent validation beyond self-reported vendor benchmarks, comparative evidence ruling out independent strong components
+RESEARCH_GAP_CREATED       G_f05d17e15d [NO_INDEPENDENT_SOURCE] C_11de55763e: no independent confirmation of 'Nebius recorded a Llama-3.1-8B training time of 27.83 minutes on 32x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.' (value 0.43)
+RESEARCH_GAP_CREATED       G_9e5f9ef2d4 [NO_INDEPENDENT_SOURCE] C_180229425f: no independent confirmation of 'Nebius AI Cloud achieved a 6.7% performance increase on a one-host NVIDIA GB200 NVL72 installation running Llama 3.1 405B inference in offline mode in MLPerf Inference v5.1 compared to the best results of the previous round.' (value 0.43)
+RESEARCH_GAP_CREATED       G_2a6a5e9b37 [NO_INDEPENDENT_SOURCE] C_180a3b5095: no independent confirmation of 'Nebius recorded a Llama-3.1-8B training time of 85.37 minutes on 8x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 6th.' (value 0.21)
+RESEARCH_GAP_CREATED       G_1aa39c2044 [NO_INDEPENDENT_SOURCE] C_3bbff40a7f: no independent confirmation of 'Nebius recorded a Llama-2-70B LoRA training time of 5.82 minutes on 16x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.' (value 0.43)
+RESEARCH_GAP_CREATED       G_096d8a1baf [NO_INDEPENDENT_SOURCE] C_3bd36499b9: no independent confirmation of 'Nebius recorded a FLUX.1 training time of 93.17 minutes on 16x NVIDIA HGX B200 GPUs in MLPerf Training v5.1, placing 1st.' (value 0.43)
+RESEARCH_GAP_CREATED       G_976cf7c63e [NO_INDEPENDENT_SOURCE] C_3c8ba1b71f: no independent confirmation of 'WEKA NeuralMesh with Augmented Memory Grid held a 93% cache hit rate against 40% for HBM-only on NVIDIA HGX B300 in the Nebius/WEKA benchmark.' (value 0.43)
+RESEARCH_GAP_CREATED       G_6f470eb145 [SOURCE_DEPENDENCE] C_04c5a3f87c: 3 sources but only 1 independent root (value 0.21)
+RESEARCH_GAP_CREATED       G_a8bd582bb1 [SOURCE_DEPENDENCE] C_1ea9b20797: 5 sources but only 1 independent root (value 0.21)
+RESEARCH_GAP_CREATED       G_10ec4ac70e [NO_INDEPENDENT_SOURCE] C_0baaa9d94a: no independent confirmation of 'Nebius launched its MLPerf Training v5.0 benchmarks using Soperator, its in-house Kubernetes operator for Slurm, in Q2 2025.' (value 0.32)
+RESEARCH_GAP_CREATED       G_10c5318a2d [NO_INDEPENDENT_SOURCE] C_1902cdcc53: no independent confirmation of 'Nebius runs its virtual GPU instances without virtualizing NVIDIA GPUs and NVIDIA ConnectX InfiniBand adapters, resulting in zero performance degradation and parity with bare-metal benchmarks.' (value 0.53)
+RESEARCH_GAP_CREATED       G_3e48ab27a8 [NO_INDEPENDENT_SOURCE] C_1cd47f53a1: no independent confirmation of 'The scheduling core of NVIDIA Run:ai is KAI Scheduler, which has been open source since April 2025 under Apache 2.0 and is a CNCF Sandbox project.' (value 0.16)
+RESEARCH_GAP_CREATED       G_b6a31c2c52 [NO_INDEPENDENT_SOURCE] C_372f045886: no independent confirmation of 'Nebius ran the MLPerf Training v5.0 Llama 3.1 405B benchmark on a 64-node cluster with 512 NVIDIA H200 GPUs in Q2 2025.' (value 0.32)
+RESEARCH_GAP_RESOLVED      G_7479e2e23a resolved: C_04c5a3f87c: no independent confirmation of 'Nebius Shared Filesystem achieved 442 GB/s aggregated write performance on a 302-host production cluster in Q2 2025.'
+RESEARCH_GAP_RESOLVED      G_71079b0af9 resolved: C_1ea9b20797: no independent confirmation of 'Nebius recorded a training step time of 124.5 minutes on a 128-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.'
+RESEARCH_GAP_RESOLVED      G_589bed99b0 resolved: C_41c104de55: no independent confirmation of 'Nebius's new class of Object Storage, designed for streaming data to NVIDIA GPUs and checkpointing, offers up to 2 GiB/s write throughput per GPU in Q2 2025.'
+RESEARCH_GAP_RESOLVED      G_1955978edb resolved: C_50c46e9165: no independent confirmation of 'Nebius recorded a training step time of 244.6 minutes on a 64-node NVIDIA Hopper cluster when training a Llama 3.1 405B model in MLPerf Training v5.0 in Q2 2025.'
+RESEARCH_GAP_RESOLVED      G_3f4af6874c resolved: C_570c3bfe73: no independent confirmation of 'Nebius topology-aware job scheduling delivered average NVIDIA NCCL test performance improvements of 10–25%, depending on benchmark parameters, in Q2 2025.'
+RESEARCH_GAP_RESOLVED      G_62ac4f7686 resolved: C_7bd2baea6f: no independent confirmation of 'Nebius Shared Filesystem achieved 987 GB/s aggregated read performance on a 302-host production cluster in Q2 2025.'
+RESEARCH_GAP_RESOLVED      G_877ad60f1b resolved: H4.R2 (H4): no evidence yet on 'Ablation or comparative benchmarks isolating the effect of integrated stack changes versus individual-layer changes'
+RESEARCH_GAP_RESOLVED      G_9629164f65 resolved: C_6de31387ec: no independent confirmation of 'Nebius new platform file storage achieves higher read throughput and lower latency by extending the minimum data chunk size, which reduces IO to CPU and frees computational resources.'
+RESEARCH_GAP_RESOLVED      G_de466ee8d1 resolved: C_739b37a9f5: no independent confirmation of 'Nebius can quickly and efficiently provision compute resources on demand from a single node to thousands of nodes with high-performance storage GPU-to-GPU networking, and managed services.'
+RESEARCH_GAP_RESOLVED      G_aee5a5fd2e resolved: C_7ab918af7d: no independent confirmation of 'Nebius's AI cloud platform delivers a true hyperscale cloud experience for AI innovators, with fully featured cloud software and hardware designed in-house, giving AI builders the compute, storage, managed services and tools they need to build, tune and run models and apps in one place.'
+RESEARCH_GAP_RESOLVED      G_f8d2ca7351 resolved: C_7ca6a06f57: no independent confirmation of 'Through vertical integration and full-stack control, Nebius reduces energy consumption per workload, increases compute density per megawatt, lowers operating overhead, and works to secure performance and reliability across system components rather than addressing efficiency at a single layer.'
+RESEARCH_GAP_RESOLVED      G_a1a1df3055 resolved: C_905a09d515: no independent confirmation of 'Nebius new platform storage ensures seamless data streaming during model training and prevents disruptions when saving checkpoints, uploading model code, or sharing model weights across cluster nodes.'
+STOP_DECISION              STOP (DIMINISHING_RETURNS): last research round produced no new independent evidence root; new independent roots this round: 0
+REPORT_GENERATED           report: INSUFFICIENT_EVIDENCE, 13 verified sentence(s), 0 rejected, 8 citation(s)
+REPORT_GENERATED           final review passed: 13 statement(s), each → claim → evidence → excerpt → source

@@ -16,7 +16,7 @@ from datetime import date
 
 from ..models import (
     HypothesesOutput, HypothesisProposal, InferenceProposal, InferenceVerdict, QuestionAnalysis, RequirementProposal, ResultProposal,
-    ScientificReviewOutput, StudyProposal, StudyRelationProposal, SynthesisOutput, SynthesisSentence,
+    ScientificReviewOutput, StudyProposal, StudyRelationProposal, SynthesisOutput, KeyLine, PyramidPoint,
 )
 from .base import Page, PageClaim, Scenario, find
 
@@ -230,21 +230,23 @@ class ScienceScenario(Scenario):
 
     def synthesize(self, cl: list[dict]) -> SynthesisOutput:
         e31, e12, e02 = find(cl, "0.31 standard"), find(cl, "0.12 standard"), find(cl, "0.02 sd")
-        S = SynthesisSentence
-        out = []
+        P = PyramidPoint
+        lines = []
         if e31:
-            out.append(S(text="The original randomized trial with 412 students reported a 0.31 SD improvement; its preprint, conference and "
-                              "journal versions are one study, not three confirmations.", claim_ids=[e31]))
-        if e12:
-            out.append(S(text="A preregistered multi-site replication with 1,180 students found a smaller effect of 0.12 SD.", claim_ids=[e12]))
-        if e02:
-            out.append(S(text="A preregistered direct replication with 640 students found no statistically significant effect (0.02 SD).",
-                         claim_ids=[e02]))
-        out.append(S(text="MemoLoop is used by over a million students worldwide.", claim_ids=[]))  # must be removed
-        return SynthesisOutput(conclusion=out, what_would_change_our_mind=[
+            lines.append(KeyLine(text="The large original effect comes from one conflicted study, not three.", claim_ids=[e31], support=[
+                P(text="The original randomized trial with 412 students reported a 0.31 SD improvement; its preprint, conference and "
+                       "journal versions are one study.", claim_ids=[e31])]))
+        if e12 and e02:
+            lines.append(KeyLine(text="Independent preregistered replications found a much smaller effect, or none.", claim_ids=[e12, e02], support=[
+                P(text="A multi-site replication with 1,180 students found 0.12 SD.", claim_ids=[e12]),
+                P(text="A direct replication with 640 students found no statistically significant effect (0.02 SD).", claim_ids=[e02])]))
+        lines.append(KeyLine(text="MemoLoop is used by over a million students worldwide.", claim_ids=[],
+                             support=[P(text="Adoption keeps growing every semester.", claim_ids=[])]))  # must be removed
+        governing = P(text="MemoLoop's effect on exam scores is small at best: the large original effect did not hold up in independent replications.",
+                      claim_ids=[c for c in (e12, e02) if c])
+        return SynthesisOutput(governing_thought=governing, key_lines=lines, what_would_change_our_mind=[
             "A third preregistered replication with an effect above 0.2 SD",
             "A meta-analysis pooling all randomized MemoLoop trials",
             "Evidence that the effect depends on how the app is used (dose or subgroup analyses)"])
-
 
 SCENARIO = ScienceScenario()

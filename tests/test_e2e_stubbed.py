@@ -100,7 +100,11 @@ def test_cli_demo(capsys, tmp_path, monkeypatch, scenario):
     out_json = tmp_path / "r.json"
     assert app.main(["--demo", scenario, "--json", str(out_json)]) == 0
     out, err = capsys.readouterr()
-    assert out.startswith("# Research report:") and "SYNTHETIC DEMO RUN" in out and "## Why research stopped" in out
+    assert out.startswith("# ") and "SYNTHETIC DEMO RUN" in out
+    # Minto order: answer first, then reasons, then judge-checkable citations and the decision trace
+    order = [out.index(h) for h in ("## Answer", "## Why", "## Caveats", "## Citations you can check", "## How the agent decided",
+                                    "# Supporting detail", "## Why research stopped")]
+    assert order == sorted(order)
     assert "AGENT_SELECTED" in err and "SOURCE_DEPENDENCY_DETECTED" in err
     assert json.loads(out_json.read_text())["synthetic"] is True
 
@@ -111,3 +115,28 @@ def test_cli_live_without_keys_fails_cleanly(capsys, monkeypatch):
     monkeypatch.setattr("app.load_dotenv_if_present", lambda: None)
     assert app.main(["Is X true?"]) == 2
     assert "NEBIUS_API_KEY" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("name", ["business", "science"])
+def test_pyramid_and_every_citation_is_checkable(runs, name):
+    r, _ = runs[name]
+    rep = r.report
+    assert rep.governing_thought and not rep.governing_is_system_summary and rep.governing_thought.citations
+    assert 2 <= len(rep.key_lines) <= 4 and all(kl.support for kl in rep.key_lines)
+    assert rep.caveats and rep.decision_trace
+    assert any("agent selected" in d for d in rep.decision_trace)
+    for c in rep.citations:
+        assert c.uses, f"citation [{c.n}] has no quote"
+        for u in c.uses:
+            assert u["excerpt"] in r.graph.sources[c.source_id].raw_text
+            assert u["deep_link"].startswith(c.url)
+
+
+@pytest.mark.parametrize("name", ["business", "science"])
+def test_live_citation_audit_finds_every_quote(runs, name):
+    from evidence_research.demo import FakeSearch, get_scenario
+    from evidence_research.verification.citation_audit import audit
+
+    r, _ = runs[name]
+    checks = asyncio.run(audit(r.report.model_dump(mode="json"), FakeSearch(get_scenario(name).pages)))
+    assert checks and all(c.status.startswith("found") for c in checks)

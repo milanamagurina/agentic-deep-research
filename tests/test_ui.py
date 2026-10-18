@@ -21,5 +21,8 @@ def test_ui_runs_synthetic_demo(monkeypatch, tmp_path, mode):
     assert not at.exception
     labels = {m.label: m.value for m in at.metric}
     assert labels["Evidence status"] == "LIKELY"  # both scenarios are deterministic
-    assert len(at.tabs) == 8
+    assert len(at.tabs) == 9  # incl. Citation Check
     assert any("SYNTHETIC" in w.value for w in at.warning)
+    at.button(key="audit").click().run()  # judges' one-click re-check of every citation
+    assert not at.exception
+    assert any("quotes found" in x.value for x in at.success)

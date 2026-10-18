@@ -16,7 +16,7 @@ from datetime import date
 
 from ..models import (
     HypothesesOutput, HypothesisProposal, InferenceProposal, InferenceVerdict, QuestionAnalysis, RequirementProposal,
-    SynthesisOutput, SynthesisSentence,
+    SynthesisOutput, KeyLine, PyramidPoint,
 )
 from .base import Page, PageClaim, Scenario, find
 
@@ -215,24 +215,25 @@ class BusinessScenario(Scenario):
     def synthesize(self, cl: list[dict]) -> SynthesisOutput:
         growth, logo81 = find(cl, "grew 70%"), find(cl, "logo retention was 81%")
         ret95, disc45 = find(cl, "retained 95%"), find(cl, "45%", "discount")
-        S = SynthesisSentence
-        out = []
+        P = PyramidPoint
+        lines = []
         if growth:
-            out.append(S(text="Acme Fleet's revenue growth of 70% in fiscal year 2025 is supported by its filed annual accounts, "
-                              "not only by its own press release.", claim_ids=[growth]))
+            lines.append(KeyLine(text="Revenue growth is real and independently confirmed.", claim_ids=[growth], support=[
+                P(text="Revenue grew 70% in fiscal year 2025, confirmed by the filed annual accounts, not only the press release.", claim_ids=[growth]),
+                P(text="Revenue grew 85% year over year.", claim_ids=[growth])]))  # must be removed: 85% is not in evidence
         if logo81 and ret95:
-            out.append(S(text="An independent benchmark reports 81% gross logo retention for 2025, below the 90% segment median, "
-                              "which contradicts the company-reported 95% retention.", claim_ids=[logo81, ret95]))
+            lines.append(KeyLine(text="Customer retention is weaker than the company claims.", claim_ids=[logo81, ret95], support=[
+                P(text="An independent benchmark puts 2025 gross logo retention at 81%, below the 90% segment median, against the "
+                       "company-reported 95%.", claim_ids=[logo81, ret95])]))
         if disc45:
-            out.append(S(text="Around 45% of new customers in 2025 joined through a 50% first-year discount, so growth quality is uncertain.",
-                         claim_ids=[disc45]))
-        out.append(S(text="Acme Fleet is the clear market leader in European route optimisation.", claim_ids=[]))  # must be removed
-        if growth:
-            out.append(S(text="Revenue grew 85% year over year.", claim_ids=[growth]))  # must be removed: 85% is not in evidence
-        return SynthesisOutput(conclusion=out, what_would_change_our_mind=[
+            lines.append(KeyLine(text="A large part of the growth was bought with discounts.", claim_ids=[disc45], support=[
+                P(text="Around 45% of 2025's new customers joined through a 50% first-year discount.", claim_ids=[disc45]),
+                P(text="Acme Fleet is the clear market leader in European route optimisation.", claim_ids=[])]))  # must be removed
+        governing = P(text="Acme Fleet's growth is real, but weak retention and heavy discounting mean strong product-market fit is not established.",
+                      claim_ids=[c for c in (growth, logo81, disc45) if c])
+        return SynthesisOutput(governing_thought=governing, key_lines=lines, what_would_change_our_mind=[
             "Independently verified retention above the 90% segment median",
             "Evidence that discounted 2025 cohorts renewed at full price",
             "A restatement of the FY2025 turnover in the filed accounts"])
-
 
 SCENARIO = BusinessScenario()

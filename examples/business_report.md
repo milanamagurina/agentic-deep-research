@@ -1,15 +1,93 @@
-# Research report: Does Acme Fleet have strong product-market fit?
+# Does Acme Fleet have strong product-market fit?
 
 > **SYNTHETIC DEMO RUN** — fictional entities, scripted corpus and model responses. Not real-world evidence.
 
-## Executive conclusion
-**Current evidence status: LIKELY**
+## Answer
+**Acme Fleet's growth is real, but weak retention and heavy discounting mean strong product-market fit is not established.** [1][2][3][5][6][7]
 
-- Acme Fleet's revenue growth of 70% in fiscal year 2025 is supported by its filed annual accounts, not only by its own press release. [2][3][5][6][7]
-- An independent benchmark reports 81% gross logo retention for 2025, below the 90% segment median, which contradicts the company-reported 95% retention. [1][2][3]
-- Around 45% of new customers in 2025 joined through a 50% first-year discount, so growth quality is uncertain. [1]
+Evidence status: **LIKELY** · model-estimated confidence 81% · evidence sufficiency 59% (H4)
 
-_2 draft sentence(s) were removed by the citation verifier._
+## Why
+**1. Revenue growth is real and independently confirmed.** [2][3][5][6][7]
+   - Revenue grew 70% in fiscal year 2025, confirmed by the filed annual accounts, not only the press release. [2][3][5][6][7]
+**2. Customer retention is weaker than the company claims.** [1][2][3]
+   - An independent benchmark puts 2025 gross logo retention at 81%, below the 90% segment median, against the company-reported 95%. [1][2][3]
+**3. A large part of the growth was bought with discounts.** [1]
+   - Around 45% of 2025's new customers joined through a 50% first-year discount. [1]
+
+_2 draft statement(s) were removed by the citation verifier (no evidence, or numbers not in the evidence)._
+
+## Caveats
+- Source independence: 8 sources with evidence reduce to 5 independent roots; 1 of these are interested parties (self-reported).
+- Contradicted: 1 key claim(s) have independent evidence against them, e.g. "Acme Fleet retained 95% of its customers in 2025".
+- Thinly sourced: 4 of 7 key claims rest on a single independent source.
+- Open gap [NO_INDEPENDENT_SOURCE]: C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
+- Open gap [CONTRADICTORY_EVIDENCE]: C_5b93e6c990: independent sources disagree on 'Acme Fleet retained 95% of its customers in 2025'
+- Confidence values are model-estimated evidence beliefs from explicit heuristics, not calibrated probabilities.
+
+## What would change our mind
+1. Independently verified retention above the 90% segment median
+2. Evidence that discounted 2025 cohorts renewed at full price
+3. A restatement of the FY2025 turnover in the filed accounts
+4. Evidence resolving: C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
+5. Evidence resolving: C_5b93e6c990: independent sources disagree on 'Acme Fleet retained 95% of its customers in 2025'
+6. Evidence resolving: C_e5e830f2c6: no primary source for 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
+
+## Citations you can check
+_Each link opens the page at the quoted text (text fragments; plain URL where unsupported)._
+
+**[1]** [Route optimisation software benchmark 2026](https://industry-analyst.example/route-optimisation-benchmark-2026#:~:text=Acme%20Fleet%27s%20gross%20logo%20retention,median%20of%2090%25) — industry-analyst.example, published 2026-05-15
+   > “Acme Fleet's gross logo retention was 81% in 2025, below the segment median of 90%”
+   > “Around 45% of Acme Fleet's new customers in 2025 joined through a 50% first-year discount promotion”
+**[2]** [Acme Fleet reports record FY2025 results](https://acmefleet.example/press/fy2025-results#:~:text=Revenue%20grew%2070%25%20to%20EUR,route%20optimisation%20platform) — acmefleet.example, published 2026-02-03
+   > “Revenue grew 70% to EUR 47.5 million, driven by strong demand for its route optimisation platform”
+   > “Acme Fleet retained 95% of its customers during 2025”
+**[3]** [Route-planning start-up Acme Fleet says revenue jumped 70%](https://logistics-times.example/acme-fleet-growth#:~:text=Acme%20Fleet%20announced%20that%20revenue,company%20press%20release) — logistics-times.example, published 2026-02-05
+   > “Acme Fleet announced that revenue grew 70% to EUR 47.5 million in 2025, driven by strong demand for its route optimisation platform, according to a company press release”
+   > “Acme Fleet also said it retained 95% of its customers”
+**[4]** [Acme Fleet reviews](https://fleet-reviews.example/acme-fleet#:~:text=Great%20routing%2C%20but%20many%20couriers,the%20first%20year) — fleet-reviews.example, published 2026-06-12
+   > “Great routing, but many couriers in our network churned after the first year”
+   > “We joined on the introductory 50% discount and cancelled when the renewal price doubled”
+**[5]** [Acme Fleet GmbH: annual accounts 2025](https://business-registry.example/acme-fleet-gmbh/annual-accounts-2025#:~:text=Turnover%20increased%20by%2070.0%25%20compared,previous%20financial%20year) — business-registry.example, published 2026-04-30
+   > “Turnover increased by 70.0% compared with the previous financial year”
+   > “Turnover for the financial year 2025: EUR 47,512,000”
+**[6]** [Acme Fleet posts record year](https://fleetnews.example/2026/02/acme-fleet-record-year#:~:text=According%20to%20a%20press%20release,route%20optimisation%20platform) — fleetnews.example, published 2026-02-04
+   > “According to a press release published on Tuesday, Acme Fleet said revenue grew 70% to EUR 47.5 million, driven by strong demand for its route optimisation platform”
+**[7]** [Acme Fleet: 70% growth!](https://dailyfreight-blog.example/acme-fleet-70-percent#:~:text=Big%20news%20from%20Acme%20Fleet,route%20optimisation%20platform) — dailyfreight-blog.example, published 2026-02-06
+   > “Big news from Acme Fleet today: revenue grew 70% to EUR 47.5 million, driven by strong demand for its route optimisation platform”
+
+## How the agent decided
+_Decisions made by code during the run, in order, with their reasons._
+
+1. agent selected: Next agent: GeneralResearcher (utility 0.95). Reason: no evidence collected yet: broad discovery first
+2. independence summary: 6 URLs with evidence → 6 publication families → 3 independent evidence roots; 1 of them are interested parties (self-reported)
+3. temporal version detected: C_4b19d50a85 (2025-12-31 → 2025-12-31) supersedes C_b6b0311872 (2021-12-31 → 2021-12-31): not a contradiction
+4. inference rejected: I_528956a95b rejected (weak): Revenue growth is consistent with PMF but also with discounting or M&A; retention is not established.; missing: independent customer retention data, organic customer growth
+5. inference accepted: I_ea105cee31 accepted (plausible, score 0.65)
+6. inference rejected: I_cc8eb032ec rejected (plausible): Retention bears on PMF if the figure is reliable.; R2: all premises rest on one interested source (self-reported)
+7. inference rejected: I_b36257a175 rejected (weak): Absolute discount volume says nothing about the share of growth it drove.
+8. necessity assessed: C_294c7b4974 is a NECESSARY dependency of H4 (structural (sole premise)): sole accepted premise for this hypothesis
+9. agent selected: Next agent: AdversarialResearcher (utility 0.73). Reason: leading hypothesis H4 (posterior 0.52) has not been challenged yet
+10. agent selected: Next agent: GapResearcher (utility 0.65). Reason: [WEAK_INFERENCE] I_528956a95b → H1: needs evidence on 'independent customer retention data'
+11. stop decision: CONTINUE: 2 critical claim(s) below sufficiency, 0 open contradiction(s), 6 researchable gap(s); new independent roots this round: 3
+12. contradiction found: S_ab67bdf197 contradicts C_5b93e6c990: "Great routing, but many couriers in our network churned after the first year"
+13. independence summary: 7 URLs with evidence → 7 publication families → 4 independent evidence roots; 1 of them are interested parties (self-reported)
+14. contradiction found: S_a92afe4598 contradicts C_5b93e6c990: "Acme Fleet's gross logo retention was 81% in 2025, below the segment median of 90%"
+15. independence summary: 8 URLs with evidence → 8 publication families → 5 independent evidence roots; 1 of them are interested parties (self-reported)
+16. inference accepted: I_a4ce194068 accepted (valid, score 0.90)
+17. inference accepted: I_cbd8dd268c accepted (valid, score 0.90)
+18. necessity assessed: C_294c7b4974 is NOT a necessary dependency of H4 (model-based necessity assessment): other premises carry the conclusion without it
+19. agent selected: Next agent: IndependenceResearcher (utility 0.93). Reason: [NO_INDEPENDENT_SOURCE] C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% dis
+20. agent selected: Next agent: PrimarySourceResearcher (utility 0.78). Reason: [NO_PRIMARY_SOURCE] C_e5e830f2c6: no primary source for 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
+21. stop decision: CONTINUE: 4 critical claim(s) below sufficiency, 1 open contradiction(s), 12 researchable gap(s); new independent roots this round: 2
+22. stop decision: STOP (DIMINISHING_RETURNS): last research round produced no new independent evidence root; new independent roots this round: 0
+23. statement rejected: support point dropped (number '85%' not found in referenced claims): Revenue grew 85% year over year.
+24. statement rejected: support point dropped (no claim ids: unsupported factual statement): Acme Fleet is the clear market leader in European route optimisation.
+
+---
+
+# Supporting detail
+
 
 ## Surviving hypotheses
 | ID | Hypothesis | Prior | Posterior | Sufficiency | Inference validity | Status |
@@ -98,14 +176,6 @@ Strongest counter-hypothesis: **H2** — Acme Fleet's growth is primarily discou
 - **MEDIUM** [MISSING_REQUIRED_DIMENSION] H3.R1 (H3): no evidence yet on 'acquisitions made by Acme Fleet in 2025'
 - **MEDIUM** [WEAK_INFERENCE] I_528956a95b → H1: needs evidence on 'independent customer retention data'
 
-## What would change our mind
-1. Independently verified retention above the 90% segment median
-2. Evidence that discounted 2025 cohorts renewed at full price
-3. A restatement of the FY2025 turnover in the filed accounts
-4. Evidence resolving: C_e5e830f2c6: no independent confirmation of 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
-5. Evidence resolving: C_5b93e6c990: independent sources disagree on 'Acme Fleet retained 95% of its customers in 2025'
-6. Evidence resolving: C_e5e830f2c6: no primary source for 'Acme Fleet customers cancelled when the renewal price doubled after an introductory 50% discount'
-
 ## Why research stopped
 - DIMINISHING_RETURNS: last research round produced no new independent evidence root
 - Final agent bids: IndependenceResearcher 0.93, PrimarySourceResearcher 0.78, ContradictionResearcher 0.73, GapResearcher 0.37, GeneralResearcher 0.22, AdversarialResearcher 0.10, Synthesis 0.04, ReplicationResearcher 0.00
@@ -122,7 +192,7 @@ Strongest counter-hypothesis: **H2** — Acme Fleet's growth is primarily discou
 - 0 source(s) were screened out before extraction; reasons are preserved (negative provenance).
 - Stop reason: DIMINISHING_RETURNS — last research round produced no new independent evidence root
 
-## Citations
+## All citations
 [1] Route optimisation software benchmark 2026 — https://industry-analyst.example/route-optimisation-benchmark-2026 (industry-analyst.example; published 2026-05-15; retrieved 2026-10-18; root S_a92afe4598)
 [2] Acme Fleet reports record FY2025 results — https://acmefleet.example/press/fy2025-results (acmefleet.example; published 2026-02-03; retrieved 2026-10-18; root S_c315c04e06)
 [3] Route-planning start-up Acme Fleet says revenue jumped 70% — https://logistics-times.example/acme-fleet-growth (logistics-times.example; published 2026-02-05; retrieved 2026-10-18; root S_c315c04e06)
@@ -131,4 +201,4 @@ Strongest counter-hypothesis: **H2** — Acme Fleet's growth is primarily discou
 [6] Acme Fleet posts record year — https://fleetnews.example/2026/02/acme-fleet-record-year (fleetnews.example; published 2026-02-04; retrieved 2026-10-18; root S_c315c04e06)
 [7] Acme Fleet: 70% growth! — https://dailyfreight-blog.example/acme-fleet-70-percent (dailyfreight-blog.example; published 2026-02-06; retrieved 2026-10-18; root S_c315c04e06)
 
-_Stats: {'iterations': 3, 'searches': 10, 'extractions': 8, 'model_calls': 30, 'hypothesis': 5, 'requirement': 9, 'source': 8, 'claim': 14, 'evidence': 24, 'inference': 7, 'gap': 13, 'edges': 115, 'screened_out': 0, 'unverified_evidence': 0}_
+_Stats: {'iterations': 3, 'searches': 10, 'extractions': 8, 'model_calls': 31, 'hypothesis': 5, 'requirement': 9, 'source': 8, 'claim': 14, 'evidence': 24, 'inference': 7, 'gap': 13, 'edges': 115, 'screened_out': 0, 'unverified_evidence': 0}_
