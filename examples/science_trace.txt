@@ -1,0 +1,187 @@
+SESSION_STARTED            'Does the MemoLoop spaced-repetition app materially improve university exam scores?' (depth=standard, SYNTHETIC DEMO)
+QUESTION_ANALYZED          entities=['MemoLoop'] scope=2023 to 2026 assumptions=["'materially' means an effect of at least 0.2 standard deviations"]
+HYPOTHESIS_CREATED         H1 MemoLoop materially improves university exam scores (effect of at least 0.2 SD) (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H2 MemoLoop has a small positive effect on exam scores (below 0.2 SD) (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H3 MemoLoop has no meaningful effect on exam scores (heuristic prior 0.20)
+HYPOTHESIS_CREATED         H4 MemoLoop's effect depends on context (only some students or settings benefit) (heuristic prior 0.20)
+HYPOTHESIS_CREATED         H5 Public evidence is insufficient to judge MemoLoop's effect on exam scores (heuristic prior 0.20)
+REQUIREMENT_CREATED        H1.R1 for H1: randomized controlled evidence (importance 1.0)
+REQUIREMENT_CREATED        H1.R2 for H1: independent replication (importance 1.0)
+REQUIREMENT_CREATED        H1.R3 for H1: effect size magnitude (importance 1.0)
+REQUIREMENT_CREATED        H2.R1 for H2: effect size estimates across independent studies (importance 1.0)
+REQUIREMENT_CREATED        H2.R2 for H2: replication results (importance 1.0)
+REQUIREMENT_CREATED        H3.R1 for H3: null or failed replication results (importance 1.0)
+REQUIREMENT_CREATED        H4.R1 for H4: subgroup analyses by student group (importance 0.6)
+REQUIREMENT_CREATED        H4.R2 for H4: heterogeneity of effects across sites (importance 0.6)
+AGENT_BIDS                 GeneralResearcher 0.95 · PrimarySourceResearcher 0.00 · IndependenceResearcher 0.00 · ContradictionResearcher 0.00 · GapResearcher 0.00 · ReplicationResearcher 0.00 · Synthesis 0.00
+AGENT_SELECTED             Next agent: GeneralResearcher (utility 0.95). Reason: no evidence collected yet: broad discovery first
+RESEARCH_TASK_CREATED      T_5030d3e11e GeneralResearcher: no evidence collected yet: broad discovery first → queries ['MemoLoop exam scores randomized trial', 'MemoLoop spaced repetition study', 'MemoLoop university students grades']
+SEARCH_EXECUTED            'MemoLoop exam scores randomized trial' → 3 result(s)
+SOURCE_FOUND               S_1e2b2e1e82 journal-of-learning-research.example: MemoLoop: Adaptive Spaced Retrieval Improves University Exam Performan (academic, tavily=0.82, diversity_penalty=0.00)
+SOURCE_FOUND               S_76bda71feb preprints-archive.example: MemoLoop: Adaptive Spaced Retrieval Improves University Exam Performan (preprint, tavily=0.9, diversity_penalty=0.00)
+SOURCE_FOUND               S_8121eb0c6d las-proceedings.example: MemoLoop: Adaptive Spaced Retrieval Improves University Exam Performan (conference, tavily=0.84, diversity_penalty=0.00)
+SEARCH_EXECUTED            'MemoLoop spaced repetition study' → 3 result(s)
+SOURCE_FOUND               S_d658e695b2 journal-of-classroom-studies.example: A pilot evaluation of MemoLoop (academic, tavily=0.65, diversity_penalty=0.00)
+SEARCH_EXECUTED            'MemoLoop university students grades' → 2 result(s)
+SOURCE_FOUND               S_a8ee1251f3 campus-news.example: MemoLoop boosts grades, campus study finds (trade_press, tavily=0.8, diversity_penalty=0.00)
+SOURCE_FOUND               S_e8a705548a edtech-blog.example: EdTech roundup: MemoLoop (blog, tavily=0.7, diversity_penalty=0.00)
+SOURCE_SCREENED            S_1e2b2e1e82: INCLUDE [peer_reviewed_article] (model) — directly reports evidence on the question
+SOURCE_SCREENED            S_d658e695b2: INCLUDE [peer_reviewed_article] (model) — directly reports evidence on the question
+SOURCE_SCREENED            S_76bda71feb: INCLUDE [preprint] (model) — directly reports evidence on the question
+SOURCE_SCREENED            S_a8ee1251f3: INCLUDE [news_article] (model) — directly reports evidence on the question
+SOURCE_SCREENED            S_8121eb0c6d: INCLUDE [conference_paper] (model) — directly reports evidence on the question
+SOURCE_SCREENED            S_e8a705548a: INCLUDE [blog] (model) — directly reports evidence on the question
+SOURCE_SELECTED            S_1e2b2e1e82 selected for extraction: https://journal-of-learning-research.example/article/10.5555/jlr.2025.0042
+SOURCE_SELECTED            S_d658e695b2 selected for extraction: https://journal-of-classroom-studies.example/2023/memoloop-pilot
+SOURCE_SELECTED            S_76bda71feb selected for extraction: https://preprints-archive.example/abs/2403.01234
+SOURCE_SELECTED            S_a8ee1251f3 selected for extraction: https://campus-news.example/2024/memoloop-boosts-grades
+SOURCE_SELECTED            S_8121eb0c6d selected for extraction: https://las-proceedings.example/2024/paper-17
+SOURCE_SELECTED            S_e8a705548a selected for extraction: https://edtech-blog.example/memoloop-a-third-better
+SOURCE_EXTRACTED           S_1e2b2e1e82 extracted (467 chars)
+SOURCE_EXTRACTED           S_d658e695b2 extracted (332 chars)
+SOURCE_EXTRACTED           S_76bda71feb extracted (570 chars)
+SOURCE_EXTRACTED           S_a8ee1251f3 extracted (287 chars)
+SOURCE_EXTRACTED           S_8121eb0c6d extracted (397 chars)
+SOURCE_EXTRACTED           S_e8a705548a extracted (321 chars)
+CLAIM_CREATED              C_788364b2a2 [fact] MemoLoop raised final exam scores by 0.31 standard deviations in the Lind et al. randomized trial (n=412)
+CLAIM_CREATED              C_2f2f8ce686 [fact] MemoLoop improves university exam scores
+CLAIM_CREATED              C_89d9e35122 [fact] Exam scores of MemoLoop pilot students improved by 0.8 standard deviations (n=12, no control group)
+CLAIM_CREATED              C_0889f28d46 [attribution] Lind et al. study stated that memoLoop improves university exam scores
+EVIDENCE_ATTACHED          E_e890062a86 → C_788364b2a2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1e2b2e1e82
+EVIDENCE_ATTACHED          E_2c0b9a2410 → C_2f2f8ce686 STANCE: SUPPORTS p=0.95 directness=1.00 from S_1e2b2e1e82
+EVIDENCE_ATTACHED          E_bcec362017 → C_89d9e35122 STANCE: SUPPORTS p=0.95 directness=1.00 from S_d658e695b2
+EVIDENCE_ATTACHED          E_d89fe59e4d → C_2f2f8ce686 STANCE: SUPPORTS p=0.95 directness=1.00 from S_d658e695b2
+EVIDENCE_ATTACHED          E_cb81850561 → C_788364b2a2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_76bda71feb
+EVIDENCE_ATTACHED          E_449bdc5d1c → C_2f2f8ce686 STANCE: SUPPORTS p=0.95 directness=1.00 from S_76bda71feb
+EVIDENCE_ATTACHED          E_6f3b96f775 → C_0889f28d46 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a8ee1251f3
+EVIDENCE_ATTACHED          E_2d74b4ee98 → C_2f2f8ce686 STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_a8ee1251f3
+EVIDENCE_ATTACHED          E_147c50fbf1 → C_788364b2a2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_8121eb0c6d
+EVIDENCE_ATTACHED          E_3b8f83ce03 → C_2f2f8ce686 STANCE: SUPPORTS p=0.95 directness=1.00 from S_8121eb0c6d
+EVIDENCE_ATTACHED          E_f8c5429ec1 → C_0889f28d46 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e8a705548a
+EVIDENCE_ATTACHED          E_550ec41d17 → C_2f2f8ce686 STANCE: SUPPORTS p=0.80 directness=0.35 (reported speech) from S_e8a705548a
+DOCUMENT_CLASSIFIED        S_1e2b2e1e82 peer_reviewed_article · peer reviewed: MemoLoop: Adaptive Spaced Retrieval Improves University Exam Performan (arXiv 2403.01234) (DOI 10.5555/jlr.2025.0042)
+DOCUMENT_CLASSIFIED        S_d658e695b2 peer_reviewed_article · peer reviewed: A pilot evaluation of MemoLoop
+DOCUMENT_CLASSIFIED        S_76bda71feb preprint · NOT peer reviewed: MemoLoop: Adaptive Spaced Retrieval Improves University Exam Performan (arXiv 2403.01234)
+DOCUMENT_CLASSIFIED        S_8121eb0c6d conference_paper · peer reviewed: MemoLoop: Adaptive Spaced Retrieval Improves University Exam Performan (arXiv 2403.01234)
+SCIENTIFIC_VERSION_RESOLVED 3 documents are versions of ONE work → 1 research lineage (ST_518a27a363): S_1e2b2e1e82 (peer_reviewed_article), S_76bda71feb (preprint), S_8121eb0c6d (conference_paper)
+STUDY_ASSESSED             ST_518a27a363 'MemoLoop: Adaptive Spaced Retrieval Improves University Exam': design=randomized_controlled_trial, n=412, peer_reviewed=True, quality 0.64 (design prior 0.80 (randomized_controlled_trial); material conflict of interest (×0.76); authors are co-founders of the product)
+RESULT_EXTRACTED           RS_cfd66c7ad7 final exam score: SD=0.31 (95% CI 0.12–0.5) n=412 [VERIFIED]
+RESULT_EXTRACTED           RS_3d6044c2b0 final exam score: SD=0.31 (95% CI 0.12–0.5) n=412 [VERIFIED]
+RESULT_EXTRACTED           RS_a84a6272bf final exam score: SD=0.31 (95% CI 0.12–0.5) n=412 [VERIFIED]
+STUDY_ASSESSED             ST_c38bb3b011 'A pilot evaluation of MemoLoop': design=observational_study, n=12, peer_reviewed=True, quality 0.15 (design prior 0.55 (observational_study); very small sample n=12 (×0.6); no control group (×0.7))
+RESULT_EXTRACTED           RS_e372f218af exam score change vs previous term: SD=0.8 n=7 [VERIFIED]
+CLAIM_POSTERIOR_UPDATED    C_788364b2a2 posterior 0.50 → 0.94, sufficiency 0.00 → 0.88 (3 raw source(s), 3 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2f2f8ce686 posterior 0.50 → 0.96, sufficiency 0.00 → 0.97 (6 raw source(s), 5 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_89d9e35122 posterior 0.50 → 0.56, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0889f28d46 posterior 0.50 → 0.71, sufficiency 0.00 → 0.53 (2 raw source(s), 2 independent root(s))
+HYPOTHESIS_UPDATED         H5 posterior 0.20 → 0.69 (sufficiency 1.00, active)
+SOURCE_DEPENDENCY_DETECTED S_76bda71feb is a version of the same work as S_1e2b2e1e82 (p=1.00: same arXiv ID 2403.01234; explicit cross-reference between versions; title similarity 1.00)
+SOURCE_DEPENDENCY_DETECTED S_8121eb0c6d is a version of the same work as S_1e2b2e1e82 (p=1.00: same arXiv ID 2403.01234; explicit cross-reference between versions; title similarity 1.00)
+SOURCE_DEPENDENCY_DETECTED S_a8ee1251f3 derives from S_76bda71feb (p=0.64: explicit link to parent URL; published within 10 days after parent)
+SOURCE_DEPENDENCY_DETECTED S_e8a705548a derives from S_a8ee1251f3 (p=0.87: text reuse: 100% of 6-word phrases shared; 1 identical quotation(s); published within 10 days after parent)
+INDEPENDENCE_SUMMARY       6 URLs with evidence → 4 publication families → 2 independent evidence roots
+CLAIM_POSTERIOR_UPDATED    C_788364b2a2 posterior 0.94 → 0.83, sufficiency 0.88 → 0.50 (3 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2f2f8ce686 posterior 0.96 → 0.86, sufficiency 0.97 → 0.75 (6 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0889f28d46 posterior 0.71 → 0.67, sufficiency 0.53 → 0.35 (2 raw source(s), 1 independent root(s))
+HYPOTHESIS_UPDATED         H5 posterior 0.69 → 0.79 (sufficiency 1.00, supported)
+INFERENCE_PROPOSED         I_2c1d8a1fc4: C_788364b2a2 ⇒ supports H1 (statistical): A randomized trial found a 0.31 SD effect, above the 0.2 SD threshold
+INFERENCE_PROPOSED         I_a83a45f1c4: C_89d9e35122 ⇒ supports H1 (inductive): A pilot study found a 0.8 SD improvement
+INFERENCE_ACCEPTED         I_2c1d8a1fc4 accepted (plausible, score 0.65)
+INFERENCE_REJECTED         I_a83a45f1c4 rejected (weak): n=12, no control group and high attrition cannot establish an effect.
+HYPOTHESIS_UPDATED         H1 posterior 0.35 → 0.68 (sufficiency 0.46, active)
+HYPOTHESIS_UPDATED         H5 posterior 0.79 → 0.54 (sufficiency 1.00, active)
+NECESSITY_ASSESSED         C_788364b2a2 is a NECESSARY dependency of H1 (structural (sole premise)): sole accepted premise for this hypothesis
+RESEARCH_GAP_CREATED       G_b21bde0beb [MISSING_REQUIRED_DIMENSION] H2.R2 (H2): no evidence yet on 'replication results' (value 0.63)
+RESEARCH_GAP_CREATED       G_46d3f1524b [MISSING_REQUIRED_DIMENSION] H1.R2 (H1): no evidence yet on 'independent replication' (value 0.57)
+RESEARCH_GAP_CREATED       G_4114eafc58 [NO_INDEPENDENT_SOURCE] C_89d9e35122: no independent confirmation of 'Exam scores of MemoLoop pilot students improved by 0.8 standard deviations (n=12, no control group)' (value 0.26)
+RESEARCH_GAP_CREATED       G_027c432e77 [NO_REPLICATION] C_89d9e35122: supported by a single study (ST_c38bb3b011) with no known replication (value 0.43)
+RESEARCH_GAP_CREATED       G_e3533d20f6 [SOURCE_DEPENDENCE] C_788364b2a2: 3 sources but only 1 independent root (value 0.24)
+RESEARCH_GAP_CREATED       G_6af0facaba [NO_REPLICATION] C_788364b2a2: supported by a single study (ST_518a27a363) with no known replication (value 0.40)
+RESEARCH_GAP_CREATED       G_84bbd19f2f [OUTDATED_EVIDENCE] C_89d9e35122: only outdated evidence (value 0.11)
+RESEARCH_GAP_CREATED       G_f9210d04b6 [MISSING_REQUIRED_DIMENSION] H3.R1 (H3): no evidence yet on 'null or failed replication results' (value 0.36)
+RESEARCH_GAP_CREATED       G_89e2e7b191 [INSUFFICIENT_SAMPLE] ST_c38bb3b011: n=12 is too small to carry the claim alone (value 0.21)
+RESEARCH_GAP_CREATED       G_b8cb422ddb [MISSING_REQUIRED_DIMENSION] H4.R1 (H4): no evidence yet on 'subgroup analyses by student group' (value 0.13)
+RESEARCH_GAP_CREATED       G_877ad60f1b [MISSING_REQUIRED_DIMENSION] H4.R2 (H4): no evidence yet on 'heterogeneity of effects across sites' (value 0.22)
+AGENT_BIDS                 GapResearcher 0.88 · AdversarialResearcher 0.81 · ReplicationResearcher 0.57 · GeneralResearcher 0.34 · IndependenceResearcher 0.33 · Synthesis 0.07 · PrimarySourceResearcher 0.00 · ContradictionResearcher 0.00
+AGENT_SELECTED             Next agent: GapResearcher (utility 0.88). Reason: [MISSING_REQUIRED_DIMENSION] H2.R2 (H2): no evidence yet on 'replication results'
+AGENT_SELECTED             Next agent: AdversarialResearcher (utility 0.81). Reason: leading hypothesis H1 (posterior 0.68) has not been challenged yet
+STOP_DECISION              CONTINUE: 2 critical claim(s) below sufficiency, 0 open contradiction(s), 11 researchable gap(s); new independent roots this round: 2
+RESEARCH_TASK_CREATED      T_7b0b963622 GapResearcher: [MISSING_REQUIRED_DIMENSION] H2.R2 (H2): no evidence yet on 'replication results' → queries ['MemoLoop effect size replication studies']
+SEARCH_EXECUTED            'MemoLoop effect size replication studies' → 2 result(s)
+SOURCE_FOUND               S_9f2889d604 journal-of-open-replication.example: A preregistered multi-site replication of Lind et al. (2024) (academic, tavily=0.86, diversity_penalty=0.00)
+SOURCE_FOUND               S_55c264f1cc journal-of-replication-studies.example: Preregistered direct replication of MemoLoop (academic, tavily=0.84, diversity_penalty=0.00)
+SOURCE_SCREENED            S_9f2889d604: INCLUDE [peer_reviewed_article] (model) — directly reports evidence on the question
+SOURCE_SCREENED            S_55c264f1cc: INCLUDE [peer_reviewed_article] (model) — directly reports evidence on the question
+SOURCE_SELECTED            S_9f2889d604 selected for extraction: https://journal-of-open-replication.example/2025/memoloop-multisite
+SOURCE_SELECTED            S_55c264f1cc selected for extraction: https://journal-of-replication-studies.example/2026/memoloop
+SOURCE_EXTRACTED           S_9f2889d604 extracted (568 chars)
+SOURCE_EXTRACTED           S_55c264f1cc extracted (399 chars)
+CLAIM_CREATED              C_6340bdec73 [fact] MemoLoop raised final exam scores by 0.12 standard deviations in a preregistered multi-site replication (n=1,180)
+CLAIM_CREATED              C_5e82fb0de7 [fact] MemoLoop had no statistically significant effect on final exam scores in a preregistered direct replication (0.02 SD, n=640)
+EVIDENCE_ATTACHED          E_fd7cef3dcc → C_6340bdec73 STANCE: SUPPORTS p=0.95 directness=1.00 from S_9f2889d604
+EVIDENCE_ATTACHED          E_7689e84fe5 → C_2f2f8ce686 STANCE: SUPPORTS p=0.95 directness=1.00 from S_9f2889d604
+EVIDENCE_ATTACHED          E_dd0f641e5c → C_5e82fb0de7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_55c264f1cc
+EVIDENCE_ATTACHED          E_9d25692486 → C_788364b2a2 STANCE: CONTRADICTS p=0.60 directness=1.00 from S_9f2889d604
+CONTRADICTION_FOUND        S_9f2889d604 contradicts C_788364b2a2: "finds a substantially smaller effect than the original study"
+EVIDENCE_ATTACHED          E_5b1ce7216f → C_2f2f8ce686 STANCE: CONTRADICTS p=0.80 directness=1.00 from S_55c264f1cc
+CONTRADICTION_FOUND        S_55c264f1cc contradicts C_2f2f8ce686: "MemoLoop users scored 0.02 standard deviations higher on the final exam (95% CI -0.08 to 0"
+EVIDENCE_ATTACHED          E_a620cf8a3d → C_788364b2a2 STANCE: CONTRADICTS p=0.95 directness=1.00 from S_55c264f1cc
+CONTRADICTION_FOUND        S_55c264f1cc contradicts C_788364b2a2: "We failed to replicate the effect reported by Lind et al. (2024)"
+DOCUMENT_CLASSIFIED        S_9f2889d604 peer_reviewed_article · peer reviewed: A preregistered multi-site replication of Lind et al. (2024) (DOI 10.5555/jor.2025.0107)
+DOCUMENT_CLASSIFIED        S_55c264f1cc peer_reviewed_article · peer reviewed: Preregistered direct replication of MemoLoop
+STUDY_ASSESSED             ST_6ac4252451 'A preregistered multi-site replication of Lind et al. (2024)': design=randomized_controlled_trial, n=1180, peer_reviewed=True, quality 0.95 (design prior 0.80 (randomized_controlled_trial); large sample n=1180 (×1.05); preregistered (×1.08))
+RESULT_EXTRACTED           RS_fde281d322 final exam score: SD=0.12 (95% CI 0.03–0.21) n=1180 [VERIFIED]
+STUDY_RELATION_FOUND       ST_6ac4252451 REPLICATES ST_518a27a363: "This replication confirms a positive effect of MemoLoop but finds a substantially smaller "
+STUDY_ASSESSED             ST_dc780eea4d 'Preregistered direct replication of MemoLoop': design=randomized_controlled_trial, n=640, peer_reviewed=True, quality 0.91 (design prior 0.80 (randomized_controlled_trial); preregistered (×1.08))
+RESULT_EXTRACTED           RS_3de75c331d final exam score: SD=0.02 (95% CI -0.08–0.12) n=640 [VERIFIED]
+STUDY_RELATION_FOUND       ST_dc780eea4d FAILS_TO_REPLICATE ST_518a27a363: "We failed to replicate the effect reported by Lind et al. (2024)"
+CLAIM_POSTERIOR_UPDATED    C_788364b2a2 posterior 0.83 → 0.12, sufficiency 0.50 → 0.88 (5 raw source(s), 3 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2f2f8ce686 posterior 0.86 → 0.85, sufficiency 0.75 → 0.94 (8 raw source(s), 4 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6340bdec73 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5e82fb0de7 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H1 posterior 0.68 → 0.35 (sufficiency 0.82, weakened)
+HYPOTHESIS_UPDATED         H5 posterior 0.54 → 0.18 (sufficiency 1.00, weakened)
+INDEPENDENCE_SUMMARY       8 URLs with evidence → 6 publication families → 4 independent evidence roots
+RESEARCH_TASK_CREATED      T_de52bce589 AdversarialResearcher: leading hypothesis H1 (posterior 0.68) has not been challenged yet → queries ['MemoLoop no effect exam scores', 'MemoLoop criticism conflict of interest']
+SEARCH_EXECUTED            'MemoLoop no effect exam scores' → 1 result(s)
+SEARCH_EXECUTED            'MemoLoop criticism conflict of interest' → 0 result(s)
+INFERENCE_PROPOSED         I_9acf278574: C_6340bdec73 ⇒ supports H2 (statistical): A preregistered multi-site replication found 0.12 SD: a small positive effect
+INFERENCE_PROPOSED         I_9c120fb6f2: C_6340bdec73 ⇒ contradicts H1 (statistical): The large replication's effect of 0.12 SD is below the 0.2 SD threshold
+INFERENCE_PROPOSED         I_ab3282a847: C_5e82fb0de7 ⇒ supports H3 (statistical): A preregistered direct replication found no significant effect
+INFERENCE_PROPOSED         I_f59407dd2a: C_5e82fb0de7 ⇒ contradicts H1 (statistical): A preregistered replication found no significant effect, against a material effect
+INFERENCE_PROPOSED         I_18c313b841: C_5e82fb0de7, C_6340bdec73 ⇒ supports H2 (statistical): Two preregistered replications (0.12 SD and 0.02 SD) together indicate a small effect at most
+INFERENCE_ACCEPTED         I_9acf278574 accepted (valid, score 0.90)
+INFERENCE_ACCEPTED         I_9c120fb6f2 accepted (valid, score 0.90)
+INFERENCE_ACCEPTED         I_ab3282a847 accepted (plausible, score 0.65)
+INFERENCE_ACCEPTED         I_f59407dd2a accepted (valid, score 0.90)
+INFERENCE_ACCEPTED         I_18c313b841 accepted (valid, score 0.90)
+HYPOTHESIS_UPDATED         H1 posterior 0.35 → 0.01 (sufficiency 0.64, rejected)
+HYPOTHESIS_UPDATED         H2 posterior 0.35 → 0.85 (sufficiency 0.59, active)
+HYPOTHESIS_UPDATED         H3 posterior 0.20 → 0.33 (sufficiency 0.50, weakened)
+HYPOTHESIS_UPDATED         H5 posterior 0.18 → 0.36 (sufficiency 1.00, weakened)
+NECESSITY_ASSESSED         C_5e82fb0de7 is NOT a necessary dependency of H2 (model-based necessity assessment): other premises carry the conclusion without it
+NECESSITY_ASSESSED         C_6340bdec73 is a NECESSARY dependency of H2 (model-based necessity assessment): the remaining premises do not establish the conclusion
+RESEARCH_GAP_CREATED       G_a866065fc1 [FAILED_REPLICATION] ST_518a27a363 'MemoLoop: Adaptive Spaced Retrieval Improves University Exam' has a failed replication: which result holds, and why? (value 0.60)
+RESEARCH_GAP_CREATED       G_356f1625cb [NO_INDEPENDENT_SOURCE] C_5e82fb0de7: no independent confirmation of 'MemoLoop had no statistically significant effect on final exam scores in a preregistered direct replication (0.02 SD, n=640)' (value 0.40)
+RESEARCH_GAP_CREATED       G_ea05a0e9c1 [NO_INDEPENDENT_SOURCE] C_6340bdec73: no independent confirmation of 'MemoLoop raised final exam scores by 0.12 standard deviations in a preregistered multi-site replication (n=1,180)' (value 0.40)
+RESEARCH_GAP_CREATED       G_e9a68b99d7 [NO_REPLICATION] C_5e82fb0de7: supported by a single study (ST_dc780eea4d) with no known replication (value 0.40)
+RESEARCH_GAP_CREATED       G_e52743e02c [NO_REPLICATION] C_6340bdec73: supported by a single study (ST_6ac4252451) with no known replication (value 0.40)
+RESEARCH_GAP_CREATED       G_162ff3d6ad [CONTRADICTORY_EVIDENCE] C_2f2f8ce686: independent sources disagree on 'MemoLoop improves university exam scores' (value 0.13)
+RESEARCH_GAP_CREATED       G_adf66f00f2 [CONTRADICTORY_EVIDENCE] C_788364b2a2: independent sources disagree on 'MemoLoop raised final exam scores by 0.31 standard deviations in the Lind et al. randomized trial (n=412)' (value 0.17)
+RESEARCH_GAP_RESOLVED      G_b21bde0beb resolved: H2.R2 (H2): no evidence yet on 'replication results'
+RESEARCH_GAP_RESOLVED      G_46d3f1524b resolved: H1.R2 (H1): no evidence yet on 'independent replication'
+RESEARCH_GAP_RESOLVED      G_e3533d20f6 resolved: C_788364b2a2: 3 sources but only 1 independent root
+RESEARCH_GAP_RESOLVED      G_6af0facaba resolved: C_788364b2a2: supported by a single study (ST_518a27a363) with no known replication
+RESEARCH_GAP_RESOLVED      G_f9210d04b6 resolved: H3.R1 (H3): no evidence yet on 'null or failed replication results'
+AGENT_BIDS                 ReplicationResearcher 0.86 · IndependenceResearcher 0.54 · AdversarialResearcher 0.44 · GapResearcher 0.32 · ContradictionResearcher 0.24 · GeneralResearcher 0.23 · Synthesis 0.09 · PrimarySourceResearcher 0.00
+AGENT_SELECTED             Next agent: ReplicationResearcher (utility 0.86). Reason: [FAILED_REPLICATION] ST_518a27a363 'MemoLoop: Adaptive Spaced Retrieval Improves University Exam' has a failed replication: which result holds, and why?
+AGENT_SELECTED             Next agent: IndependenceResearcher (utility 0.54). Reason: [NO_INDEPENDENT_SOURCE] C_5e82fb0de7: no independent confirmation of 'MemoLoop had no statistically significant effect on final exam scores in a preregistered direct replication (0.02 SD, n=640)'
+STOP_DECISION              CONTINUE: 3 critical claim(s) below sufficiency, 2 open contradiction(s), 13 researchable gap(s); new independent roots this round: 2
+RESEARCH_TASK_CREATED      T_8865f7e5bc ReplicationResearcher: [FAILED_REPLICATION] ST_518a27a363 'MemoLoop: Adaptive Spaced Retrieval Improves University Exam' has a failed replication: which result holds, and why? → queries ['MemoLoop replication Lind et al. 2024']
+SEARCH_EXECUTED            'MemoLoop replication Lind et al. 2024' → 2 result(s)
+RESEARCH_TASK_CREATED      T_5475f74fdd IndependenceResearcher: [NO_INDEPENDENT_SOURCE] C_5e82fb0de7: no independent confirmation of 'MemoLoop had no statistically significant effect on final exam scores in a preregistered direct replication (0.02 SD, n=640)' → queries ['MemoLoop independent preregistered study']
+SEARCH_EXECUTED            'MemoLoop independent preregistered study' → 4 result(s)
+STOP_DECISION              STOP (DIMINISHING_RETURNS): last research round produced no new independent evidence root; new independent roots this round: 0
+STATEMENT_REJECTED         report sentence dropped (no claim ids: unsupported factual statement): MemoLoop is used by over a million students worldwide.
+REPORT_GENERATED           report: LIKELY, 3 verified sentence(s), 1 rejected, 8 citation(s)
+REPORT_GENERATED           final review passed: 3 statement(s), each → claim → evidence → excerpt → source

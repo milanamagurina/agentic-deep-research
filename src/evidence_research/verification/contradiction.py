@@ -2,7 +2,8 @@
 
 Two claims about the same subject + predicate with different values:
   * valid periods known and disjoint  -> TEMPORAL_VERSION_OF (both can be true)
-  * periods overlap or are unknown    -> CONTRADICTS (a temporal conflict if both are dated)
+  * periods overlap                   -> CONTRADICTS (temporal conflict)
+  * a period unknown                  -> no conflict asserted (undated values usually differ in period)
 """
 
 from __future__ import annotations
@@ -26,6 +27,9 @@ def detect_claim_conflicts(graph: EvidenceGraph, events: EventLog, checked: set[
             if values_consistent(a.object, b.object):
                 continue
             overlap = periods_overlap(a.temporal_scope, b.temporal_scope)
+            if overlap is None:
+                # Undated values usually describe different periods (Q2 2024 vs Q2 2025): not a contradiction.
+                continue
             if overlap is False:
                 older, newer = sorted((a, b), key=lambda c: c.temporal_scope.valid_from or c.temporal_scope.valid_to)
                 graph.link_claims(newer.id, older.id, Link.TEMPORAL_VERSION_OF)
@@ -34,11 +38,10 @@ def detect_claim_conflicts(graph: EvidenceGraph, events: EventLog, checked: set[
                             newer=newer.id, older=older.id)
                 found.append((newer.id, older.id, "temporal_version"))
             else:
-                kind = "temporal_conflict" if overlap else "contradiction"
+                kind = "temporal_conflict"
                 graph.link_claims(a.id, b.id, Link.CONTRADICTS, kind=kind)
                 events.emit(EventType.CONTRADICTION_FOUND,
-                            f"{a.id} '{a.object}' vs {b.id} '{b.object}' for {a.subject} / {a.predicate}"
-                            + (" (overlapping periods)" if overlap else " (period unknown)"),
+                            f"{a.id} '{a.object}' vs {b.id} '{b.object}' for {a.subject} / {a.predicate} (overlapping valid periods)",
                             a=a.id, b=b.id, kind=kind)
                 found.append((a.id, b.id, kind))
     return found

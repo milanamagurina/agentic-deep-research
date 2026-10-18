@@ -9,343 +9,362 @@ We ask:
 > "What do we currently believe, what evidence supports it, what would falsify it,
 > and which missing piece of evidence is most likely to change the conclusion?"
 
-Built for the Nebius × Tavily **Agentic Deep Research** challenge. Inference runs on **Nebius Token Factory**
-(OpenAI-compatible API) and retrieval on **Tavily** (search, then extraction of selected pages only).
+An auditable research process for the Nebius × Tavily **Agentic Deep Research** challenge. Inference runs on
+**Nebius Token Factory** (OpenAI-compatible API, role-routed models, `reflection/beam` supported as the reasoning
+model) and retrieval on **Tavily** (search → screen → extract selected pages only).
 
 ```
-LLM proposes.  Verifier checks.  Evidence graph remembers.  Probability engine updates.  Gap engine decides what to research next.
+LLM proposes.  Verifier checks.  Evidence vault remembers.  Probability engine updates.  Policy engine decides what to research next.
 ```
 
-Ten websites repeating the same press release are **not** ten independent pieces of evidence. This system
-knows that, shows it, and changes its confidence because of it.
+**The core thesis:** the LLM may propose hypotheses, interpretations and reasoning steps, but it is not allowed to
+establish truth by itself. Confidence comes from source-grounded evidence, provenance, independence, lineage,
+study quality, verified inference, contradiction and temporal consistency, aggregated by code.
+
+Ten websites repeating one press release are not ten pieces of evidence. Neither are an arXiv preprint and its
+conference and journal versions. This system detects both, shows it, and changes its confidence because of it.
 
 ---
 
 ## Quick start
 
-Requires Python 3.12+.
+Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync                     # or: pip install -e . pytest
-cp .env.example .env        # fill NEBIUS_API_KEY and TAVILY_API_KEY
+uv sync
+cp .env.example .env              # fill NEBIUS_API_KEY and TAVILY_API_KEY
 
-uv run pytest               # 52 offline tests, no API calls
-uv run python app.py --check                     # live connectivity: Token Factory + Tavily
-uv run streamlit run ui/streamlit_app.py         # the demo UI
+uv run pytest                     # 81 offline tests: stubbed model and Tavily, real pipeline
+uv run python app.py --check      # live connectivity: one Token Factory call, one Tavily search + extract
+uv run streamlit run ui/streamlit_app.py
 ```
 
-No keys? Everything below also runs on an **offline synthetic scenario** (a fictional company, a scripted
-model and a fake corpus, clearly labelled as such):
+No keys? Two **synthetic** offline scenarios (fictional entities, scripted model, fake corpus, labelled as such in
+every output) exercise the whole real pipeline:
 
 ```bash
-uv run python app.py --demo                      # full research run, report on stdout, trace on stderr
-uv run python -m evidence_research.evaluation.benchmark   # benchmark + baseline comparison
+uv run python app.py --demo business      # "Does Acme Fleet have strong product-market fit?"
+uv run python app.py --demo science       # "Does the MemoLoop app materially improve university exam scores?"
+uv run python -m evidence_research.evaluation.benchmark     # hackathon evaluation + baseline comparison
 ```
 
-CLI for real questions:
+Live CLI:
 
 ```bash
-uv run python app.py "Does Company X have strong product-market fit?" --depth standard --md report.md --json report.json
-uv run python app.py "Does Company X have strong product-market fit?" --baseline   # naive search + one synthesis, for comparison
-uv run python -m evidence_research.llm.gateway --list-models                        # Token Factory model IDs
+uv run python app.py "Does Duolingo have strong product-market fit?" --depth fast --md report.md --json report.json
+uv run python app.py "your question" --baseline          # naive search + one summary, for comparison
+uv run python -m evidence_research.llm.gateway --list-models
 ```
 
-Without uv: `pip install -e . pytest`, then drop the `uv run` prefix. Without installing: `PYTHONPATH=src python app.py --demo`.
+The report goes to stdout and the research trace to stderr. Sessions, every event and graph snapshots are stored in
+SQLite (`data/research.sqlite`). Without uv: `pip install -e . pytest` (or `PYTHONPATH=src python app.py …`).
 
 ---
 
 ## Architecture
 
-A modular monolith. Each box is a module with a narrow interface, so the in-memory graph, SQLite and the
-model/search clients can later be swapped (Neo4j, Postgres, a queue) without touching the research logic.
+A modular monolith. Each box is a module behind a narrow interface; NetworkX, SQLite and the model/search clients
+can later be swapped for Neo4j, Postgres or a queue without touching research logic.
 
 ```
 USER QUESTION
-     │
-QUESTION ANALYZER ─────────────── llm: entities, scope, hidden assumptions, dimensions
-     │
-HYPOTHESIS GENERATOR ──────────── llm: 3-5 competing hypotheses + null hypothesis, heuristic priors
-     │
-EVIDENCE REQUIREMENTS ─────────── what each hypothesis would need to be established
-     │
-RESEARCH PLANNER / SCHEDULER ──── discovery | gap-targeted | adversarial queries (parallel, budgeted)
-     │
-TAVILY SERVICE ────────────────── search (advanced) → rank → dedup → select → extract (advanced)
-     │
-SOURCE STORE + ASSESSMENT ─────── authority, expertise, transparency, editorial, primary, conflict of interest
-     │
-CLAIM EXTRACTOR ───────────────── llm: atomic claims + verbatim excerpts;  code: rejects non-verbatim excerpts,
-     │                                 splits reported speech into ATTRIBUTION + FACT claims
-CLAIM NORMALIZER ──────────────── canonical key (numbers/units/currency/fiscal year) → llm SAME/DIFFERENT
-     │
-PROVENANCE / LINEAGE ──────────── link, text reuse, shared quotes, publisher, timing → independent roots
-     │
-EVIDENCE GRAPH (NetworkX) ─────── hubs · typed links · append-only satellites (confidence history)
-     │
-  ┌──┴───────────────────┐
-EVIDENCE JUDGE          CONTRADICTION / TEMPORAL VALIDATOR
-llm: stance category    code: same slot, overlapping vs disjoint valid time
-  └──┬───────────────────┘
-INFERENCE PROPOSER → INFERENCE VERIFIER ── llm proposes, separate llm call judges, code rules R1-R3 gate
-     │
-PROBABILITY ENGINE ────────────── heuristic likelihood ratios, cluster-aware Bayesian odds update
-     │
-UNCERTAINTY ENGINE ────────────── truth posterior · evidence sufficiency · inference validity
-     │
-GAP ENGINE ────────────────────── typed gaps ranked by heuristic expected information value
-     │
-STOP POLICY ── enough? ── no ──► next research round (DISCOVERY)
-     │ yes
-SYNTHESIS ─────────────────────── llm prose, each sentence tagged with claim IDs
-     │
-CITATION VERIFIER → FINAL REVIEW → VERIFIED REPORT
+ │
+QUESTION ANALYZER ──────────── entities, scope, hidden assumptions, dimensions
+ │
+HYPOTHESIS GENERATOR ───────── competing, distinguishable hypotheses + a null hypothesis
+ │
+EVIDENCE REQUIREMENTS ──────── what each hypothesis needs before it can be "supported"
+ │
+ACTIVE RESEARCH GRAPH ◄──────── small working context rebuilt each round from the LONG-TERM EVIDENCE VAULT
+ │
+RESEARCH POLICY ENGINE ─────── every agent bids "utility of acting now"; the top bids run
+ ├── GeneralResearcher        ├── PrimarySourceResearcher   ├── IndependenceResearcher
+ ├── ContradictionResearcher  ├── GapResearcher             ├── ReplicationResearcher
+ └── AdversarialResearcher    └── (Synthesis bid: readiness to stop, shown for transparency)
+ │
+TAVILY SERVICE ─── search (advanced) → rank → SCREENING (include / exclude / uncertain, reasons kept) → extract
+ │
+SOURCE STORE ─── authority · expertise · transparency · editorial · primary · independence · conflict of interest
+ │
+SCIENTIFIC SOURCE RESOLUTION ─ Document → Study → Result; preprint / conference / journal = ONE work
+ │                              study quality (design, n, control, randomization, preregistration, attrition, COI)
+ │                              replication graph (REPLICATES, FAILS_TO_REPLICATE, CORRECTS, RETRACTS …)
+CLAIM EXTRACTION ───────────── atomic claims; excerpts LOCATED in the page by code (never the model's string);
+ │                              reported speech split into attribution + fact
+CLAIM NORMALIZATION ────────── canonical key (numbers, units, currency, fiscal year) → model SAME/DIFFERENT
+ │
+EVIDENCE DAG ───────────────── evidential · logical · provenance · semantic links, never mixed
+ │
+ ├── EVIDENCE JUDGE (stance)   ├── CONTRADICTION / TEMPORAL VALIDATOR   ├── LOGIC RULES R1-R3
+ └──────────────┬──────────────┘
+INFERENCE VERIFIER ── proposer and verifier are separate calls; DELETION TEST finds necessary premises
+ │
+PROBABILITY ENGINE ─────────── heuristic likelihood ratios, provenance-cluster-aware Bayesian odds update
+ │
+UNCERTAINTY ANALYZER ───────── truth posterior · evidence sufficiency · inference validity (never merged)
+ │
+GAP ENGINE ─────────────────── 13 typed gaps ranked by heuristic expected research value
+ │
+STOP POLICY ── research ───► back to the policy engine
+ │ stop
+SYNTHESIS → CITATION VALIDATION → FINAL REVIEW → REPORT
 ```
 
 ### Who does what
 
-| LLMs do (semantic tasks) | Code does (control tasks) |
+| LLMs do (semantic, typed output only) | Code does (control) |
 |---|---|
-| decompose the question, generate hypotheses | own the `ResearchSession` state and the phase machine |
-| write search queries (discovery, gap, adversarial) | dedup URLs, select what to extract, enforce budgets |
-| extract atomic claims with excerpts | **verify every excerpt verbatim** against the retrieved page |
-| classify stance (`supports/contradicts/qualifies/neutral`, plus a strength *category*) | map categories to numbers; count sources and **independent roots** |
-| propose inferences; a separate call verifies them | apply logic rules, accept/reject, create gaps from missing premises |
-| rate a gap's decision impact (low/medium/high) | compute every probability, sufficiency and priority |
-| write the final prose | **delete any sentence** that is not grounded; render citations from the source store only |
+| analyze the question, propose hypotheses and requirements | own `ResearchSession`, the phase machine and the budgets |
+| write queries for the agent that won the bid | compute bids, pick agents, dedup queries and URLs |
+| screen search results, classify document type | keep every screening decision; select what to extract |
+| extract claims and excerpts; review study methods and results | **locate every excerpt in the page**; store unverifiable ones as UNVERIFIED |
+| classify stance, match claims, propose and verify inferences, answer the deletion test | lineage, version resolution, study-quality scores, every probability |
+| rate a gap's decision impact; write the final prose | rank gaps, decide to stop, **delete ungrounded sentences** |
 
-No model is ever asked "how confident are you from 0 to 100". Hidden reasoning (`<think>` blocks) is stripped
-and never stored; the audit trail contains structured decisions only.
+No model is ever asked for a confidence number. Every state-changing output is a Pydantic schema; hidden
+reasoning (`<think>`) is stripped and never stored. Web text is evidence, not instructions, in every prompt.
 
-### Explicit state machine
+### Research objects
 
-`INITIALIZED → QUESTION_ANALYSIS → HYPOTHESIS_GENERATION → DISCOVERY → EVIDENCE_COLLECTION → CLAIM_VERIFICATION →
-ADVERSARIAL_RESEARCH → GAP_ANALYSIS → (DISCOVERY … | SYNTHESIS) → FINAL_REVIEW → COMPLETED`. Transitions are
-validated in `orchestration/state_machine.py`; an illegal transition raises.
+`ResearchQuestion (session) · Hypothesis · EvidenceRequirement · Entity · Source · Document · Study · StudyResult ·
+Evidence · Claim · Inference · NecessityAssessment · ResearchGap · ResearchTask · AgentBid · ResearchEvent`
 
----
+A paper is not evidence. `Document -DESCRIBES-> Study -PRODUCES-> Result -EXTRACTED_AS-> Evidence -SUPPORTS-> Claim`.
+A news article quoting a CEO supports *"the CEO stated X"* strongly and *X* only weakly (directness capped at 0.35).
 
-## The evidence model
+### Evidence DAG (`graph/evidence_graph.py`)
 
-**Data-Vault style graph** (`graph/evidence_graph.py`):
-- *Hubs*: Source, Claim, Evidence, Hypothesis, Requirement, Inference, Gap.
-- *Links*: `SUPPORTS`, `CONTRADICTS`, `QUALIFIES`, `DERIVED_FROM`, `DEPENDS_ON`, `ABOUT`, `TEMPORAL_VERSION_OF`,
-  `PREMISE_OF`, `CONCLUDES`.
-- *Satellites*: time-stamped observations (assessments, posteriors, aliases, verifications). **Confidence history
-  is never overwritten**; each update appends an observation.
+| family | links | used as support? |
+|---|---|---|
+| evidential | Evidence `SUPPORTS / CONTRADICTS / QUALIFIES` Claim | yes |
+| logical | Claim `REQUIRED_FOR / SUPPORTS_HYPOTHESIS / CHALLENGES_HYPOTHESIS` Hypothesis (only after verification) | yes |
+| provenance | `DESCRIBES, PRODUCES, EXTRACTED_AS, EXTRACTED_FROM, CITES, DERIVED_FROM, DUPLICATES`, `REPLICATES, FAILS_TO_REPLICATE, EXTENDS, REANALYZES, CORRECTS, RETRACTS` | shapes weights |
+| semantic | `ABOUT, RELATED_TO` | **never** (tested) |
 
-**Claims never carry URLs.** `Source → Evidence (verbatim excerpt, stance, directness, temporal relevance) → Claim`.
+Data-Vault style: hubs (stable IDs), links, and append-only satellites `SAT_SOURCE_ASSESSMENT`, `SAT_STUDY_ASSESSMENT`,
+`SAT_CLAIM_CONFIDENCE`, `SAT_EVIDENCE_SCORE`, `SAT_HYPOTHESIS_POSTERIOR`, `SAT_SCREENING`. **History is never overwritten**.
+Claims are bitemporal: valid time (true in the world) vs observation time (when we learned it). "CEO = Alice (2025)" and
+"CEO = Bob (2026)" are temporal versions, not a contradiction; undated differing values are not called contradictions.
 
-**Reporting vs fact.** "Reuters: the CEO said revenue grew 200%" creates two claims: *the CEO stated that revenue grew
-200%* (strongly evidenced) and *revenue grew 200%* (evidence capped at directness 0.35).
+### Long-term vault vs active graph
 
-**Bitemporal.** Claims have a *valid time* (when true in the world) and evidence an *observation time*. "CEO = Alice
-(2025)" and "CEO = Bob (2026)" are temporal versions, not a contradiction.
+The **vault** keeps everything: every source, search, screening decision (including exclusions: negative provenance),
+extraction (including unverified ones), rejected inference, confidence update and event. The **active graph**
+(`graph/active.py`) is rebuilt from it after every round: active hypotheses, the ~14 claims that carry the argument,
+their strongest evidence, critical contradictions, top gaps and recent updates. Models only see the active graph.
 
-**Lineage / independence** (`evidence/lineage.py`). The signals are combined noisy-OR: explicit link (0.6), same
-publisher (0.5), attribution to the parent (0.35), 6-word text reuse (up to 0.8), identical quotations (0.3 each)
-and timing (0.1). Pairs at or above 0.5 are dependent. Clusters are connected components, and each cluster has
-one root. The UI and the report show **raw sources, independent roots and clusters** side by side.
+### Source independence and scientific resolution
+
+**Lineage** (`evidence/lineage.py`) uses these signals, combined noisy-OR:
+- explicit link to the parent URL;
+- same publisher (except on multi-publisher hosts such as sec.gov, arXiv or press wires);
+- an explicit report of the parent's announcement;
+- 6-word text reuse;
+- shared quotations (quoted *titles* of cited works don't count);
+- timing.
+
+**Resolver** (`science/resolver.py`) matches versions of one work by arXiv ID, DOI, explicit cross-reference, title
+similarity and author overlap. Two groupings are reported side by side: **URLs → publication families → independent
+evidence roots**.
+
+**Is arXiv trustworthy?** arXiv is a *preprint server*: moderated, **not peer reviewed**. It is classified as
+`preprint` (moderate authority, low editorial score). A preprint earns weight through its *study*: design, sample,
+controls, preregistration, conflicts of interest and replication. If the same work later appears at a conference or in
+a journal, all versions collapse into one research lineage, which counts once and records the peer-reviewed status.
+Peer review alone is not decisive either: a peer-reviewed n=12 study without a control group scores 0.15.
+
+### Dynamic agent selection (`orchestration/policy.py`)
+
+There is no fixed planner → researcher → writer chain. Each round, each capability bids a heuristic utility from the
+active graph, mostly the value of the gaps it is built to close:
+- **PrimarySource:** no primary source, unverified extraction.
+- **Independence:** source dependence.
+- **Contradiction:** conflicting evidence.
+- **Replication:** no or failed replication, missing methods, small samples.
+- **Gap:** missing requirements, weak inferences.
+- **Adversarial:** an unchallenged leading hypothesis.
+
+An agent whose last task found nothing new is discounted ×0.5. The top two bids run. Every bid and its reasons are
+in the trace, e.g. `Next agent: ReplicationResearcher (utility 0.86). Reason: [FAILED_REPLICATION] …`.
 
 ---
 
 ## Probability engine (all heuristic, all in `config.py`)
 
-> All probability values are **heuristic, model-estimated evidence beliefs**, not scientifically calibrated
-> probabilities. No calibration experiments have been run. The UI labels them accordingly.
+> All values are **model-estimated evidence beliefs based on explicit heuristic assumptions**, not calibrated
+> probabilities. Future calibration could use Brier score, ECE and labelled fact-verification datasets.
 
-**Evidence strength** for one evidence item and one claim:
-
-```
-s = p_stance × (0.4 + 0.6·directness) × (0.5 + 0.5·temporal_relevance) × reliability(source, claim) × (0.5 + 0.5·extraction_confidence)
-```
-
-`p_stance` maps the judge's category: explicit 0.95 · strong 0.80 · partial 0.60 · weak 0.40.
-`reliability` is **claim-dependent**. It combines the source's dimensions, penalizes conflict of interest by claim
-category, and applies a fit factor. For example, a filing is strong evidence for official revenue and weak
-evidence for customer satisfaction.
-
-**Heuristic evidence likelihood ratios** by strength bucket:
-
-| bucket | s ≥ | support LR | contradiction LR |
-|---|---|---|---|
-| very strong | 0.70 | 8 | 0.125 |
-| strong | 0.50 | 4 | 0.25 |
-| moderate | 0.30 | 2 | 0.5 |
-| weak | 0.12 | 1.25 | 0.8 |
-| neutral | — | 1 | 1 |
-
-**Update.** `posterior_odds = prior_odds × Π LR`, computed in log space. **Correlated evidence:** evidence is
-grouped by independent root. In each root group, the strongest support and the strongest contradiction count in
-full. Every further item from the same root adds only `DEPENDENT_EVIDENCE_DISCOUNT` (0.15) of its log-LR.
-
-**Three dimensions, never merged:**
-- **Truth posterior**: as above.
-- **Evidence sufficiency**: for claims, `(1 − 0.5^roots) × (0.7 + 0.3·has_primary) × (0.5 + 0.5·max_directness)`.
-  For hypotheses, 0.5 × requirement coverage + 0.5 × the sufficiency of the weakest accepted premise.
-- **Inference validity**: the mean verifier score of the accepted inferences.
-
-**Importance never touches truth.** Importance only drives research priority:
+**Evidence strength.** Dimensions are kept separate and shown in the UI. Only their product picks a likelihood ratio:
 
 ```
-priority (heuristic expected information value) = importance × (1 − |2P − 1|) × decision_impact × searchability
+effective source quality = reliability(source, claim category) × (0.4 + 0.6 · study quality) × replication factor × result quality
+strength = p_stance × (0.4 + 0.6 · directness) × (0.5 + 0.5 · temporal relevance) × effective source quality × (0.5 + 0.5 · extraction confidence)
 ```
 
-A test asserts that changing a claim's importance leaves its posterior unchanged.
+| bucket (strength ≥) | 0.70 very strong | 0.50 strong | 0.30 moderate | 0.12 weak | below: neutral |
+|---|---|---|---|---|---|
+| support LR | 8 | 4 | 2 | 1.25 | 1 |
+| contradiction LR | 0.125 | 0.25 | 0.5 | 0.8 | 1 |
 
-**Inference verification** (`verification/inference_verifier.py`). Verdict valid 0.9 · plausible 0.65 · weak 0.35 ·
-invalid 0.05. An inference is accepted at ≥ 0.6, plus these code rules:
-- **R1:** every premise must be established (posterior ≥ 0.55).
-- **R2:** premises that rest only on one *interested* root (self-reported) are capped at "weak".
-- **R3:** a causal or abductive inference with confounders not ruled out needs evidence.
+**Bayesian update:**
+- `posterior odds = prior odds × Π LR`, computed in log space.
+- **Correlated evidence:** within one independent root, the strongest support and the strongest contradiction count
+  in full, and each derivative adds 15% of its log-LR (`DEPENDENT_EVIDENCE_DISCOUNT`).
+- Across roots, contributions combine normally.
 
-Missing premises and confounders become `WEAK_INFERENCE` gaps, and those gaps drive the next searches.
+**Replication factor:** ×1.2 per replication, ×0.6 per failed replication, ×0.8 per correction, and 0 if retracted.
 
-**Gap types:** NO_PRIMARY_SOURCE, NO_INDEPENDENT_SOURCE, CONTRADICTORY_EVIDENCE, TEMPORAL_CONFLICT,
-MISSING_REQUIRED_DIMENSION, WEAK_INFERENCE, SOURCE_DEPENDENCE, OUTDATED_EVIDENCE.
+**Credibility is claim-dependent.** A filing is strong evidence for reported revenue and weak evidence for customer
+satisfaction. SEC filings are typed `company_filing`: legally attested, but self-reported.
 
-**Stop policy** (`orchestration/stop_policy.py`), checked in this order:
-1. **Budget:** searches, extractions, model calls or iterations exhausted.
-2. **Success:** every critical claim has sufficiency ≥ 0.70 and no high-importance contradiction is open.
-3. **Convergence:** beliefs moved less than 0.03 for 2 iterations.
-4. **Diminishing returns:** a round produced no new independent root.
-5. **Unresolvable:** only gaps already researched repeatedly without result remain.
+**Four quantities, never merged:**
+- **Truth posterior:** from the Bayesian update above.
+- **Evidence sufficiency:** for claims, `(1 − 0.5^roots) × (0.7 + 0.3 · primary) × (0.5 + 0.5 · directness)`. For
+  hypotheses, half requirement coverage and half the weakest accepted premise.
+- **Inference validity:** from the verifier's verdict.
+- **Importance:** research priority only. A test asserts it never touches truth.
 
-Final statuses: `SUPPORTED · LIKELY · CONTESTED · INSUFFICIENT_EVIDENCE · REFUTED · UNRESOLVABLE_WITH_PUBLIC_DATA`.
-"Insufficient evidence" is a valid result, not a failure.
+**Research priority (heuristic expected research value)** = importance × uncertainty × decision impact × searchability,
+where uncertainty = max(1 − |2P − 1|, 1 − sufficiency). A confident claim resting on one study is still uncertain.
 
-**Citation guarantee.** Every report sentence must cite claim IDs. Every claim needs non-neutral evidence whose
-excerpt is found verbatim in a stored source. Every number in the sentence must appear in the referenced claims,
-and free-form URLs are rejected. Failing sentences are removed and logged as `STATEMENT_REJECTED`. Citations are
-rendered only from the source repository.
+**Inference verification.** The proposer and the verifier are separate calls. Verdicts map to scores: valid 0.9,
+plausible 0.65, weak 0.35, invalid 0.05, and an inference is accepted at ≥ 0.6. Code rules apply on top:
+- **R1:** premises must be established (posterior ≥ 0.55).
+- **R2:** premises resting only on one *interested* root are capped at weak.
+- **R3:** causal or abductive inferences with confounders still open need evidence.
 
-**Prompt-injection boundary.** Every prompt states that retrieved content is evidence, not instructions. Retrieved
-text can't change prompts, tools, destinations or files. The synthetic corpus contains an injection line, and a
-benchmark check confirms it had no effect.
+Missing premises and confounders become `WEAK_INFERENCE` gaps.
+
+**Deletion test.** For the leading hypothesis, each accepted premise is removed in turn, and the model judges whether
+the remaining premises still justify the conclusion. It is recorded as a *model-based necessity assessment*.
+Necessary premises get `REQUIRED_FOR` links and research priority.
+
+**Gap types:** NO_PRIMARY_SOURCE, NO_INDEPENDENT_SOURCE, SOURCE_DEPENDENCE, CONTRADICTORY_EVIDENCE, TEMPORAL_CONFLICT,
+WEAK_INFERENCE, MISSING_REQUIRED_DIMENSION, OUTDATED_EVIDENCE, NO_REPLICATION, FAILED_REPLICATION,
+MISSING_METHOD_INFORMATION, INSUFFICIENT_SAMPLE, UNVERIFIED_EXTRACTION.
+
+**Stop policy:** budget → evidence sufficient with no critical contradiction → posterior convergence (< 0.03 for 2
+rounds) → diminishing returns (no new independent root) → only unresolvable gaps left → no agent bid above threshold.
+Final states: `SUPPORTED · LIKELY · CONTESTED · INSUFFICIENT_EVIDENCE · REFUTED · UNRESOLVABLE_WITH_PUBLIC_DATA`.
+"We don't know" is a valid answer.
+
+**Citation guarantee:** final statement → claim IDs → evidence IDs → exact excerpt → source. Before rendering, the
+verifier requires:
+- verified, non-neutral evidence whose excerpt occurs verbatim in a stored page;
+- every number in the sentence to be present in that evidence;
+- no free-form URL.
+
+Failing sentences are removed and logged; the system never "fixes" them. A final review re-checks the chain.
 
 ---
 
-## The reproducible example run (synthetic)
+## What the synthetic scenarios show (`examples/`)
 
-`python app.py --demo` regenerates [examples/demo_report.md](examples/demo_report.md) and
-[examples/demo_trace.txt](examples/demo_trace.txt). This is the story the run tells, and every step is a real
-pipeline decision:
+**Business** ([report](examples/business_report.md), [trace](examples/business_trace.txt)):
+1. Hypotheses and requirements come first; sources are screened before anything is extracted.
+2. Five URLs support "revenue grew 70%". Four derive from one press release, so there are **2 independent roots**,
+   counting the registry filing.
+3. The verifier rejects "70% growth ⇒ PMF" (confounders: discounting, acquisitions). "95% retention ⇒ PMF" is
+   rejected by R2, because only the company says it.
+4. The policy engine picks an adversarial researcher and a gap researcher. They find churn reviews and an
+   independent 81% retention benchmark, and the 95% claim falls from 0.71 to 0.45 (`contested`).
+5. The 2021 customer count is a temporal version, not a contradiction. A prompt-injection line on a review page has
+   no effect.
+6. Final status: **LIKELY**: "growth is real but retention is weak". Two invented draft sentences are removed by the
+   citation verifier.
 
-1. Five hypotheses are created (strong product-market fit, discount-driven, acquisition-driven, real growth with
-   weak retention, insufficient information), each with evidence requirements.
-2. Discovery search finds a press release, three outlets that copy it, a company-registry filing and a 2021 profile.
-3. **Lineage:** the three outlets are detected as derived from the press release (p = 0.82–0.97). The 95%
-   retention claim drops from **0.71 to 0.67**, and its independent roots go from 2 to 1.
-4. **Temporal validator:** "900 customers (2021)" vs "4,800 customers (2025)" is a temporal version, not a contradiction.
-5. **Inference rejected:** "70% revenue growth ⇒ strong product-market fit" is judged weak. The confounders are
-   discounting and acquisitions, and the missing premise is independent retention data, which opens a
-   `WEAK_INFERENCE` gap. "95% retention ⇒ product-market fit" is rejected by rule R2, because only the company says so.
-6. **Adversarial search** against the leading hypothesis finds customer reviews about churn after a 50% discount ended.
-7. **Gap-driven search** ("searching because of G_… [WEAK_INFERENCE]") finds an independent benchmark with **81%
-   logo retention**. The 95% claim falls from **0.62 to 0.45** and becomes `contested`. "Strong product-market fit"
-   falls from 0.35 to 0.12.
-8. The stop policy ends the run on **DIMINISHING_RETURNS**. Two draft sentences are removed by the citation
-   verifier: one has no claim IDs, and one invents "85%".
-9. Final status: **LIKELY**. The leading hypothesis is "growth is real but retention is weak" (model-estimated
-   posterior 0.81, sufficiency 0.59). The report lists research debt and what would change the conclusion.
+**Science** ([report](examples/science_report.md), [trace](examples/science_trace.txt)):
+1. An arXiv-style preprint, a conference paper and a journal article are resolved as **one work** (same arXiv ID plus
+   explicit cross-reference). A campus news story and a blog derive from the preprint: **6 URLs → 4 publication
+   families → 2 independent roots**.
+2. The original RCT (n=412, authors are co-founders) lifts "material effect" from 0.35 to 0.68. A peer-reviewed pilot
+   (n=12, no control, high attrition) scores quality 0.15, and its inference is rejected.
+3. The policy engine picks gap and adversarial researchers. They find a preregistered multi-site replication
+   (`REPLICATES`, 0.12 SD) and a preregistered direct replication with no significant effect (`FAILS_TO_REPLICATE`,
+   0.02 SD).
+4. "Material effect" falls to 0.01. "Small positive effect" leads at 0.85, and the final status is **LIKELY**.
 
-## Evaluation
+## Hackathon evaluation (`python -m evidence_research.evaluation.benchmark`)
 
-`python -m evidence_research.evaluation.benchmark` runs the synthetic scenario, which contains all five required
-case types. It checks the expected behaviour for each one and reports metrics and a baseline comparison. Current output:
+This is a small, synthetic evaluation; no statistical claims are made. All 23 behaviour checks pass: 14 for the
+business success scenario (section 42) and 9 for the scientific scenario (section 43). Lineage accuracy against the
+constructed source families is 1.0 in both.
 
-| check | result |
+Comparison with the naive baseline (Tavily → one LLM summary → cite everything) on the same corpora:
+
+| | business: baseline | business: system | science: baseline | science: system |
+|---|---|---|---|---|
+| cited "sources" | 6 | 8 | 6 | 8 |
+| actual independent roots | 3 | 5 | 3 | 4 |
+| contradictions discovered | 0 | 2 | 0 | 3 |
+| research gaps discovered | 0 | 13 | 0 | 18 |
+| unsupported statements removed | 0 | 2 | 0 | 1 |
+| abstains where evidence is missing | no | yes | no | yes |
+
+The baseline repeats the contradicted 95% retention figure, and "confirmed by 6 independent sources" for an
+unreplicated trial. The Brier score on a handful of claims that are true *by construction* (0.11 in both scenarios) is
+a sanity check, not calibration. `--live` runs [examples/sample_questions.md](examples/sample_questions.md) against the
+real APIs, producing metrics only.
+
+## UI (`streamlit run ui/streamlit_app.py`)
+
+The header shows the evidence status, the truth posterior and sufficiency of the main surviving hypothesis, and
+independent roots (with URLs and families). A live trace streams while the run executes.
+
+| tab | contents |
 |---|---|
-| agreeing sources: growth backed by ≥ 2 independent roots | ✅ |
-| conflicting sources: retention claim contested, posterior < 0.5 | ✅ |
-| derived reporting: press copies collapse into one root | ✅ |
-| outdated evidence: 2021 count is a temporal version, not a contradiction | ✅ |
-| insufficient evidence: acquisition hypothesis stays insufficient with an open gap | ✅ |
-| adversarial evidence lowered a posterior | ✅ |
-| prompt injection had no effect | ✅ |
-
-Metrics:
-- citation validity 1.0
-- unsupported fact claims 0
-- requirement coverage 0.78
-- 8 raw sources → 5 independent roots
-- 3 lineage edges, 2 contradictions, 1 temporal version, 3 rejected inferences
-- 27 model calls
-
-On the same corpus, the **naive baseline** cites 6 "sources" that are only 3 independent roots, and it repeats the
-contradicted 95% retention figure. The Brier score on 5 labelled claims is 0.108. The labels are true *by
-construction* of the fictional world, so this is a sanity check, not a calibration result.
-
-`--live` runs the five questions in [examples/sample_questions.md](examples/sample_questions.md) (agree / conflict /
-derived / outdated / insufficient) against Token Factory + Tavily and reports the same metrics. There is no ground
-truth for these, so they produce metrics only.
-
-## Streamlit UI
-
-`streamlit run ui/streamlit_app.py`:
-- **Header:** question, depth (Fast / Standard / Deep), live or synthetic mode, and a live trace while the run executes.
-- **Headline metrics:** evidence status, truth confidence, evidence sufficiency, independent roots vs raw
-  sources, and unresolved critical gaps.
-
-The six tabs:
-- **Overview:** verified conclusion, sentences removed by the verifier, surviving hypotheses, the biggest
-  contradiction with its posterior history, research debt, and what would change our mind.
-- **Hypotheses:** prior, posterior, sufficiency and inference validity, a posterior-history chart, and the
-  accepted and rejected inferences.
-- **Claims & Evidence:** per claim, the posterior, sufficiency, roots, raw sources, SUPPORT, AGAINST and MISSING.
-- **Research Trace:** a filterable chronological event log.
-- **Evidence Graph:** a focused hypothesis → inference → claim → evidence → source view (Graphviz), with filters.
-- **Sources:** type, primary status, conflict of interest, origin (discovery / gap / adversarial), root and clusters.
-
-Runs are persisted to SQLite (`data/research.sqlite`): sessions, every event as it happens, and the graph and
-report snapshot.
+| Overview | conclusion with its citation chain, main and counter-hypothesis, biggest contradiction, research debt, why research stopped |
+| Hypotheses | prior and posterior history, deletion-test results, accepted and rejected inferences |
+| Claims & Evidence | per claim: posterior, sufficiency, inference validity, raw sources vs roots, support, contradiction, missing; every evidence line with its quality dimensions |
+| Scientific Studies | versions, design, n, peer review, quality, replication graph, verified results, methodological notes |
+| Source Lineage | URLs → families → independent roots, every dependency with its signals |
+| Research Trace | filterable auditable events, plus agent bids per round |
+| Evidence DAG | focused hypothesis → inference → claim → evidence → source / study view |
+| Sources | screening decision and reasons (including exclusions), type, independence, conflict of interest, root |
 
 ## Docker
 
 ```bash
 docker build -t evidence-research .
-docker run --rm -p 8501:8501 --env-file .env evidence-research            # UI on http://localhost:8501
-docker run --rm evidence-research pytest -q                               # tests, no keys
-docker run --rm evidence-research python app.py --demo                    # synthetic run
+docker run --rm -p 8501:8501 --env-file .env evidence-research          # UI on :8501
+docker run --rm -e EVIDENCE_NO_DOTENV=1 evidence-research pytest -q     # tests, no keys
+docker run --rm evidence-research python app.py --demo science
 ```
 
 ## Layout
 
 ```
-app.py                         CLI (live, --demo, --baseline, --check)
-ui/streamlit_app.py            demo UI
+app.py                       CLI: live, --demo business|science, --baseline, --check
+ui/streamlit_app.py          8-tab demo UI
 src/evidence_research/
-  config.py  models.py  runtime.py
-  orchestration/   orchestrator, state_machine, budget, stop_policy   (scheduling: asyncio.gather in retrieval)
-  llm/             gateway (AsyncOpenAI → Token Factory, roles, retries, structured output), prompts
-  retrieval/       tavily_client, service (search→rank→dedup→select→extract), source_ranker, url_normalizer
-  research/        analysis (question + hypotheses), query_planner (discovery/gap/adversarial), gap_analyzer
-  evidence/        extractor (ingestion pipeline), claim_normalizer, source_classifier, lineage, temporal
-  graph/           evidence_graph (NetworkX), repository (SQLite), queries (UI views)
-  verification/    entailment (stance judge), inference_verifier, citation_verifier, contradiction
-  probability/     evidence_score, bayesian, uncertainty, engine (recompute from graph)
-  synthesis/       report, serializer
-  observability/   events (audit trail)
-  demo/            scenario (SYNTHETIC: scripted model + fake corpus)
-  evaluation/      baseline, benchmark
-tests/                         52 offline tests
-examples/                      sample questions, reproducible synthetic run
+  config.py models.py runtime.py
+  orchestration/  orchestrator, policy (agent bids), state_machine, budget (synthesis reserve), stop_policy
+  llm/            gateway (AsyncOpenAI → Token Factory, roles, structured output, repair), prompts (one per task/agent)
+  retrieval/      tavily_client, service, screening, source_ranker, url_normalizer
+  research/       analysis (question + hypotheses), query_planner (per agent), gap_analyzer
+  evidence/       extractor (ingestion), excerpts (locate/align, passage selection), claim_normalizer,
+                  source_classifier, lineage, temporal
+  science/        resolver (versions of one work), quality (study + replication), reviewer (Document/Study/Result)
+  graph/          evidence_graph (vault, NetworkX), active (working context), repository (SQLite), queries (UI)
+  verification/   entailment (stance judge), inference_verifier, necessity (deletion test), contradiction, citation_verifier
+  probability/    evidence_score, bayesian, uncertainty, engine (recompute + evidence-quality breakdown)
+  synthesis/      report, serializer
+  observability/  events (audit trail)
+  demo/           base, business, science (SYNTHETIC)
+  evaluation/     baseline, benchmark
+tests/            81 offline tests
+examples/         sample questions, synthetic reports and traces, live run notes
 ```
-
-Module boundaries follow the brief. A few files were merged where a separate file would have been empty
-ceremony: the question analyzer and hypothesis generator are in `research/analysis.py`; the researcher and
-adversarial researcher are the query planner plus the shared retrieval and ingestion path; the scheduler is
-`asyncio.gather` with semaphores; trace logic is in `events.py`.
 
 ## Status and limitations
 
-- **Offline:** all 52 tests pass, the synthetic demo, benchmark and UI run, and the Token Factory and Tavily
-  adapters are tested against mocked SDK clients.
-- **Not yet verified live:** no API keys were available while this was built. Run `python app.py --check` first;
-  it calls each API once. Real models may phrase claims differently from the scripted ones, and the matcher, judge
-  and verifier prompts are the most likely places to need tuning.
-- **Heuristic numbers:** all priors, likelihood ratios and source assessments are hand-set heuristics, not
-  calibrated or audited.
-- **Lineage limits:** detection is text- and metadata-based. It misses paraphrased derivation and can't see
-  syndication deals.
-- **Not built (stretch):** perspective decomposition, a dedicated entailment model, calibration, cross-session
-  source reputation, and monitoring re-runs.
+- **Verified live** on 2026-10-18 with MiniMax-M3 (fast role) and `reflection/beam` (reasoning role) on a business and
+  a scientific question; reports, traces and what the live runs changed are in [examples/live_runs.md](examples/live_runs.md).
+  Real models phrase things differently from the scripted ones. The matcher, judge and verifier prompts are where
+  tuning pays off.
+- **Heuristic numbers:** likelihood ratios, source priors, study-design priors and agent utilities are hand-set,
+  documented heuristics, not calibrated or audited.
+- **Lineage is text- and metadata-based.** It misses paraphrased derivation and syndication deals, and a company's
+  own documents (10-K, press releases) are correctly *one* interested root, which can make independent evidence look scarce.
+- **Not built (stretch):** perspective decomposition, a dedicated NLI model, calibration, cross-session source
+  reputation, and monitoring re-runs.

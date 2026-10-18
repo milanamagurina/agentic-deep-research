@@ -16,7 +16,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from ..config import Heuristics
-from ..graph.evidence_graph import EvidenceGraph
+from ..graph.evidence_graph import SAT_INFERENCE_VERIFICATION, EvidenceGraph
 from ..llm.gateway import LLMGateway, ModelRole
 from ..llm.prompts import INFERENCE_PROPOSER, INFERENCE_VERIFIER
 from ..models import Inference, InferenceProposalOutput, InferenceVerdictOutput, stable_id
@@ -39,9 +39,13 @@ def _claim_view(graph: EvidenceGraph, claim_id: str) -> dict:
             "independent_roots": len(graph.roots_for_claim(c.id)), "status": c.status.value}
 
 
-async def propose_and_verify(llm: LLMGateway, graph: EvidenceGraph, events: EventLog, h: Heuristics, question: str) -> VerificationRound:
+async def propose_and_verify(llm: LLMGateway, graph: EvidenceGraph, events: EventLog, h: Heuristics, question: str,
+                             focus: list[str] | None = None) -> VerificationRound:
+    """``focus``: claim IDs from the Active Research Graph; the model sees only those."""
     rnd = VerificationRound()
-    evidenced = [c.id for c in graph.claims.values() if graph.evidence_for(c.id)]
+    evidenced = [c.id for c in graph.claims.values() if c.kind == "fact" and graph.evidence_for(c.id)]
+    if focus:
+        evidenced = [cid for cid in focus if cid in set(evidenced)] or evidenced
     hyps = [x for x in graph.hypotheses.values() if not x.is_null_hypothesis]
     if not evidenced or not hyps:
         return rnd
@@ -86,7 +90,7 @@ async def propose_and_verify(llm: LLMGateway, graph: EvidenceGraph, events: Even
     for inf in fresh:
         v = by_id.get(inf.id)
         if v is None:
-            inf.status, inf.failure_reason = "needs_evidence", "verifier returned no verdict"
+            inf.status, inf.failure_reasons = "needs_evidence", ["verifier returned no verdict"]
             rnd.rejected.append(inf)
             continue
         score = h.inference_scores[v.verdict]
@@ -110,14 +114,15 @@ async def propose_and_verify(llm: LLMGateway, graph: EvidenceGraph, events: Even
             status = "accepted" if score >= h.inference_accept_threshold else "rejected"
 
         inf.verifier_score, inf.status = score, status
-        inf.failure_reason = None if status == "accepted" else "; ".join(reasons)
-        graph.observe(inf.id, "verification", {"verdict": v.verdict, "score": score, "status": status}, "; ".join(reasons))
+        inf.failure_reasons = [] if status == "accepted" else reasons
+        graph.observe(inf.id, SAT_INFERENCE_VERIFICATION, {"verdict": v.verdict, "score": score, "status": status}, "; ".join(reasons))
         if status == "accepted":
+            graph.accept_inference(inf)
             rnd.accepted.append(inf)
             events.emit(EventType.INFERENCE_ACCEPTED, f"{inf.id} accepted ({v.verdict}, score {score:.2f})", inference_id=inf.id)
         else:
             rnd.rejected.append(inf)
             extra = f"; missing: {', '.join(inf.missing_premises)}" if inf.missing_premises else ""
-            events.emit(EventType.INFERENCE_REJECTED, f"{inf.id} {status} ({v.verdict}): {inf.failure_reason}{extra}",
+            events.emit(EventType.INFERENCE_REJECTED, f"{inf.id} {status} ({v.verdict}): {'; '.join(inf.failure_reasons)}{extra}",
                         inference_id=inf.id, confounders=inf.confounders, missing=inf.missing_premises)
     return rnd

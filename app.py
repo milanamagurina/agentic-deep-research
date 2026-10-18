@@ -1,7 +1,7 @@
 """CLI entrypoint.
 
     python app.py "Does Company X have strong product-market fit?" --depth standard
-    python app.py --demo                       # offline synthetic run, no API keys
+    python app.py --demo [business|science]    # offline synthetic run, no API keys
     python app.py "question" --baseline        # simple search -> one-shot synthesis, for comparison
     python app.py --check                      # Token Factory + Tavily connectivity checks
 
@@ -28,7 +28,8 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description="Probabilistic evidence deep research (Nebius Token Factory + Tavily)")
     p.add_argument("question", nargs="?", help="research question (omit with --demo)")
     p.add_argument("--depth", choices=[d.value for d in Depth], default="standard")
-    p.add_argument("--demo", action="store_true", help="offline SYNTHETIC scenario: scripted model + fictional corpus")
+    p.add_argument("--demo", nargs="?", const="business", choices=["business", "science"],
+                   help="offline SYNTHETIC scenario (scripted model + fictional corpus): business (default) or science")
     p.add_argument("--baseline", action="store_true", help="naive baseline: Tavily search + one LLM synthesis")
     p.add_argument("--check", action="store_true", help="verify Token Factory and Tavily connectivity")
     p.add_argument("--json", type=Path, help="also write the report as JSON to this path")
@@ -47,10 +48,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.check:
         return _check(settings)
 
-    from evidence_research.demo.scenario import QUESTION
-
-    question = args.question or (QUESTION if args.demo else None)
-    if not question:
+    question = args.question
+    if not question and not args.demo:
         p.error("a question is required (or use --demo)")
 
     try:

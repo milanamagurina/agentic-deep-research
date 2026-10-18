@@ -16,7 +16,11 @@ from ..retrieval.url_normalizer import registrable_domain
 _LISTS: dict[str, tuple[str, ...]] = {
     "regulator": ("sec.gov", "europa.eu", "companieshouse.gov.uk", "bundesanzeiger.de", "fca.org.uk", "esma.europa.eu"),
     "official_statistics": ("eurostat", "ons.gov.uk", "destatis.de", "census.gov", "bls.gov", "oecd.org", "worldbank.org", "iea.org"),
-    "academic": ("arxiv.org", "doi.org", "nature.com", "science.org", "sciencedirect.com", "springer.com", "nih.gov", "acm.org", "ieee.org", "ssrn.com"),
+    # Preprint servers: moderated, NOT peer reviewed. The study itself must earn trust (science/quality.py).
+    "preprint": ("arxiv.org", "biorxiv.org", "medrxiv.org", "ssrn.com", "osf.io", "researchsquare.com", "preprints.org", "chemrxiv.org"),
+    "conference": ("openreview.net", "aclanthology.org", "proceedings.mlr.press", "neurips.cc", "papers.nips.cc", "ijcai.org", "aaai.org"),
+    "academic": ("doi.org", "nature.com", "science.org", "sciencedirect.com", "springer.com", "nih.gov", "acm.org", "ieee.org",
+                 "wiley.com", "tandfonline.com", "plos.org", "bmj.com", "thelancet.com", "nejm.org", "jamanetwork.com", "cell.com"),
     "major_news": ("reuters.com", "bloomberg.com", "ft.com", "wsj.com", "nytimes.com", "economist.com", "theguardian.com", "bbc.co.uk", "bbc.com", "apnews.com", "cnbc.com", "handelsblatt.com"),
     "trade_press": ("techcrunch.com", "theverge.com", "sifted.eu", "venturebeat.com", "wired.com", "arstechnica.com"),
     "press_wire": ("prnewswire.com", "businesswire.com", "globenewswire.com", "einpresswire.com", "accesswire.com", "newswire.ca"),
@@ -28,6 +32,7 @@ _LISTS: dict[str, tuple[str, ...]] = {
 _KEYWORDS: list[tuple[str, str]] = [
     ("registry", "regulator"), ("filings", "regulator"), ("regulator", "regulator"),
     ("statistics", "official_statistics"), ("stats", "official_statistics"),
+    ("rxiv", "preprint"), ("preprint", "preprint"), ("proceedings", "conference"),
     ("university", "academic"), ("journal-of", "academic"),
     ("wire", "press_wire"), ("press-release", "press_wire"),
     ("reviews", "review_site"), ("blog", "blog"), ("forum", "social"),
@@ -40,7 +45,10 @@ _DIMENSIONS: dict[str, tuple[float, float, float, float, float, float]] = {
     "regulator":           (0.90, 0.70, 0.80, 0.80, 0.90, 0.10),
     "official_statistics": (0.90, 0.80, 0.90, 0.80, 0.90, 0.05),
     "academic":            (0.80, 0.90, 0.80, 0.80, 0.80, 0.15),
+    "conference":          (0.70, 0.85, 0.75, 0.65, 0.80, 0.15),
+    "preprint":            (0.55, 0.80, 0.70, 0.35, 0.80, 0.20),
     "company":             (0.50, 0.70, 0.40, 0.50, 0.90, 0.80),
+    "company_filing":      (0.80, 0.70, 0.80, 0.70, 0.95, 0.50),
     "press_wire":          (0.30, 0.50, 0.30, 0.20, 0.60, 0.85),
     "major_news":          (0.75, 0.60, 0.60, 0.80, 0.30, 0.20),
     "trade_press":         (0.55, 0.60, 0.50, 0.55, 0.30, 0.30),
@@ -57,27 +65,36 @@ _COI_WEIGHT = {"official_financial": 0.25, "self_reported_metric": 0.5, "custome
 # Category fit: a source type can be especially good or bad evidence for a kind of claim.
 _FIT = {("regulator", "official_financial"): 1.15, ("regulator", "customer_experience"): 0.5,
         ("review_site", "customer_experience"): 1.3, ("review_site", "official_financial"): 0.3,
-        ("company", "customer_experience"): 0.6, ("academic", "technical"): 1.2,
+        ("company", "customer_experience"): 0.6, ("academic", "technical"): 1.2, ("conference", "technical"): 1.1,
         ("official_statistics", "market"): 1.2, ("social", "official_financial"): 0.4}
 
 PRIMARY_THRESHOLD = 0.7
 
 
+_LEGAL = {"inc", "corp", "corporation", "gmbh", "ag", "ltd", "limited", "plc", "llc", "sa", "group", "holdings", "company"}
+
+
 def _entity_tokens(entities: list[str]) -> list[str]:
+    """Full joined entity names only: "Acme Fleet" -> "acmefleet". A single generic word ("fleet") is not enough
+    to call fleet-reviews.example the company's own site."""
     toks = []
     for e in entities:
-        for t in re.findall(r"[a-z0-9]+", e.lower()):
-            if len(t) >= 4 and t not in {"company", "group", "holdings", "corp", "limited", "inc"}:
-                toks.append(t)
-        joined = re.sub(r"[^a-z0-9]", "", e.lower())
+        words = [w for w in re.findall(r"[a-z0-9]+", e.lower()) if w not in _LEGAL]
+        joined = "".join(words)
         if len(joined) >= 4:
             toks.append(joined)
     return toks
 
 
+# Filings hosted by a regulator are written by the company: legally attested, but self-reported.
+_FILING_PATHS = ("sec.gov/archives/edgar", "sec.gov/cgi-bin/browse-edgar", "companieshouse.gov.uk/company", "find-and-update.company-information")
+
+
 def classify_domain(url: str, key_entities: list[str]) -> str:
     host = (urlsplit(url).hostname or "").lower().removeprefix("www.")
     full = host + urlsplit(url).path.lower()
+    if any(full.startswith(p) or p in full for p in _FILING_PATHS):
+        return "company_filing"
     for stype, needles in _LISTS.items():
         if any(host == n or host.endswith("." + n) or full.startswith(n) for n in needles):
             return stype
@@ -94,8 +111,23 @@ def classify_domain(url: str, key_entities: list[str]) -> str:
     return "other"
 
 
-def assess(source: Source, key_entities: list[str]) -> SourceAssessment:
+# Screening's document type can refine a domain classification (e.g. a paper on a university site).
+DOCTYPE_TO_SOURCE_TYPE = {
+    "preprint": "preprint", "conference_paper": "conference", "peer_reviewed_article": "academic", "systematic_review": "academic",
+    "meta_analysis": "academic", "randomized_controlled_trial": "academic", "prospective_cohort": "academic",
+    "observational_study": "academic", "case_control_study": "academic", "retrospective_study": "academic", "case_report": "academic",
+    "government_publication": "regulator", "regulator_publication": "regulator", "official_statistics": "official_statistics",
+    "company_filing": "company_filing", "company_press_release": "company", "company_whitepaper": "company", "industry_report": "analyst",
+    "news_article": "trade_press", "blog": "blog", "social_media": "social", "forum": "social", "review_site": "review_site",
+}
+_OVERRIDING_DOCTYPES = {"preprint", "conference_paper"}
+
+
+def assess(source: Source, key_entities: list[str], document_type: str | None = None) -> SourceAssessment:
     stype = classify_domain(source.url, key_entities)
+    mapped = DOCTYPE_TO_SOURCE_TYPE.get(document_type or "")
+    if mapped and (stype == "other" or document_type in _OVERRIDING_DOCTYPES):
+        stype = mapped
     a, e, t, q, p, c = _DIMENSIONS[stype]
     return SourceAssessment(
         source_id=source.id, source_type=stype, authority=a, expertise=e, transparency=t,

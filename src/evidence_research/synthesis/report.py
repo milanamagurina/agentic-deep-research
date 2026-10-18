@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from ..config import Settings
 from ..evidence.temporal import describe
+from ..graph.active import ActiveResearchGraph
 from ..graph.evidence_graph import EvidenceGraph
 from ..llm.gateway import LLMError, LLMGateway, ModelRole
 from ..llm.prompts import SYNTHESIZER
@@ -16,7 +17,7 @@ from ..models import EvidenceStatus, QuestionAnalysis, ResearchSession, Synthesi
 from ..observability.events import EventLog, EventType
 from ..probability.engine import BeliefState
 from ..probability.uncertainty import overall_status
-from ..verification.citation_verifier import CitationVerifier
+from ..verification.citation_verifier import CitationVerifier, strip_ids
 
 
 class Citation(BaseModel):
@@ -34,9 +35,11 @@ class EvidenceLine(BaseModel):
     evidence_id: str
     stance: str
     excerpt: str
+    location: str | None
     citation: int
     directness: float
     reported_speech: bool
+    quality: dict = Field(default_factory=dict)  # separate dimensions (section 28)
 
 
 class ClaimView(BaseModel):
@@ -72,7 +75,22 @@ class HypothesisView(BaseModel):
 class Statement(BaseModel):
     text: str
     claim_ids: list[str]
+    evidence_ids: list[str] = Field(default_factory=list)
     citations: list[int] = Field(default_factory=list)
+
+
+class StudyView(BaseModel):
+    id: str
+    title: str
+    versions: list[dict]
+    design: str | None
+    sample_size: int | None
+    peer_reviewed: bool | None
+    preregistered: bool | None
+    quality: float
+    replication: list[str]
+    warnings: list[str]
+    results: list[dict]
 
 
 class GapView(BaseModel):
@@ -92,13 +110,18 @@ class Report(BaseModel):
     stop_reason: str | None
     stop_explanation: str | None
     leading_hypothesis: str | None
+    counter_hypothesis: str | None
     conclusion: list[Statement]
     rejected_statements: list[dict]
     hypotheses: list[HypothesisView]
     critical_claims: list[ClaimView]
     raw_source_count: int
+    publication_family_count: int
     independent_root_count: int
     clusters: list[dict]
+    studies: list[StudyView]
+    screened_out: list[dict]
+    why_stopped: list[str]
     gaps: list[GapView]
     what_would_change: list[str]
     method_limitations: list[str]
@@ -111,7 +134,8 @@ def _debt(value: float) -> str:
 
 
 async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: ResearchSession, analysis: QuestionAnalysis,
-                       beliefs: BeliefState, critical_ids: set[str], settings: Settings, events: EventLog) -> Report:
+                       beliefs: BeliefState, critical_ids: set[str], settings: Settings, events: EventLog,
+                       active: ActiveResearchGraph | None = None) -> Report:
     verifier = CitationVerifier(graph)
     citations: dict[str, Citation] = {}
 
@@ -138,10 +162,12 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
     for c in ranked_claims[:12]:
         b = beliefs.claims.get(c.id)
         lines = {"supports": [], "contradicts": []}
-        for e in sorted(graph.evidence_for(c.id), key=lambda e: -e.directness):
+        for e in sorted(graph.evidence_for(c.id), key=lambda e: -(graph.evidence_quality[e.id].strength if e.id in graph.evidence_quality else 0)):
             if e.stance in lines:
-                lines[e.stance].append(EvidenceLine(evidence_id=e.id, stance=e.stance, excerpt=e.exact_excerpt, citation=cite(e.source_id),
-                                                    directness=e.directness, reported_speech=e.reported_speech))
+                q = graph.evidence_quality.get(e.id)
+                lines[e.stance].append(EvidenceLine(evidence_id=e.id, stance=e.stance, excerpt=e.exact_excerpt, location=e.location,
+                                                    citation=cite(e.source_id), directness=e.directness, reported_speech=e.reported_speech,
+                                                    quality=q.model_dump(exclude={"evidence_id"}) if q else {}))
         claim_views.append(ClaimView(
             id=c.id, text=c.natural_language, kind=c.kind, period=describe(c.temporal_scope), posterior=c.truth_probability,
             sufficiency=c.evidence_sufficiency, status=c.status.value, raw_sources=b.raw_sources if b else 0,
@@ -154,7 +180,7 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
         id=x.id, text=x.text, is_null=x.is_null_hypothesis, prior=x.prior_probability, posterior=x.posterior_probability,
         sufficiency=x.evidence_sufficiency, inference_validity=x.inference_validity, status=x.status,
         accepted_inferences=[f"{i.id}: {i.statement}" for i in graph.inferences_for(x.id) if i.status == "accepted"],
-        rejected_inferences=[f"{i.id} ({i.status}): {i.statement} — {i.failure_reason}" for i in graph.inferences_for(x.id) if i.status != "accepted"],
+        rejected_inferences=[f"{i.id} ({i.status}): {i.statement} — {'; '.join(i.failure_reasons)}" for i in graph.inferences_for(x.id) if i.status != "accepted"],
         history=[o.value["p"] for o in graph.history(x.id)],
     ) for x in hyps]
 
@@ -170,6 +196,7 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
             "claims": [{"id": c.id, "text": c.text, "posterior": round(c.posterior, 2), "sufficiency": round(c.sufficiency, 2),
                         "status": c.status, "independent_roots": c.independent_roots, "raw_sources": c.raw_sources} for c in claim_views],
             "top_gaps": [g.description for g in open_gaps[:5]],
+            "recent_updates": active.recent_updates if active else [],
         }
         try:
             out = await llm.structured("synthesize", ModelRole.SYNTHESIS, SYNTHESIZER, payload, SynthesisOutput)
@@ -177,8 +204,8 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
             for sent in out.conclusion:
                 check = verifier.check(sent.text, sent.claim_ids)
                 if check.ok:
-                    cites = sorted({cite(e.source_id) for cid in sent.claim_ids for e in graph.evidence_for(cid) if e.stance != "neutral"})
-                    conclusion.append(Statement(text=sent.text, claim_ids=sent.claim_ids, citations=cites))
+                    cites = sorted({cite(graph.evidence[eid].source_id) for eid in check.evidence_ids})
+                    conclusion.append(Statement(text=strip_ids(sent.text), claim_ids=sent.claim_ids, evidence_ids=check.evidence_ids, citations=cites))
                 else:
                     rejected.append({"text": sent.text, "claim_ids": sent.claim_ids, "reason": check.reason})
                     events.emit(EventType.STATEMENT_REJECTED, f"report sentence dropped ({check.reason}): {sent.text[:90]}")
@@ -186,8 +213,18 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
             events.emit(EventType.ERROR, f"synthesis failed, using structured summary only: {e}")
     change += [f"Evidence resolving: {g.description}" for g in open_gaps[:3] if g.estimated_value >= 0.15]
 
-    raw = len({e.source_id for e in graph.evidence.values()})
-    roots = len({graph.root_of.get(e.source_id, e.source_id) for e in graph.evidence.values()})
+    used = {e.source_id for e in graph.evidence.values() if e.verification_status == "verified"}
+    raw = len(used)
+    families = len({graph.family_of.get(s, s) for s in used})
+    roots = len({graph.root_of.get(s, s) for s in used})
+    counter = next((x for x in non_null[1:] if x.status != "rejected"), None)
+    studies = [_study_view(graph, st) for st in graph.studies.values()]
+    screened_out = [{"source_id": d.source_id, "title": graph.sources[d.source_id].title, "url": graph.sources[d.source_id].url,
+                     "reasons": d.reasons} for d in graph.screening.values() if d.decision == "exclude"]
+    why = [f"{session.stop_reason.value if session.stop_reason else 'n/a'}: {session.stop_explanation or ''}"]
+    if graph.bids:
+        it, last = graph.bids[-1]
+        why.append("Final agent bids: " + ", ".join(f"{b.agent_type} {b.utility:.2f}" for b in last))
     clusters = [{"root": r, "root_title": graph.sources[r].title, "members": m}
                 for r, m in sorted(_clusters(graph).items(), key=lambda kv: -len(kv[1])) if len(m) > 1]
     method = [
@@ -196,6 +233,9 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
         "Probabilities are model-estimated evidence beliefs from heuristic likelihood ratios, NOT calibrated probabilities.",
         f"Evidence from one provenance cluster counts once; derivatives add {settings.heuristics.dependent_evidence_discount:.0%} of their weight.",
         "Source credibility uses heuristic priors by source type, adjusted per claim category; no audited ratings.",
+        "Scientific evidence is weighted by a deterministic study-quality score and replication factors; peer review alone is not decisive.",
+        "Research agents were chosen each round by heuristic utility bids, not by a fixed pipeline.",
+        f"{len(screened_out)} source(s) were screened out before extraction; reasons are preserved (negative provenance).",
         f"Stop reason: {session.stop_reason.value if session.stop_reason else 'n/a'} — {session.stop_explanation or ''}",
     ]
     if session.synthetic:
@@ -204,9 +244,10 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
     report = Report(
         question=session.question, synthetic=session.synthetic, status=status,
         stop_reason=session.stop_reason.value if session.stop_reason else None, stop_explanation=session.stop_explanation,
-        leading_hypothesis=lead.id if lead else None, conclusion=conclusion, rejected_statements=rejected,
-        hypotheses=hyp_views, critical_claims=claim_views, raw_source_count=raw, independent_root_count=roots,
-        clusters=clusters,
+        leading_hypothesis=lead.id if lead else None, counter_hypothesis=counter.id if counter else None,
+        conclusion=conclusion, rejected_statements=rejected,
+        hypotheses=hyp_views, critical_claims=claim_views, raw_source_count=raw, publication_family_count=families,
+        independent_root_count=roots, clusters=clusters, studies=studies, screened_out=screened_out, why_stopped=why,
         gaps=[GapView(id=g.id, gap_type=g.gap_type, description=g.description, value=g.estimated_value, level=_debt(g.estimated_value),
                       attempts=g.attempts, unresolvable=g.unresolvable) for g in open_gaps[:10]],
         what_would_change=change, method_limitations=method,
@@ -219,8 +260,22 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
     return report
 
 
+def _study_view(graph: EvidenceGraph, st) -> StudyView:
+    sa = graph.study_assessments[st.id]
+    versions = [{"source_id": graph.documents[d].source_id, "document_type": graph.documents[d].document_type,
+                 "url": graph.sources[graph.documents[d].source_id].url, "peer_reviewed": graph.documents[d].peer_reviewed}
+                for d in st.document_ids if d in graph.documents]
+    rel = [f"{r.from_study_id} {r.relation} {r.to_study_id}" for r in graph.study_relations.values() if st.id in (r.from_study_id, r.to_study_id)]
+    results = [{"id": r.id, "outcome": r.outcome, "effect": r.effect_size, "measure": r.effect_measure, "ci": [r.ci_low, r.ci_high],
+                "p": r.p_value, "n": r.sample_size, "status": r.verification_status, "excerpt": r.exact_excerpt}
+               for r in graph.results.values() if r.study_id == st.id]
+    return StudyView(id=st.id, title=st.title, versions=versions, design=sa.study_design, sample_size=sa.sample_size,
+                     peer_reviewed=sa.peer_reviewed, preregistered=sa.preregistered, quality=sa.quality_score, replication=rel,
+                     warnings=sa.notes, results=results)
+
+
 def _clusters(graph: EvidenceGraph) -> dict[str, list[str]]:
-    used = {e.source_id for e in graph.evidence.values()}
+    used = {e.source_id for e in graph.evidence.values() if e.verification_status == "verified"}
     out: dict[str, list[str]] = {}
     for sid in used:
         out.setdefault(graph.root_of.get(sid, sid), []).append(sid)

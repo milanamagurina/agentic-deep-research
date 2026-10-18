@@ -31,7 +31,7 @@ def test_three_derivative_articles_are_one_root():
     assert len(roots) == 2  # the press-release cluster + the registry filing
     assert result.root_of[copies[0].id] == release.id
     assert {e.child_source_id for e in result.edges} >= {c.id for c in copies}
-    assert all(e.dependency_probability >= 0.5 and e.reasons for e in result.edges)
+    assert all(e.dependency_probability >= 0.5 and e.evidence for e in result.edges)
 
 
 def test_unrelated_sources_stay_independent():

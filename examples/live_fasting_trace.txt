@@ -1,0 +1,524 @@
+SESSION_STARTED            'Does intermittent fasting lead to more weight loss than continuous calorie restriction in adults?' (depth=fast)
+QUESTION_ANALYZED          entities=['intermittent fasting', 'continuous calorie restriction', 'weight loss', 'adults'] scope=None assumptions=['Both approaches are assumed to be isocaloric (equal total calorie intake) when compared', 'Weight loss is assumed to be the primary outcome of interest', 'Adults are assumed to be generally healthy or overweight/obese seeking weight loss', 'Adherence and sustainability are assumed to be comparable between the two approaches', 'The comparison is assumed to be meaningful regardless of intermittent fasting protocol (e.g., 16:8, 5:2, alternate-day fasting)']
+HYPOTHESIS_CREATED         H1 Intermittent fasting produces greater weight loss than continuous calorie restriction in adults, even when total energy intake is matched, due to fasting-specific metabolic, hormonal, or behavioral advantages. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H2 When total calorie intake is matched, intermittent fasting and continuous calorie restriction produce equivalent weight loss; apparent differences are explained by differences in actual intake or adherence rather than by fasting itself. (heuristic prior 0.50)
+HYPOTHESIS_CREATED         H3 Continuous calorie restriction produces greater weight loss than intermittent fasting because a steady daily deficit is more consistently maintained and less likely to trigger compensatory overeating. (heuristic prior 0.20)
+HYPOTHESIS_CREATED         H4 The relative weight-loss effect is not universal; it depends on the specific intermittent fasting protocol and participant characteristics, with some protocols outperforming continuous restriction in some adult populations and not in others. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H5 Publicly available evidence is insufficient to establish whether intermittent fasting produces greater weight loss than continuous calorie restriction in adults. (heuristic prior 0.35)
+REQUIREMENT_CREATED        H1.R1 for H1: Randomized controlled trials comparing defined intermittent fasting protocols with continuous calorie restriction under verified isocaloric conditions (importance 1.0)
+REQUIREMENT_CREATED        H1.R2 for H1: Objective or carefully measured energy intake and adherence data for both groups (importance 1.0)
+REQUIREMENT_CREATED        H1.R3 for H1: Clinically relevant weight-loss outcomes with adequate follow-up duration (importance 1.0)
+REQUIREMENT_CREATED        H1.R4 for H1: Body-composition measures distinguishing fat mass from lean mass (importance 0.6)
+REQUIREMENT_CREATED        H2.R1 for H2: Controlled feeding or tightly monitored trials with matched prescribed and consumed calories (importance 1.0)
+REQUIREMENT_CREATED        H2.R2 for H2: Direct comparison of weight change between matched-calorie intermittent fasting and continuous restriction arms (importance 1.0)
+REQUIREMENT_CREATED        H2.R3 for H2: Adherence, dropout, and compensatory eating measurements (importance 0.6)
+REQUIREMENT_CREATED        H3.R1 for H3: Head-to-head trials with comparable prescribed deficits and monitored actual intake (importance 1.0)
+REQUIREMENT_CREATED        H3.R2 for H3: Weight-loss and regain outcomes over sufficiently long follow-up periods (importance 1.0)
+REQUIREMENT_CREATED        H3.R3 for H3: Adherence, hunger, and compensatory intake assessments (importance 0.6)
+REQUIREMENT_CREATED        H4.R1 for H4: Stratified or subgroup analyses by intermittent fasting protocol, such as time-restricted eating, 5:2, and alternate-day fasting (importance 1.0)
+REQUIREMENT_CREATED        H4.R2 for H4: Stratification by baseline BMI, age, sex, metabolic health, and other relevant population characteristics (importance 1.0)
+REQUIREMENT_CREATED        H4.R3 for H4: Consistent outcome definitions and long-term follow-up across protocols (importance 0.6)
+REQUIREMENT_CREATED        H4.R4 for H4: Tests for interaction between protocol or population and treatment effect (importance 0.6)
+AGENT_BIDS                 GeneralResearcher 0.95 · PrimarySourceResearcher 0.00 · IndependenceResearcher 0.00 · ContradictionResearcher 0.00 · GapResearcher 0.00 · ReplicationResearcher 0.00 · Synthesis 0.00
+AGENT_SELECTED             Next agent: GeneralResearcher (utility 0.95). Reason: no evidence collected yet: broad discovery first
+RESEARCH_TASK_CREATED      T_5030d3e11e GeneralResearcher: no evidence collected yet: broad discovery first → queries ['randomized controlled trial intermittent fasting versus continuous calorie restriction isocaloric weight loss adults', 'controlled feeding trial time-restricted eating alternate day fasting 5:2 matched calorie intake weight loss', 'systematic review meta-analysis intermittent fasting continuous energy restriction weight loss adults 2023 2024', 'intermittent fasting protocol subgroup analysis time-restricted eating 5:2 alternate day fasting weight loss randomized trial']
+SEARCH_EXECUTED            'randomized controlled trial intermittent fasting versus continuous calorie restriction isocaloric weight loss adults' → 8 result(s)
+SOURCE_FOUND               S_84bd455455 sciencedirect.com: Is isocaloric intermittent fasting superior to calorie restriction? A  (academic, tavily=0.86024034, diversity_penalty=0.00)
+SOURCE_FOUND               S_ecd46974e8 prezi.com: Intermittent Fasting vs. Continuous Calorie Restriction | Prezi (other, tavily=0.926683, diversity_penalty=0.00)
+SOURCE_FOUND               S_c8567287be consensus.app: Intermittent fasting vs. caloric restriction for weight loss. Which is (other, tavily=0.8995547, diversity_penalty=0.00)
+SOURCE_FOUND               S_faa806366f mdpi.com: Is Fasting Superior to Continuous Caloric Restriction for Weight Loss  (other, tavily=0.85624856, diversity_penalty=0.00)
+SOURCE_FOUND               S_dd75d0bddf medium.com: Intermittent Fasting vs. Caloric Restriction: What 2024–25 RCTs Actual (blog, tavily=0.8898454, diversity_penalty=0.00)
+SOURCE_FOUND               S_c425258fd5 consensus.app: Clinical trial shows intermittent fasting yields comparable weight los (other, tavily=0.89849097, diversity_penalty=0.15)
+SOURCE_FOUND               S_852be106d8 consensus.app: Randomized trial shows intermittent fasting aids weight loss in adults (other, tavily=0.8945781, diversity_penalty=0.30)
+SOURCE_FOUND               S_c4b657ee82 consensus.app: Intermittent fasting vs calorie restriction for weight loss (adults) - (other, tavily=0.85797083, diversity_penalty=0.45)
+SEARCH_EXECUTED            'controlled feeding trial time-restricted eating alternate day fasting 5:2 matched calorie intake weight loss' → 8 result(s)
+SOURCE_FOUND               S_5734f1ade3 rutgers.edu: Researchers Find Intermittent Fasting Is No Better, or Worse, Than Con (academic, tavily=0.8506799, diversity_penalty=0.00)
+SOURCE_FOUND               S_a05f0bd781 nih.gov: A meta‐analysis comparing the effectiveness of alternate day fasting,  (academic, tavily=0.8452414, diversity_penalty=0.00)
+SOURCE_FOUND               S_b5e1a06fda cuanschutz.edu: 4:3 Intermittent Fasting Outperforms Daily Calorie Restriction in Weig (academic, tavily=0.7552947, diversity_penalty=0.00)
+SOURCE_FOUND               S_2074ecef8b foodandnutritionjournal.org: Comparative Effects of Time-Restricted Eating, Calorie Restriction, an (major_news, tavily=0.7120925, diversity_penalty=0.00)
+SOURCE_FOUND               S_f106fa791b frontiersin.org: Frontiers | Effect of 5:2 intermittent fasting diet versus daily calor (other, tavily=0.8156003, diversity_penalty=0.00)
+SOURCE_FOUND               S_cf7c74ccdb ifso.com: [PDF] A review of 5:2 intermittent fasting, alternate day fasting or t (other, tavily=0.79022324, diversity_penalty=0.00)
+SOURCE_FOUND               S_bb1c37c441 bhf.org.uk: Intermittent fasting: is the 5:2 diet good for weight loss? - BHF (other, tavily=0.77199864, diversity_penalty=0.00)
+SOURCE_FOUND               S_32327e0626 healthline.com: The Beginner’s Guide to the 5:2 Diet: Benefits, Foods to Eat and Avoid (other, tavily=0.70847535, diversity_penalty=0.00)
+SEARCH_EXECUTED            'systematic review meta-analysis intermittent fasting continuous energy restriction weight loss adults 2023 2024' → 8 result(s)
+SOURCE_FOUND               S_6f57458b6a nih.gov: Intermittent fasting and health outcomes: an umbrella review of system (academic, tavily=0.8896154, diversity_penalty=0.00)
+SOURCE_FOUND               S_4839ac6cb5 sciencedirect.com: Review Effects of Intermittent Energy Restriction Compared ... (academic, tavily=0.87706697, diversity_penalty=0.00)
+SOURCE_FOUND               S_4670356def nutrition.org: Effects of Intermittent Energy Restriction Compared with ... (other, tavily=0.8660535, diversity_penalty=0.00)
+SOURCE_FOUND               S_22644b8ce9 frontiersin.org: Intermittent energy restriction vs. continuous ... (other, tavily=0.8335554, diversity_penalty=0.00)
+SOURCE_FOUND               S_11943bd5f5 endocrinologyadvisor.com: Alternate-Day Fasting Superior to Continuous Energy Restriction - Endo (other, tavily=0.81595254, diversity_penalty=0.00)
+SOURCE_FOUND               S_eca22b4913 uhcancercenter.org: Intermittent versus continuous energy restriction on weight ... (other, tavily=0.7969415, diversity_penalty=0.00)
+SEARCH_EXECUTED            'intermittent fasting protocol subgroup analysis time-restricted eating 5:2 alternate day fasting weight loss randomized trial' → 8 result(s)
+SOURCE_FOUND               S_a972e388b0 nih.gov: A meta-analysis comparing the effectiveness of alternate day fasting,  (academic, tavily=0.8302782, diversity_penalty=0.00)
+SOURCE_FOUND               S_7ec260fabb sciencedirect.com: Effectiveness of intermittent fasting for weight loss in individuals w (academic, tavily=0.7890553, diversity_penalty=0.00)
+SOURCE_FOUND               S_769d81ca77 bmj.com: Intermittent fasting strategies and their effects on body weight and o (academic, tavily=0.779339, diversity_penalty=0.00)
+SOURCE_FOUND               S_d2dceafd6d thewholehealthpractice.com: Understanding the 5:2 Diet, Is it Effective? An Overview of Studies (other, tavily=0.7795405, diversity_penalty=0.00)
+SOURCE_SCREENED            S_a972e388b0: EXCLUDE [unknown] (rule) — duplicate source: same title on the same site as S_a05f0bd781
+SOURCE_SCREENED            S_6f57458b6a: INCLUDE [systematic_review] (model) — Umbrella review of systematic reviews/meta-analyses of RCTs directly comparing intermittent fasting with continuous energy restriction on weight outcomes
+SOURCE_SCREENED            S_4839ac6cb5: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis of RCTs directly comparing IER vs CER on weight loss and body composition
+SOURCE_SCREENED            S_84bd455455: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis of RCTs comparing isocaloric intermittent fasting vs calorie restriction for weight loss
+SOURCE_SCREENED            S_5734f1ade3: INCLUDE [news_article] (model) — News article summarizing a review of 22 RCTs comparing intermittent fasting forms with conventional dieting for weight loss
+SOURCE_SCREENED            S_a05f0bd781: INCLUDE [meta_analysis] (model) — Network meta-analysis of RCTs comparing ADF, 5:2, and TRE for weight loss
+SOURCE_SCREENED            S_7ec260fabb: INCLUDE [meta_analysis] (model) — Meta-analysis of RCTs evaluating intermittent fasting for weight loss in adults with obesity
+SOURCE_SCREENED            S_769d81ca77: INCLUDE [meta_analysis] (model) — BMJ systematic review and network meta-analysis of RCTs comparing intermittent fasting strategies for weight loss
+SOURCE_SCREENED            S_b5e1a06fda: INCLUDE [news_article] (model) — News article describing an RCT comparing 4:3 intermittent fasting with daily calorie restriction for weight loss
+SOURCE_SCREENED            S_ecd46974e8: EXCLUDE [unknown] (model) — Prezi presentation, not a primary source; commentary only
+SOURCE_SCREENED            S_c8567287be: EXCLUDE [review_site] (model) — Search aggregator page listing multiple studies, not a primary source itself
+SOURCE_SCREENED            S_4670356def: INCLUDE [meta_analysis] (model) — Full-text version of the Schroor 2024 systematic review/meta-analysis comparing IER vs CER
+SOURCE_SCREENED            S_2074ecef8b: INCLUDE [randomized_controlled_trial] (model) — RCT comparing time-restricted eating, calorie restriction, and combination on glycemic outcomes; relevant to IF vs CR comparison
+SOURCE_SCREENED            S_faa806366f: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis of RCTs comparing fasting-based strategies vs continuous caloric restriction for weight loss
+SOURCE_SCREENED            S_22644b8ce9: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis comparing IER vs CER on weight loss
+SOURCE_SCREENED            S_f106fa791b: INCLUDE [randomized_controlled_trial] (model) — RCT comparing 5:2 intermittent fasting vs daily calorie restriction in MAFLD; reports weight outcomes
+SOURCE_SCREENED            S_11943bd5f5: INCLUDE [news_article] (model) — News article summarizing a network meta-analysis comparing intermittent fasting forms for weight loss
+SOURCE_SCREENED            S_eca22b4913: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis comparing IER vs CER on weight and cardiometabolic biomarkers
+SOURCE_SCREENED            S_dd75d0bddf: EXCLUDE [blog] (model) — Blog post summarizing recent RCTs; not a primary source
+SOURCE_SCREENED            S_cf7c74ccdb: INCLUDE [systematic_review] (model) — Review of IF strategies (ADF, TRF, 5:2) for obesity management including weight loss outcomes
+SOURCE_SCREENED            S_d2dceafd6d: EXCLUDE [blog] (model) — Blog/practice website summarizing studies; not a primary source
+SOURCE_SCREENED            S_bb1c37c441: EXCLUDE [review_site] (model) — Consumer health information page summarizing studies; not a primary source
+SOURCE_SCREENED            S_c425258fd5: INCLUDE [news_article] (model) — Evidence review summarizing a clinical trial comparing intermittent fasting vs calorie restriction for weight loss
+SOURCE_SCREENED            S_32327e0626: EXCLUDE [review_site] (model) — Consumer health article; commentary only, not a primary source
+SOURCE_SCREENED            S_852be106d8: INCLUDE [news_article] (model) — Evidence review summarizing RCT evidence comparing intermittent fasting vs calorie restriction for weight loss
+SOURCE_SCREENED            S_c4b657ee82: EXCLUDE [review_site] (model) — Search aggregator page listing multiple studies, not a primary source
+SOURCE_SELECTED            S_6f57458b6a selected for extraction: https://pmc.ncbi.nlm.nih.gov/articles/PMC10945168
+SOURCE_SELECTED            S_4839ac6cb5 selected for extraction: https://www.sciencedirect.com/science/article/pii/S2161831323013911
+SOURCE_SELECTED            S_84bd455455 selected for extraction: https://www.sciencedirect.com/science/article/pii/S0939475324004393
+SOURCE_SELECTED            S_a05f0bd781 selected for extraction: https://pmc.ncbi.nlm.nih.gov/articles/PMC10098946
+SOURCE_SELECTED            S_7ec260fabb selected for extraction: https://www.sciencedirect.com/science/article/pii/S0939475323001862
+SOURCE_SELECTED            S_769d81ca77 selected for extraction: https://www.bmj.com/content/389/bmj-2024-082007
+SOURCE_EXTRACTED           S_6f57458b6a extracted (84,280 chars)
+SOURCE_EXTRACTED           S_84bd455455 extracted (150,373 chars)
+SOURCE_EXTRACTED           S_a05f0bd781 extracted (55,361 chars)
+SOURCE_EXTRACTED           S_7ec260fabb extracted (115,298 chars)
+SOURCE_EXTRACTED           S_769d81ca77 extracted (326,791 chars)
+EVIDENCE_REJECTED          S_84bd455455: excerpt not found in source → stored as UNVERIFIED (no weight): The systematic review and meta-analysis included 20 randomized controlled trials
+EVIDENCE_REJECTED          S_84bd455455: excerpt not found in source → stored as UNVERIFIED (no weight): The combination of intermittent fasting and calorie restriction reduced visceral
+EVIDENCE_REJECTED          S_84bd455455: excerpt not found in source → stored as UNVERIFIED (no weight): Visual analog scale assessment of hunger revealed that individuals in the interm
+EVIDENCE_REJECTED          S_7ec260fabb: excerpt not found in source → stored as UNVERIFIED (no weight): No significant difference in efficacy between alternate day fasting and time-res
+CLAIM_CREATED              C_af1407cff2 [attribution] Zhang et al. (2022) stated that a 2022 meta-analysis by Zhang et al. found notable alterations in body weight after intermittent fasting compared to continuous energy restriction (CER).
+CLAIM_CREATED              C_8fbd6bdded [fact] A 2022 meta-analysis by Zhang et al. found notable alterations in body weight after intermittent fasting compared to continuous energy restriction (CER).
+CLAIM_CREATED              C_d54582f462 [attribution] Zhang et al. (2022) stated that in a 2022 meta-analysis by Zhang et al., the difference in BMI between intermittent fasting and continuous energy restriction failed to reach statistical significance.
+CLAIM_CREATED              C_5c2cff2244 [fact] In a 2022 meta-analysis by Zhang et al., the difference in BMI between intermittent fasting and continuous energy restriction failed to reach statistical significance.
+CLAIM_CREATED              C_964ab63b02 [attribution] Gu et al. (2022) stated that gu et al. (2022) reviewed 43 RCTs and found no significant results on fasting glucose after intermittent fasting intervention compared to non-intervention diets.
+CLAIM_CREATED              C_d390a66165 [fact] Gu et al. (2022) reviewed 43 RCTs and found no significant results on fasting glucose after intermittent fasting intervention compared to non-intervention diets.
+CLAIM_CREATED              C_439d725c99 [fact] A 2021 umbrella review of 11 meta-analyses comprising 130 RCTs found that modified alternate-day fasting for 1–2 months was associated with a reduction in BMI in healthy adults and those with overweight, obesity, or nonalcoholic fatty liver disease compared to a regular diet.
+CLAIM_CREATED              C_c946054cae [fact] In the Sun et al. 2024 umbrella review, no significant fluctuation in hunger was found among participants who underwent intermittent fasting interventions (MADF, TRE, TWF combined and respectively) compared to a continuous energy restriction diet, based on three low and one very low quality of evidence.
+CLAIM_CREATED              C_873d128a5c [fact] The Sun et al. 2024 umbrella review performed subgroup analyses for populations based on three specific statuses: diabetes, overweight or obesity, and metabolic syndrome.
+CLAIM_CREATED              C_35e43acdf0 [fact] The Sun et al. 2024 umbrella review included any type of intermittent fasting as intervention, including ADF, MADF, TRE, IER, modified periodic fasting, combinations of caloric restriction and intermittent fasting (TRF or ADF), combinations of resistance training and TRF, and TWF, at any duration.
+CLAIM_CREATED              C_6255dacb9f [fact] The Sun et al. 2024 umbrella review allowed control groups assigned to one of nine diets: CER, ad libitum diet, unrestricted diet, normal diet, usual diet, continuous dieting, habitual diet, regular diet, or no-intervention diet.
+CLAIM_CREATED              C_916f6bb89a [fact] The Sun et al. 2024 umbrella review included anthropometric outcomes such as BMI, body fat, body weight, fat free mass, fat mass, hip circumference, lean mass, total calorie intake, visceral fat mass, waist circumference, and weekly energy intake.
+CLAIM_CREATED              C_7f1df4f984 [fact] The Sun et al. 2024 umbrella review included appetite outcomes such as desire to eat, fullness, and hunger.
+CLAIM_CREATED              C_07b6564453 [fact] The systematic review and meta-analysis included 20 randomized controlled trials comparing isocaloric intermittent fasting with calorie restriction.
+CLAIM_CREATED              C_9b1856ee66 [fact] The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 0.96 kg from baseline to 3 months compared with continuous calorie restriction.
+CLAIM_CREATED              C_59be92ab2f [fact] The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 1.51% from baseline to 10–12 months compared with continuous calorie restriction.
+CLAIM_CREATED              C_5b493b3a3e [fact] The combination of intermittent fasting and calorie restriction reduced waist circumference by 1.96 cm compared with continuous calorie restriction.
+CLAIM_CREATED              C_7c497de5d2 [fact] There were no significant differences between intermittent fasting and continuous calorie restriction in body weight, BMI, or lean body mass at any time point in the meta-analysis.
+CLAIM_CREATED              C_c254daaf5f [fact] Although intermittent fasting showed a significant reduction in fat mass at 3 months, this effect diminished over time, suggesting both interventions had similar long-term effects.
+CLAIM_CREATED              C_a6973b4889 [fact] Self-reported caloric intake in the included studies showed that participants in the intermittent fasting group consumed slightly fewer calories than those in the calorie restriction group.
+CLAIM_CREATED              C_e2af570aaf [fact] Direct narrative comparison of adherence between intermittent fasting and calorie restriction found no significant differences between studies.
+CLAIM_CREATED              C_4277acc712 [fact] Visual analog scale assessment of hunger revealed that individuals in the intermittent fasting group felt hungrier compared with those in the calorie restriction group.
+CLAIM_CREATED              C_d95029b426 [fact] Dropouts and adverse events were similar in both intermittent fasting and calorie restriction groups, except for fatigue, which was lower in the calorie restriction group.
+CLAIM_CREATED              C_b6b60afaa7 [fact] The exploratory random effects network analysis of 24 RCTs (n = 1768) ranked ADF as the most effective for weight loss, followed by CER and TRE.
+CLAIM_CREATED              C_8508c45c20 [fact] The meta-analysis showed that intermittent fasting regimens resulted in similar weight loss to CER, with a mean difference of 0.26 kg (95% CI: -0.31 to 0.84; p = 0.37).
+CLAIM_CREATED              C_2b765ed6fa [fact] The three main forms of intermittent fasting (alternate day fasting, the 5:2 diet, and time-restricted eating) produced body weight reductions ranging from 1% to 13% over 2 to 52 weeks.
+CLAIM_CREATED              C_f3617fb2af [fact] ADF/MADF showed the highest range of weight loss, from 0.77% to 12.97% over 3 to 26 weeks, compared with the other regimens.
+CLAIM_CREATED              C_05f60ed535 [fact] The 5:2 diet produced weight loss ranging from 1.7% to 7.97% in the included trials.
+CLAIM_CREATED              C_63371f982d [fact] Time-restricted eating (TRE) produced weight loss ranging from 0.95% to 8.60% in the included trials.
+CLAIM_CREATED              C_38ae53a441 [fact] Compliance was generally high (>80%) in intermittent fasting trials shorter than 3 months.
+CLAIM_CREATED              C_0ff74786dc [fact] In one included TRE study, average adherence to the 8-hour eating window intervention was 60% (55.5% ± 22.4% of days within ±15 minutes, 60% ± 23% within ±30 minutes, and 66.3% ± 20.7% within ±60 minutes of the 8-hour window).
+CLAIM_CREATED              C_4fa1f36266 [fact] The meta-analysis reported high between-study heterogeneity (I² > 70%) across the included studies.
+CLAIM_CREATED              C_fc990e2c8f [fact] The maximum length of the included studies in the meta-analysis was 12 months, which limits the applicability to longer-term health outcomes.
+CLAIM_CREATED              C_cbbbd64eec [fact] The meta-analysis retrieved 9 randomized controlled trials comparing intermittent fasting with control diets in individuals with obesity.
+CLAIM_CREATED              C_6670093cc6 [fact] The meta-analysis enrolled a total of 540 patients across the 9 included randomized controlled trials.
+CLAIM_CREATED              C_765a30b9a1 [fact] Intermittent fasting was not associated with a significantly greater reduction of body weight or BMI at any time point with respect to controls or in respect to continuous restricted diets, with low-to-moderate quality of evidence.
+CLAIM_CREATED              C_05d911b469 [fact] No significant difference in efficacy between alternate day fasting and time-restricted eating was found in the meta-analysis.
+CLAIM_CREATED              C_67252ddc10 [fact] Differences in fasting plasma glucose, total or high-density lipoprotein cholesterol, or blood pressure at any time point were not statistically significant between intermittent fasting and controls.
+CLAIM_CREATED              C_c0dac22991 [fact] A reduction of low-density lipoprotein cholesterol (MD −8.39 [−15.96, −0.81] mg/dl, P=0.03; I²=0%) was observed at 2–4 months with intermittent fasting versus controls.
+CLAIM_CREATED              C_382231899a [fact] The LDL cholesterol reduction observed at 2–4 months with intermittent fasting versus controls was not sustained in the longer term.
+CLAIM_CREATED              C_ba2ade86f3 [fact] Data on psychological parameters and overall well-being were insufficient to perform a formal meta-analysis, whereas a qualitative synthesis did not show any difference between intermittent fasting and controls.
+CLAIM_CREATED              C_947ef0dfbe [fact] The meta-analysis included only randomized controlled trials with a minimum duration of 8 weeks to exclude very short-term interventions unlikely to produce major weight changes in people with obesity.
+CLAIM_CREATED              C_07f5342e4a [fact] The meta-analysis included only studies enrolling individuals with BMI >30 kg/m² (27.5 kg/m² if enrolling Asian subjects), or separate analyses of subgroups with BMI >30 kg/m² in trials with wider inclusion criteria.
+CLAIM_CREATED              C_391de60e11 [fact] The network meta-analysis identified 99 randomised clinical trials.
+CLAIM_CREATED              C_a5d6a310fa [fact] The network meta-analysis included 6582 adults across the identified trials.
+CLAIM_CREATED              C_9fdc1d9b81 [fact] Compared with continuous energy restriction, alternate day fasting reduced body weight by a mean difference of -1.29 kg (95% CI -1.99 to -0.59), with moderate certainty of evidence.
+CLAIM_CREATED              C_fa0742bad2 [fact] Alternate day fasting reduced body weight by a mean difference of -1.69 kg (95% CI -2.49 to -0.88) compared with time restricted eating, with moderate certainty of evidence.
+CLAIM_CREATED              C_2634ce8fb8 [fact] Alternate day fasting reduced body weight by a mean difference of -1.05 kg (95% CI -1.90 to -0.19) compared with whole day fasting, with moderate certainty of evidence.
+CLAIM_CREATED              C_7e2bf2a2f3 [fact] Estimates were similar among 76 trials with less than 24 weeks follow-up.
+CLAIM_CREATED              C_56b86074fd [fact] In 17 moderate-to-long-term trials (≥24 weeks), benefits in weight reduction were only shown for diet strategies compared with ad-libitum.
+CLAIM_CREATED              C_7f1cb21778 [fact] Intermittent fasting strategies showed little additional benefit against continuous energy restriction, except for alternate day fasting which showed a reduction in body weight.
+CLAIM_CREATED              C_97abec45e9 [fact] A randomized controlled trial cited in the references reported that matched weight loss through intermittent or continuous energy restriction does not lead to compensatory increases in appetite and eating behavior in women with overweight and obesity.
+CLAIM_CREATED              C_3125caebed [fact] The network meta-analysis included randomised clinical trials with a follow-up duration of at least three weeks.
+EVIDENCE_ATTACHED          E_b9260022b9 → C_af1407cff2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_0916dd10d1 → C_8fbd6bdded STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_6f57458b6a
+EVIDENCE_ATTACHED          E_18c35d12ff → C_d54582f462 STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_f6bc530f31 → C_5c2cff2244 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_6f57458b6a
+EVIDENCE_ATTACHED          E_440024a54c → C_964ab63b02 STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_1cf4dc4a5b → C_d390a66165 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_6f57458b6a
+EVIDENCE_ATTACHED          E_8f91dadff4 → C_439d725c99 STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_de9bc25f98 → C_c946054cae STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_6f83e73302 → C_873d128a5c STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_dec96cace5 → C_35e43acdf0 STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_d46fae9199 → C_6255dacb9f STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_77c339d696 → C_916f6bb89a STANCE: QUALIFIES p=0.05 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_2e89851944 → C_7f1df4f984 STANCE: SUPPORTS p=0.95 directness=1.00 from S_6f57458b6a
+EVIDENCE_ATTACHED          E_7891d9de44 → C_59be92ab2f STANCE: QUALIFIES p=0.05 directness=0.50 from S_84bd455455
+EVIDENCE_ATTACHED          E_8779907d11 → C_5b493b3a3e STANCE: QUALIFIES p=0.05 directness=0.50 from S_84bd455455
+EVIDENCE_ATTACHED          E_04d4ecade6 → C_7c497de5d2 STANCE: SUPPORTS p=0.80 directness=1.00 from S_84bd455455
+EVIDENCE_ATTACHED          E_dabd2df9f2 → C_c254daaf5f STANCE: SUPPORTS p=0.95 directness=1.00 from S_84bd455455
+EVIDENCE_ATTACHED          E_9a97ad98c5 → C_a6973b4889 STANCE: SUPPORTS p=0.95 directness=1.00 from S_84bd455455
+EVIDENCE_ATTACHED          E_aa1356352b → C_e2af570aaf STANCE: SUPPORTS p=0.95 directness=1.00 from S_84bd455455
+EVIDENCE_ATTACHED          E_b10087bcc4 → C_d95029b426 STANCE: SUPPORTS p=0.95 directness=1.00 from S_84bd455455
+EVIDENCE_ATTACHED          E_1101f23413 → C_b6b60afaa7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_8424af582b → C_8508c45c20 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_56a47db57e → C_2b765ed6fa STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_40d1398e8a → C_f3617fb2af STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_8fe6c7b8cd → C_05f60ed535 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_1aef731c95 → C_63371f982d STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_a980ed1065 → C_38ae53a441 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_09f37818b4 → C_0ff74786dc STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_7944530893 → C_4fa1f36266 STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_8ed0047329 → C_fc990e2c8f STANCE: SUPPORTS p=0.95 directness=1.00 from S_a05f0bd781
+EVIDENCE_ATTACHED          E_d88aa220c4 → C_cbbbd64eec STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_e2c61a53b7 → C_6670093cc6 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_5f7f642ca3 → C_765a30b9a1 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_0af1bc9a65 → C_67252ddc10 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_c5f1d3fd67 → C_c0dac22991 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_11c9528449 → C_382231899a STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_fcff665885 → C_ba2ade86f3 STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_9f2a8676b7 → C_947ef0dfbe STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_1331ec0d9b → C_07f5342e4a STANCE: SUPPORTS p=0.95 directness=1.00 from S_7ec260fabb
+EVIDENCE_ATTACHED          E_9560617dae → C_391de60e11 STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_7de221baff → C_a5d6a310fa STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_c27432446e → C_9fdc1d9b81 STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_62459d6555 → C_fa0742bad2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_1c1dbe9940 → C_2634ce8fb8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_94c95a742c → C_7e2bf2a2f3 STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_f0311caec4 → C_56b86074fd STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_2029b2ab37 → C_7f1cb21778 STANCE: QUALIFIES p=0.05 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_03f66ba035 → C_97abec45e9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+EVIDENCE_ATTACHED          E_a2ea7ec6ff → C_3125caebed STANCE: SUPPORTS p=0.95 directness=1.00 from S_769d81ca77
+DOCUMENT_CLASSIFIED        S_6f57458b6a systematic_review: Intermittent fasting and health outcomes: an umbrella review of system (DOI 10.1016/j.eclinm.2024.102519)
+DOCUMENT_CLASSIFIED        S_84bd455455 meta_analysis: Is isocaloric intermittent fasting superior to calorie restriction? A 
+DOCUMENT_CLASSIFIED        S_a05f0bd781 meta_analysis: A meta‐analysis comparing the effectiveness of alternate day fasting,  (DOI 10.1002/oby.23568)
+DOCUMENT_CLASSIFIED        S_7ec260fabb meta_analysis: Effectiveness of intermittent fasting for weight loss in individuals w
+DOCUMENT_CLASSIFIED        S_769d81ca77 meta_analysis: Intermittent fasting strategies and their effects on body weight and o
+STUDY_ASSESSED             ST_62d1b04de4 'Intermittent fasting and health outcomes: an umbrella review': design=meta_analysis, n=2483, peer_reviewed=None, quality 0.94 (design prior 0.85 (meta_analysis); large sample n=2483 (×1.05); Secondary synthesis of prior reviews/meta-analyses rather than a primary trial)
+RESULT_EXTRACTED           RS_e77cb211be Fasting glucose in participants with obesity: MD=-2.17 (95% CI -2.78–-1.55) n=None [VERIFIED]
+RESULT_EXTRACTED           RS_4fdab2d828 Fasting glucose in participants without obesity: MD=-0.96 (95% CI -3.04–1.13) n=None [VERIFIED]
+RESULT_EXTRACTED           RS_240cc036fc Fat mass: MD=-1.26 (95% CI -1.57–-0.95) n=1610 [VERIFIED]
+STUDY_ASSESSED             ST_e6da544c2d 'Is isocaloric intermittent fasting superior to calorie restr': design=meta_analysis, n=7, peer_reviewed=None, quality 0.54 (design prior 0.85 (meta_analysis); very small sample n=7 (×0.6); Only seven RCTs were included; total participant count is not reported in the provided text.)
+RESULT_EXTRACTED           RS_7751e7bff6 Hunger levels: SMD=-0.37 (95% CI 0.12–0.62) n=None [VERIFIED]
+RESULT_EXTRACTED           RS_fadb06c772 Fatigue: OR=1.79 (95% CI 1.03–3.09) n=None [VERIFIED]
+RESULT_EXTRACTED           RS_38077d4854 Total events of side effects: OR=1.51 (95% CI 1.14–2.0) n=None [VERIFIED]
+RESULT_EXTRACTED           RS_b6eb77bfd3 Dropouts: effect=None n=None [VERIFIED]
+STUDY_ASSESSED             ST_f67ce204d7 'A meta‐analysis comparing the effectiveness of alternate day': design=meta_analysis, n=1768, peer_reviewed=None, quality 0.94 (design prior 0.85 (meta_analysis); large sample n=1768 (×1.05); The majority of the studies reviewed had small sample sizes, potentially limiting their ability to detect significant differences between intervention groups.)
+RESULT_EXTRACTED           RS_38252801fd Weight loss: intermittent fasting regimens vs caloric energy restriction: mean difference (kg)=0.26 (95% CI -0.31–0.84) n=1768 [VERIFIED]
+RESULT_EXTRACTED           RS_68f19b4637 Compliance in intermittent fasting trials: percent=None n=None [VERIFIED]
+RESULT_EXTRACTED           RS_a7c624c412 Body weight reduction with intermittent fasting regimens: percent of body weight=None n=None [VERIFIED]
+STUDY_ASSESSED             ST_94b171666e 'Effectiveness of intermittent fasting for weight loss in ind': design=meta_analysis, n=540, peer_reviewed=None, quality 0.89 (design prior 0.85 (meta_analysis); Only 9 trials enrolling 540 patients were included.; Evidence quality was described as low-to-moderate.)
+RESULT_EXTRACTED           RS_68e7520e32 Body weight and BMI reduction: Mean difference (IF vs controls)=None n=540 [VERIFIED]
+RESULT_EXTRACTED           RS_6a05b01ca7 Weight loss: IF vs non-intermittent fasting diets: effect=None n=540 [VERIFIED]
+RESULT_EXTRACTED           RS_49673e1016 Alternate day fasting vs time restricted eating efficacy: effect=None n=540 [UNVERIFIED]
+RESULT_EXTRACTED           RS_6f0d4f931c Fasting plasma glucose, total cholesterol, HDL cholesterol, and blood pressure: effect=None n=540 [VERIFIED]
+RESULT_EXTRACTED           RS_8cf5b59962 LDL cholesterol reduction at 2-4 months: MD (mg/dl)=-8.39 (95% CI -15.96–-0.81) n=540 [VERIFIED]
+STUDY_ASSESSED             ST_498ae782ce 'Intermittent fasting strategies and their effects on body we': design=meta_analysis, n=None, peer_reviewed=None, quality 0.76 (design prior 0.85 (meta_analysis); sample size not reported (×0.85); The review assesses intermediate cardiometabolic outcomes rather than clinical endpoints.)
+CLAIM_POSTERIOR_UPDATED    C_af1407cff2 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8fbd6bdded posterior 0.50 → 0.67, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d54582f462 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5c2cff2244 posterior 0.50 → 0.67, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_964ab63b02 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d390a66165 posterior 0.50 → 0.67, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_439d725c99 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_c946054cae posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_873d128a5c posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_35e43acdf0 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6255dacb9f posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7f1df4f984 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7c497de5d2 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_c254daaf5f posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a6973b4889 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_e2af570aaf posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d95029b426 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b6b60afaa7 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8508c45c20 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2b765ed6fa posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_f3617fb2af posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_05f60ed535 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_63371f982d posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_38ae53a441 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0ff74786dc posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_4fa1f36266 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_fc990e2c8f posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cbbbd64eec posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6670093cc6 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_765a30b9a1 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_67252ddc10 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_c0dac22991 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_382231899a posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_ba2ade86f3 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_947ef0dfbe posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_07f5342e4a posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_391de60e11 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a5d6a310fa posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9fdc1d9b81 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_fa0742bad2 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2634ce8fb8 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7e2bf2a2f3 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_56b86074fd posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_97abec45e9 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3125caebed posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.35 → 0.75 (sufficiency 1.00, supported)
+INDEPENDENCE_SUMMARY       5 URLs with evidence → 5 publication families → 5 independent evidence roots
+INFERENCE_PROPOSED         I_fd4eaedee5: C_7c497de5d2, C_8508c45c20 ⇒ supports H2 (statistical): Pooled comparisons show intermittent fasting and continuous calorie restriction produce similar weight loss, consistent with equivalent effects when intake is matched.
+INFERENCE_PROPOSED         I_663e2df392: C_9fdc1d9b81 ⇒ supports H1 (statistical): Alternate day fasting reduced body weight more than continuous energy restriction, indicating at least one fasting protocol can outperform continuous restriction.
+INFERENCE_PROPOSED         I_b0ec275941: C_7f1cb21778, C_9fdc1d9b81 ⇒ supports H4 (inductive): Only alternate day fasting showed a weight reduction versus continuous restriction while other intermittent fasting strategies showed little additional benefit, suggesting effects depend on protocol.
+INFERENCE_PROPOSED         I_0558ea0bff: C_765a30b9a1 ⇒ contradicts H1 (statistical): Intermittent fasting was not associated with significantly greater body weight or BMI reduction than continuous restricted diets at any time point, weighing against a universal fasting-specific advantage.
+INFERENCE_PROPOSED         I_e3e54e5643: C_7c497de5d2, C_8508c45c20 ⇒ contradicts H3 (statistical): Equivalent weight loss between intermittent fasting and continuous restriction contradicts the claim that continuous restriction consistently produces greater loss.
+INFERENCE_PROPOSED         I_cd73904e62: C_2634ce8fb8, C_2b765ed6fa, C_5c2cff2244 ⇒ supports H4 (inductive): Nonsignificant BMI differences alongside variable weight reductions across fasting protocols and superiority of alternate day fasting over whole-day fasting indicate protocol-dependent effects.
+INFERENCE_REJECTED         I_fd4eaedee5 rejected (weak): The premises only report no significant difference and similar mean weight loss; they do not establish matched intake, equivalence, or that intake/adherence explains apparent differences.; missing: Evidence that total calorie intake was matched between arms, A predefined equivalence margin, Adherence and actual intake measurements
+INFERENCE_REJECTED         I_663e2df392 rejected (invalid): A single alternate day fasting comparison does not justify a general claim about all intermittent fasting, matched intake, or fasting-specific mechanisms.; missing: Evidence for all intermittent fasting protocols, not only alternate day fasting, Evidence that total energy intake was matched, Mechanistic evidence for metabolic, hormonal, or behavioral advantages
+INFERENCE_REJECTED         I_b0ec275941 needs_evidence (plausible): The premises support protocol-dependent differences, especially alternate day fasting versus other strategies, but dependence on participant characteristics is not established.; R1: premise not established (weakest posterior 0.50); missing: Participant-characteristic or subgroup evidence, Direct protocol-by-protocol comparisons against continuous restriction
+INFERENCE_REJECTED         I_0558ea0bff rejected (invalid): The premise states that intermittent fasting was not associated with significantly greater reduction, directly contradicting the conclusion.; missing: Any evidence that intermittent fasting produced greater weight loss, Evidence for matched total energy intake, Mechanistic evidence for fasting-specific advantages
+INFERENCE_REJECTED         I_e3e54e5643 rejected (invalid): The premises show no significant difference and similar weight loss, not greater continuous restriction loss or the proposed mechanism.; missing: Evidence that continuous restriction produced greater weight loss, Data on daily deficit consistency, Data on compensatory overeating
+INFERENCE_REJECTED         I_cd73904e62 rejected (weak): The premises show alternate day fasting differs from whole-day fasting and that reductions vary, but they do not establish dependence on participant characteristics or outperformance of continuous restriction.; missing: Direct comparisons of each protocol to continuous restriction, Participant-characteristic or subgroup analyses
+RESEARCH_GAP_CREATED       G_266bdd0090 [NO_INDEPENDENT_SOURCE] C_59be92ab2f: no independent confirmation of 'The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 1.51% from baseline to 10–12 months compared with continuous calorie restriction.' (value 0.48)
+RESEARCH_GAP_CREATED       G_bcf7167f68 [NO_INDEPENDENT_SOURCE] C_7f1cb21778: no independent confirmation of 'Intermittent fasting strategies showed little additional benefit against continuous energy restriction, except for alternate day fasting which showed a reduction in body weight.' (value 0.48)
+RESEARCH_GAP_CREATED       G_0113bf8f85 [WEAK_INFERENCE] I_fd4eaedee5 → H2: needs evidence on 'Evidence that total calorie intake was matched between arms' (value 0.72)
+RESEARCH_GAP_CREATED       G_673416f219 [WEAK_INFERENCE] I_fd4eaedee5 → H2: needs evidence on 'A predefined equivalence margin' (value 0.72)
+RESEARCH_GAP_CREATED       G_841995c45b [NO_PRIMARY_SOURCE] C_59be92ab2f: no primary source for 'The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 1.51% from baseline to 10–12 months compared with continuous calorie restriction.' (value 0.42)
+RESEARCH_GAP_CREATED       G_cd39a14572 [NO_PRIMARY_SOURCE] C_7f1cb21778: no primary source for 'Intermittent fasting strategies showed little additional benefit against continuous energy restriction, except for alternate day fasting which showed a reduction in body weight.' (value 0.42)
+RESEARCH_GAP_CREATED       G_653127c9f7 [UNVERIFIED_EXTRACTION] C_05d911b469: 'No significant difference in efficacy between alternate day fasting and time-restricted eating was found in the meta-analysis.' was extracted but its excerpt could not be located in the source (value 0.18)
+RESEARCH_GAP_CREATED       G_dc97c714dd [UNVERIFIED_EXTRACTION] C_07b6564453: 'The systematic review and meta-analysis included 20 randomized controlled trials comparing isocaloric intermittent fasting with calorie restriction.' was extracted but its excerpt could not be located in the source (value 0.36)
+RESEARCH_GAP_CREATED       G_0821ed2239 [UNVERIFIED_EXTRACTION] C_9b1856ee66: 'The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 0.96 kg from baseline to 3 months compared with continuous calorie restriction.' was extracted but its excerpt could not be located in the source (value 0.18)
+RESEARCH_GAP_CREATED       G_c509fb2ab1 [NO_INDEPENDENT_SOURCE] C_2634ce8fb8: no independent confirmation of 'Alternate day fasting reduced body weight by a mean difference of -1.05 kg (95% CI -1.90 to -0.19) compared with whole day fasting, with moderate certainty of evidence.' (value 0.32)
+RESEARCH_GAP_CREATED       G_84266b0500 [NO_INDEPENDENT_SOURCE] C_2b765ed6fa: no independent confirmation of 'The three main forms of intermittent fasting (alternate day fasting, the 5:2 diet, and time-restricted eating) produced body weight reductions ranging from 1% to 13% over 2 to 52 weeks.' (value 0.16)
+RESEARCH_GAP_CREATED       G_b5e7f83fd9 [NO_INDEPENDENT_SOURCE] C_38ae53a441: no independent confirmation of 'Compliance was generally high (>80%) in intermittent fasting trials shorter than 3 months.' (value 0.16)
+RESEARCH_GAP_CREATED       G_1187686960 [NO_INDEPENDENT_SOURCE] C_5c2cff2244: no independent confirmation of 'In a 2022 meta-analysis by Zhang et al., the difference in BMI between intermittent fasting and continuous energy restriction failed to reach statistical significance.' (value 0.32)
+RESEARCH_GAP_CREATED       G_60c9b53685 [NO_INDEPENDENT_SOURCE] C_765a30b9a1: no independent confirmation of 'Intermittent fasting was not associated with a significantly greater reduction of body weight or BMI at any time point with respect to controls or in respect to continuous restricted diets, with low-to-moderate quality of evidence.' (value 0.32)
+RESEARCH_GAP_CREATED       G_cffc47b9e0 [NO_INDEPENDENT_SOURCE] C_7c497de5d2: no independent confirmation of 'There were no significant differences between intermittent fasting and continuous calorie restriction in body weight, BMI, or lean body mass at any time point in the meta-analysis.' (value 0.32)
+RESEARCH_GAP_CREATED       G_c9bf0e3d65 [NO_INDEPENDENT_SOURCE] C_8508c45c20: no independent confirmation of 'The meta-analysis showed that intermittent fasting regimens resulted in similar weight loss to CER, with a mean difference of 0.26 kg (95% CI: -0.31 to 0.84; p = 0.37).' (value 0.32)
+RESEARCH_GAP_CREATED       G_04c564b2b2 [NO_INDEPENDENT_SOURCE] C_8fbd6bdded: no independent confirmation of 'A 2022 meta-analysis by Zhang et al. found notable alterations in body weight after intermittent fasting compared to continuous energy restriction (CER).' (value 0.32)
+RESEARCH_GAP_CREATED       G_15eec24da8 [NO_INDEPENDENT_SOURCE] C_9fdc1d9b81: no independent confirmation of 'Compared with continuous energy restriction, alternate day fasting reduced body weight by a mean difference of -1.29 kg (95% CI -1.99 to -0.59), with moderate certainty of evidence.' (value 0.32)
+RESEARCH_GAP_CREATED       G_d075092cc2 [NO_REPLICATION] C_2634ce8fb8: supported by a single study (ST_498ae782ce) with no known replication (value 0.32)
+RESEARCH_GAP_CREATED       G_dfea8656c2 [NO_REPLICATION] C_2b765ed6fa: supported by a single study (ST_f67ce204d7) with no known replication (value 0.16)
+RESEARCH_GAP_CREATED       G_efbfc10a12 [NO_REPLICATION] C_38ae53a441: supported by a single study (ST_f67ce204d7) with no known replication (value 0.16)
+RESEARCH_GAP_CREATED       G_8ead63ae91 [NO_REPLICATION] C_5c2cff2244: supported by a single study (ST_62d1b04de4) with no known replication (value 0.32)
+RESEARCH_GAP_CREATED       G_862519d81b [NO_REPLICATION] C_765a30b9a1: supported by a single study (ST_94b171666e) with no known replication (value 0.32)
+RESEARCH_GAP_CREATED       G_ed5c04c1cc [NO_REPLICATION] C_7c497de5d2: supported by a single study (ST_e6da544c2d) with no known replication (value 0.32)
+RESEARCH_GAP_CREATED       G_dc1110484c [NO_REPLICATION] C_8508c45c20: supported by a single study (ST_f67ce204d7) with no known replication (value 0.32)
+AGENT_BIDS                 IndependenceResearcher 1.00 · GapResearcher 0.77 · AdversarialResearcher 0.72 · PrimarySourceResearcher 0.66 · ReplicationResearcher 0.65 · GeneralResearcher 0.15 · ContradictionResearcher 0.00 · Synthesis 0.00
+AGENT_SELECTED             Next agent: IndependenceResearcher (utility 1.00). Reason: [NO_INDEPENDENT_SOURCE] C_59be92ab2f: no independent confirmation of 'The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 1.51% from baseline to 10–12 months compared with continuous calorie restriction.'
+AGENT_SELECTED             Next agent: GapResearcher (utility 0.77). Reason: [WEAK_INFERENCE] I_fd4eaedee5 → H2: needs evidence on 'Evidence that total calorie intake was matched between arms'
+STOP_DECISION              CONTINUE: 15 critical claim(s) below sufficiency, 0 open contradiction(s), 25 researchable gap(s); new independent roots this round: 5
+RESEARCH_TASK_CREATED      T_94f57d3aca IndependenceResearcher: [NO_INDEPENDENT_SOURCE] C_59be92ab2f: no independent confirmation of 'The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 1.51% from baseline to 10–12 months compared with continuous calorie restriction.' → queries ['intermittent fasting versus continuous calorie restriction visceral fat mass meta-analysis', 'alternate day fasting versus continuous energy restriction body weight systematic review', 'intermittent fasting Cochrane review alternate day fasting whole day fasting body weight mean difference']
+SEARCH_EXECUTED            'intermittent fasting versus continuous calorie restriction visceral fat mass meta-analysis' → 8 result(s)
+SOURCE_FOUND               S_4d91313169 nih.gov: Intermittent Fasting versus Continuous Calorie Restriction: Which Is B (academic, tavily=0.84277284, diversity_penalty=0.00)
+SOURCE_FOUND               S_c2b9d97d36 nih.gov: Intermittent fasting and protein pacing are superior to caloric restri (academic, tavily=0.834852, diversity_penalty=0.15)
+SOURCE_FOUND               S_922cb9ef18 waltersport.com: Efficacy-of-Different-Modes-of-Intermittent-Fasting-for- ... (other, tavily=0.8455478, diversity_penalty=0.00)
+SOURCE_FOUND               S_9c7468b661 elsevierpure.com: Intermittent fasting and protein pacing are superior to caloric restri (other, tavily=0.81524754, diversity_penalty=0.00)
+SOURCE_FOUND               S_e2bca70cc9 gavinpublishers.com: Intermittent Fasting vs Continuous Caloric Restriction for Weight and  (other, tavily=0.77873385, diversity_penalty=0.00)
+SEARCH_EXECUTED            'alternate day fasting versus continuous energy restriction body weight systematic review' → 8 result(s)
+SOURCE_FOUND               S_533e8bcbae bmj.com: Intermittent fasting strategies and their effects on body weight and . (academic, tavily=0.90102744, diversity_penalty=0.00)
+SOURCE_FOUND               S_b090e92842 sciencedirect.com: Effect of alternate-day fasting on obesity and cardiometabolic risk: A (academic, tavily=0.88444936, diversity_penalty=0.00)
+SOURCE_FOUND               S_4eb3f34396 nih.gov: Comparison of the Effects of Intermittent Energy Restriction and Conti (academic, tavily=0.8405867, diversity_penalty=0.00)
+SOURCE_FOUND               S_6d42423126 frontiersin.org: Frontiers | Health Effects of Alternate-Day Fasting in Adults: A Syste (other, tavily=0.8934678, diversity_penalty=0.00)
+SEARCH_EXECUTED            'intermittent fasting Cochrane review alternate day fasting whole day fasting body weight mean difference' → 8 result(s)
+SOURCE_FOUND               S_5558e11fcd nih.gov: Intermittent fasting strategies and their effects on body weight and o (academic, tavily=0.8995547, diversity_penalty=0.00)
+SOURCE_FOUND               S_ded99c53e6 harvard.edu: Diet Review: Intermittent Fasting for Weight Loss • The Nutrition Sour (academic, tavily=0.74004334, diversity_penalty=0.00)
+SOURCE_FOUND               S_0556c455d7 sciencemediacentre.org: expert reaction to Cochrane review looking at intermittent fasting and (other, tavily=0.7931224, diversity_penalty=0.00)
+SOURCE_SCREENED            S_533e8bcbae: INCLUDE [systematic_review] (model) — Systematic review and network meta-analysis directly comparing intermittent fasting strategies vs continuous energy restriction on body weight
+SOURCE_SCREENED            S_5558e11fcd: INCLUDE [meta_analysis] (model) — PMC version of the BMJ systematic review and network meta-analysis directly comparing IF vs continuous energy restriction for weight loss in adults
+SOURCE_SCREENED            S_b090e92842: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis comparing alternate-day fasting vs continuous energy restriction for weight and cardiometabolic outcomes
+SOURCE_SCREENED            S_4d91313169: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis directly comparing intermittent fasting vs continuous calorie restriction for weight loss in overweight/obese adults
+SOURCE_SCREENED            S_4eb3f34396: INCLUDE [systematic_review] (model) — Overview of systematic reviews and meta-analyses comparing intermittent energy restriction vs continuous energy restriction for weight loss
+SOURCE_SCREENED            S_ded99c53e6: INCLUDE [review_site] (model) — Harvard Nutrition Source diet review summarizing evidence on intermittent fasting vs continuous calorie restriction for weight loss
+SOURCE_SCREENED            S_c2b9d97d36: INCLUDE [randomized_controlled_trial] (model) — RCT comparing intermittent fasting with protein pacing vs caloric restriction for weight and visceral fat loss in adults with obesity
+SOURCE_SCREENED            S_6d42423126: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis on alternate-day fasting vs continuous energy restriction for body weight and fat mass
+SOURCE_SCREENED            S_922cb9ef18: INCLUDE [meta_analysis] (model) — Network meta-analysis comparing different intermittent fasting modes for fat loss in adults with overweight/obesity
+SOURCE_SCREENED            S_9c7468b661: EXCLUDE [peer_reviewed_article] (model) — Duplicate of S_c2b9d97d36 (same study, ASU pure repository entry)
+SOURCE_SCREENED            S_0556c455d7: INCLUDE [news_article] (model) — Expert commentary on Cochrane review comparing intermittent fasting vs calorie restriction for weight loss
+SOURCE_SCREENED            S_e2bca70cc9: INCLUDE [randomized_controlled_trial] (model) — Study directly comparing intermittent fasting vs continuous caloric restriction for weight and body composition in adults
+SOURCE_SELECTED            S_533e8bcbae selected for extraction: https://www.bmj.com/content/bmj/389/bmj-2024-082007.full.pdf
+SOURCE_SELECTED            S_5558e11fcd selected for extraction: https://pmc.ncbi.nlm.nih.gov/articles/PMC12175170
+SOURCE_SELECTED            S_b090e92842 selected for extraction: https://www.sciencedirect.com/science/article/abs/pii/S0026049520302006
+SOURCE_EXTRACTED           S_533e8bcbae extracted (109,025 chars)
+SOURCE_EXTRACTED           S_5558e11fcd extracted (87,988 chars)
+SOURCE_EXTRACTED           S_b090e92842 extracted (29,515 chars)
+EVIDENCE_REJECTED          S_b090e92842: excerpt not found in source → stored as UNVERIFIED (no weight): Alternate-day fasting lowers body mass index in adults with overweight within 6 
+EVIDENCE_REJECTED          S_b090e92842: excerpt not found in source → stored as UNVERIFIED (no weight): Alternate-day fasting does not lower lean body mass compared to continuous energ
+EVIDENCE_REJECTED          S_b090e92842: excerpt not found in source → stored as UNVERIFIED (no weight): The meta-analysis found a significant effect of ADF on BMI with a weighted mean 
+EVIDENCE_REJECTED          S_b090e92842: excerpt not found in source → stored as UNVERIFIED (no weight): The meta-analysis found a significant effect of ADF on fat mass with a weighted 
+EVIDENCE_REJECTED          S_b090e92842: excerpt not found in source → stored as UNVERIFIED (no weight): The meta-analysis found a significant effect of ADF on total cholesterol with a 
+EVIDENCE_REJECTED          S_b090e92842: excerpt not found in source → stored as UNVERIFIED (no weight): Subgroup analyses indicated that significant intervention effects were observed 
+CLAIM_CREATED              C_158746ec26 [fact] The systematic review and network meta-analysis assessed the effect of intermittent fasting diets (alternate day fasting, time restricted eating, and whole day fasting) compared with continuous energy restriction or unrestricted (ad-libitum) diets on intermediate cardiometabolic outcomes from randomised clinical trials.
+CLAIM_CREATED              C_2d8582e868 [fact] The systematic review searched Medline, Embase, and CENTRAL databases from inception to 14 November 2024.
+CLAIM_CREATED              C_2b3d26bcc7 [fact] Eligibility criteria selected randomised clinical trials comparing intermittent fasting diets (alternate day fasting, time restricted eating, and whole day fasting) with continuous energy restriction or unrestricted diets.
+CLAIM_CREATED              C_4853aee247 [fact] The systematic review and network meta-analysis was accepted on 07 May 2025 and published as BMJ 2025;389:e082007.
+CLAIM_CREATED              C_a84c0d1ebf [fact] Estimates were similar among trials with less than 24 weeks follow-up (n=76); however, moderate-to-long-term trials (≥24 weeks, n=17) only showed benefits in weight reduction in diet strategies compared with ad-libitum.
+CLAIM_CREATED              C_a8b69a3c70 [fact] 99 randomised clinical trials involving 6582 adults of varying health conditions (720 healthy, 5862 existing health conditions) were identified.
+CLAIM_CREATED              C_39da99e30f [fact] Almost all (92%) of the identified randomised clinical trials were parallel in design, with a median follow-up time of 12 weeks (range 3–52 weeks); only five trials extended to 52 weeks or more.
+CLAIM_CREATED              C_879ffb358d [fact] The current evidence provides some indication that intermittent fasting diets have similar benefits to continuous energy restriction for weight loss and cardiometabolic risk factors.
+CLAIM_CREATED              C_0de986d319 [fact] No differences were noted between intermittent fasting, continuous energy restriction, and ad-libitum diets for HbA1c and high density lipoprotein.
+CLAIM_CREATED              C_4c914b6da2 [attribution] Cioffi and colleagues stated that cioffi and colleagues evaluated intermittent fasting, which grouped together WDF and ADF, against CER, in 11 identified trials of adults with overweight or obesity and observed no significant improvement for weight loss.
+CLAIM_CREATED              C_229f87d2a3 [fact] Cioffi and colleagues evaluated intermittent fasting, which grouped together WDF and ADF, against CER, in 11 identified trials of adults with overweight or obesity and observed no significant improvement for weight loss.
+CLAIM_CREATED              C_c1e1a9361f [fact] If at least 10 trials per diet comparisons were available, we conducted a-priori subgroup analyses for body weight and all other outcomes age, sex, study duration, type of design, disease status, risk of bias, and funding source.
+CLAIM_CREATED              C_9efa267ed3 [fact] Alternate-day fasting lowers body mass index in adults with overweight within 6 months compared to the control.
+CLAIM_CREATED              C_7347d40528 [fact] Alternate-day fasting lowers body weight, body fat, and total cholesterol in adults with overweight within 6 months compared to the control.
+CLAIM_CREATED              C_01a0269d40 [fact] Alternate-day fasting lowers waist circumference in adults 40 years of age or older with obesity.
+CLAIM_CREATED              C_0f88c5a407 [fact] Alternate-day fasting does not lower lean body mass compared to continuous energy restriction, time-restricted feeding, or control.
+CLAIM_CREATED              C_e24c41445b [fact] The meta-analysis found a significant effect of ADF on BMI with a weighted mean difference of −0.73 kg/m² (95% CI −1.13 to −0.34).
+CLAIM_CREATED              C_aecde760d4 [fact] The meta-analysis found a significant effect of ADF on fat mass with a weighted mean difference of −1.27 kg (95% CI −2.09 to −0.46).
+CLAIM_CREATED              C_79afe2eee1 [fact] The meta-analysis found a significant effect of ADF on total cholesterol with a weighted mean difference of −8.14 mg/dL (95% CI −14.59 to −1.69).
+CLAIM_CREATED              C_3611b079fc [fact] There was no difference between ADF and continuous energy restriction, time-restricted feeding, or control with regard to lean body mass.
+CLAIM_CREATED              C_c7aaa71ffc [fact] Subgroup analyses indicated that significant intervention effects were observed for BMI, BW, FM, and total cholesterol when compared to the control, the participants were overweight, and the study duration was <6 months.
+CLAIM_CREATED              C_9abc3a8109 [fact] The meta-analysis included eight randomized controlled trials with a total of 728 participants.
+CLAIM_MERGED               'Compared with continuous energy restriction, alternate day fasting was' merged into C_9fdc1d9b81
+CLAIM_MERGED               'Alternate day fasting showed a trivial reduction in body weight compar' merged into C_fa0742bad2
+CLAIM_MERGED               'Alternate day fasting showed a trivial reduction in body weight compar' merged into C_2634ce8fb8
+EVIDENCE_ATTACHED          E_a6c88f68b5 → C_158746ec26 STANCE: SUPPORTS p=0.95 directness=1.00 from S_533e8bcbae
+EVIDENCE_ATTACHED          E_081d622f90 → C_2d8582e868 STANCE: SUPPORTS p=0.95 directness=1.00 from S_533e8bcbae
+EVIDENCE_ATTACHED          E_6762b6ef25 → C_2b3d26bcc7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_533e8bcbae
+EVIDENCE_ATTACHED          E_b6bf8e198b → C_4853aee247 STANCE: SUPPORTS p=0.95 directness=1.00 from S_533e8bcbae
+EVIDENCE_ATTACHED          E_ee09e60ce2 → C_9fdc1d9b81 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_1f2912ebb1 → C_fa0742bad2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_2b2ea45bd1 → C_2634ce8fb8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_35404d7de5 → C_a84c0d1ebf STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_52bdca7bce → C_a8b69a3c70 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_a60eb6d17d → C_39da99e30f STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_d660e8287c → C_879ffb358d STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_03adbb068c → C_0de986d319 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_d8002562f8 → C_4c914b6da2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_bce3067ed1 → C_229f87d2a3 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_5558e11fcd
+EVIDENCE_ATTACHED          E_98c28629b7 → C_c1e1a9361f STANCE: SUPPORTS p=0.95 directness=1.00 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_e3677c468f → C_7347d40528 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b090e92842
+EVIDENCE_ATTACHED          E_fdee0eaffc → C_01a0269d40 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b090e92842
+EVIDENCE_ATTACHED          E_e6ac81127d → C_3611b079fc STANCE: SUPPORTS p=0.95 directness=1.00 from S_b090e92842
+EVIDENCE_ATTACHED          E_b2ec415de0 → C_9abc3a8109 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b090e92842
+EVIDENCE_ATTACHED          E_c4fb327319 → C_07b6564453 STANCE: NEUTRAL p=0.05 directness=0.50 from S_533e8bcbae
+EVIDENCE_ATTACHED          E_08235a3fa5 → C_8fbd6bdded STANCE: NEUTRAL p=0.05 directness=0.50 from S_533e8bcbae
+EVIDENCE_ATTACHED          E_1189b351b7 → C_07b6564453 STANCE: CONTRADICTS p=0.60 directness=0.50 from S_5558e11fcd
+CONTRADICTION_FOUND        S_5558e11fcd contradicts C_07b6564453: "99 randomised clinical trials involving 6582 adults of varying health conditions (720 heal"
+EVIDENCE_ATTACHED          E_852b421464 → C_7c497de5d2 STANCE: QUALIFIES p=0.05 directness=0.50 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_0e67aa184a → C_c254daaf5f STANCE: NEUTRAL p=0.05 directness=0.50 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_04b0229bce → C_8fbd6bdded STANCE: NEUTRAL p=0.05 directness=0.50 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_eec0071de2 → C_5c2cff2244 STANCE: NEUTRAL p=0.05 directness=0.50 from S_5558e11fcd
+EVIDENCE_ATTACHED          E_882f2d6632 → C_07b6564453 STANCE: CONTRADICTS p=0.60 directness=0.50 from S_b090e92842
+CONTRADICTION_FOUND        S_b090e92842 contradicts C_07b6564453: "meta-analyses to assess weighted mean difference (WMD) with 95% confidence intervals (CIs)"
+EVIDENCE_ATTACHED          E_944d2324ad → C_7c497de5d2 STANCE: SUPPORTS p=0.60 directness=0.50 from S_b090e92842
+DOCUMENT_CLASSIFIED        S_533e8bcbae systematic_review: Intermittent fasting strategies and their effects on body weight and o (DOI 10.1136/bmj-2024-082007)
+DOCUMENT_CLASSIFIED        S_5558e11fcd meta_analysis · peer reviewed: Intermittent fasting strategies and their effects on body weight and o (DOI 10.1136/bmj-2024-082007)
+DOCUMENT_CLASSIFIED        S_b090e92842 meta_analysis: Effect of alternate-day fasting on obesity and cardiometabolic risk: A (DOI 10.1016/j.metabol.2020.15)
+SCIENTIFIC_VERSION_RESOLVED 3 documents are versions of ONE work → 1 research lineage (ST_498ae782ce): S_769d81ca77 (meta_analysis), S_533e8bcbae (systematic_review), S_5558e11fcd (meta_analysis)
+STUDY_ASSESSED             ST_498ae782ce 'Intermittent fasting strategies and their effects on body we': design=meta_analysis, n=99, peer_reviewed=True, quality 0.76 (design prior 0.85 (meta_analysis); sample size not reported (×0.85); The review assesses intermediate cardiometabolic outcomes rather than clinical endpoints.)
+RESULT_EXTRACTED           RS_fb417c7629 Body weight (continuous energy restriction vs ad-libitum diet, <24 weeks): kg=-2.09 (95% CI -2.77–-1.41) n=76 [VERIFIED]
+RESULT_EXTRACTED           RS_24cc56a70c Body weight (continuous energy restriction vs ad-libitum diet, ≥24 weeks): kg=-2.21 (95% CI -3.72–-0.7) n=17 [VERIFIED]
+RESULT_EXTRACTED           RS_f2f4d15aae Body weight (alternate day fasting vs continuous energy restriction): effect=None n=None [VERIFIED]
+STUDY_ASSESSED             ST_08b177b76f 'Effect of alternate-day fasting on obesity and cardiometabol': design=meta_analysis, n=None, peer_reviewed=None, quality 0.72 (design prior 0.85 (meta_analysis); sample size not reported (×0.85); Significant intervention effects were reported only for subgroups: comparison with control, overweight participants, and study duration under 6 months.)
+RESULT_EXTRACTED           RS_71e370699d BMI: WMD=-0.73 (95% CI -1.13–-0.34) n=None [VERIFIED]
+RESULT_EXTRACTED           RS_a8b158097d Fat mass: WMD=-1.27 (95% CI -2.09–-0.46) n=None [VERIFIED]
+RESULT_EXTRACTED           RS_979a104dd9 Total cholesterol: WMD=-8.14 (95% CI -14.59–-1.69) n=None [VERIFIED]
+CLAIM_POSTERIOR_UPDATED    C_07b6564453 posterior 0.50 → 0.39, sufficiency 0.00 → 0.56 (3 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7c497de5d2 posterior 0.67 → 0.71, sufficiency 0.50 → 0.75 (3 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9fdc1d9b81 posterior 0.67 → 0.89, sufficiency 0.50 → 0.75 (2 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_fa0742bad2 posterior 0.67 → 0.89, sufficiency 0.50 → 0.75 (2 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2634ce8fb8 posterior 0.67 → 0.89, sufficiency 0.50 → 0.75 (2 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_158746ec26 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2d8582e868 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2b3d26bcc7 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_4853aee247 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a84c0d1ebf posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a8b69a3c70 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_39da99e30f posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_879ffb358d posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0de986d319 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_4c914b6da2 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_229f87d2a3 posterior 0.50 → 0.67, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_c1e1a9361f posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7347d40528 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_01a0269d40 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3611b079fc posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9abc3a8109 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.75 → 0.65 (sufficiency 1.00, active)
+SOURCE_DEPENDENCY_DETECTED S_533e8bcbae is a version of the same work as S_5558e11fcd (p=1.00: same DOI 10.1136/bmj-2024-082007; explicit cross-reference between versions; title similarity 1.00)
+SOURCE_DEPENDENCY_DETECTED S_5558e11fcd derives from S_533e8bcbae (p=0.80: text reuse: 84% of 6-word phrases shared)
+SOURCE_DEPENDENCY_DETECTED S_769d81ca77 is a version of the same work as S_5558e11fcd (p=0.80: title similarity 1.00)
+SOURCE_DEPENDENCY_DETECTED S_b090e92842 derives from S_7ec260fabb (p=0.81: text reuse: 37% of 6-word phrases shared; 1 identical quotation(s))
+INDEPENDENCE_SUMMARY       8 URLs with evidence → 6 publication families → 4 independent evidence roots
+CLAIM_POSTERIOR_UPDATED    C_7c497de5d2 posterior 0.71 → 0.67, sufficiency 0.75 → 0.50 (3 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9fdc1d9b81 posterior 0.89 → 0.82, sufficiency 0.75 → 0.50 (2 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_fa0742bad2 posterior 0.89 → 0.82, sufficiency 0.75 → 0.50 (2 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_2634ce8fb8 posterior 0.89 → 0.82, sufficiency 0.75 → 0.50 (2 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.65 → 0.74 (sufficiency 1.00, active)
+RESEARCH_TASK_CREATED      T_8bb5033548 GapResearcher: [WEAK_INFERENCE] I_fd4eaedee5 → H2: needs evidence on 'Evidence that total calorie intake was matched between arms' → queries ['intermittent fasting vs continuous calorie restriction weight loss randomized trial isocaloric matched calorie intake', 'intermittent fasting equivalence margin non-inferiority trial weight loss adults', 'intermittent fasting continuous calorie restriction matched energy intake randomized controlled trial weight loss']
+SEARCH_EXECUTED            'intermittent fasting vs continuous calorie restriction weight loss randomized trial isocaloric matched calorie intake' → 8 result(s)
+SOURCE_FOUND               S_438c5ca462 nih.gov: The Effects of Isocaloric Intermittent Fasting vs Daily Caloric Restri (academic, tavily=0.8727061, diversity_penalty=0.00)
+SOURCE_FOUND               S_e9a53bea7d ljmu.ac.uk: Is isocaloric intermittent fasting superior to calorie restriction? A  (academic, tavily=0.846159, diversity_penalty=0.00)
+SOURCE_FOUND               S_7f6d6a59cd consensus.app: Intermittent fasting vs. caloric restriction for weight loss. Which is (other, tavily=0.9088853, diversity_penalty=0.00)
+SOURCE_FOUND               S_3adb8485a4 practicalhealthscience.com: Intermittent Fasting vs Calorie Restriction: Which Works Better? | Pra (other, tavily=0.90432173, diversity_penalty=0.00)
+SOURCE_FOUND               S_76942fc561 researcher.life: COMPARISON OF INTERMITTENT AND CONTINUOUS CALORIE RESTRICTION STRATEGI (analyst, tavily=0.85624856, diversity_penalty=0.00)
+SOURCE_FOUND               S_6e9f5d1241 orivivo.com: Intermittent Fasting vs. Continuous Calorie Restriction: New Review Fi (other, tavily=0.8446273, diversity_penalty=0.00)
+SEARCH_EXECUTED            'intermittent fasting equivalence margin non-inferiority trial weight loss adults' → 8 result(s)
+SOURCE_FOUND               S_c87f70727c nih.gov: Effect of Intermittent Compared With Continuous Energy Restricted Diet (academic, tavily=0.7971311, diversity_penalty=0.00)
+SOURCE_FOUND               S_90318c396f springer.com: Comparison of weight loss induced by daily caloric restriction versus  (academic, tavily=0.75049835, diversity_penalty=0.00)
+SOURCE_FOUND               S_fe659aaf21 sciencedirect.com: The effectiveness of 5:2 intermittent fasting compared with continuous (academic, tavily=0.6778372, diversity_penalty=0.00)
+SOURCE_FOUND               S_53d3630d77 2minutemedicine.com: 4:3 intermittent fasting effective for weight loss among adults with o (other, tavily=0.78944516, diversity_penalty=0.00)
+SOURCE_FOUND               S_013d81a7ec nih.gov: A randomized controlled trial to isolate the effects of fasting and en (academic, tavily=0.62742686, diversity_penalty=0.15)
+SOURCE_FOUND               S_842d46354a rheumatologyadvisor.com: Weight Loss Greater With Intermittent Fasting Than Calorie Restriction (other, tavily=0.71040785, diversity_penalty=0.00)
+SOURCE_FOUND               S_dda23260ca eurekalert.org: Evidence behind intermittent fasting for weight loss fails to match hy (other, tavily=0.60861784, diversity_penalty=0.00)
+SEARCH_EXECUTED            'intermittent fasting continuous calorie restriction matched energy intake randomized controlled trial weight loss' → 8 result(s)
+SOURCE_FOUND               S_39dbdbf9b8 llu.edu: Effect of intermittent versus continuous energy restriction on weight  (academic, tavily=0.92392945, diversity_penalty=0.00)
+SOURCE_FOUND               S_f38fc13fd6 nih.gov: Effects of Intermittent Fasting in Human Compared to a Non-interventio (academic, tavily=0.89189607, diversity_penalty=0.00)
+SOURCE_FOUND               S_740dd9f42b nature.com: Impact of intermittent vs. continuous energy restriction on weight and (academic, tavily=0.7959917, diversity_penalty=0.00)
+SOURCE_FOUND               S_609dafaf09 nih.gov: Intermittent versus continuous energy restriction on weight loss and c (academic, tavily=0.878825, diversity_penalty=0.15)
+SOURCE_FOUND               S_8f70038568 nutrition.org: Matched Weight Loss Through Intermittent or Continuous ... (other, tavily=0.82895297, diversity_penalty=0.00)
+SOURCE_SCREENED            S_39dbdbf9b8: INCLUDE [randomized_controlled_trial] (model) — Directly compares intermittent vs continuous energy restriction on weight loss in a 1-year RCT; Reports weight loss outcomes for both groups
+SOURCE_SCREENED            S_f38fc13fd6: INCLUDE [meta_analysis] (model) — Meta-analysis of RCTs comparing intermittent fasting to caloric restriction on weight loss; Directly relevant to the question
+SOURCE_SCREENED            S_438c5ca462: INCLUDE [systematic_review] (model) — Systematic review of RCTs comparing isocaloric intermittent fasting vs daily caloric restriction on weight loss; Directly addresses the question
+SOURCE_SCREENED            S_e9a53bea7d: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis of RCTs comparing isocaloric intermittent fasting to calorie restriction; Directly relevant to the question
+SOURCE_SCREENED            S_c87f70727c: INCLUDE [randomized_controlled_trial] (model) — RCT comparing intermittent vs continuous energy restriction, though primary outcome is glycemic control in T2D patients; Reports weight outcomes relevant to the question
+SOURCE_SCREENED            S_740dd9f42b: INCLUDE [randomized_controlled_trial] (model) — 12-month RCT comparing intermittent vs continuous energy restriction on weight and cardiometabolic factors; Directly relevant to the question
+SOURCE_SCREENED            S_90318c396f: INCLUDE [randomized_controlled_trial] (model) — Study protocol for a 52-week RCT comparing daily caloric restriction vs intermittent fasting for weight loss; Directly relevant, though protocol rather than results
+SOURCE_SCREENED            S_609dafaf09: INCLUDE [meta_analysis] (model) — Systematic review and meta-analysis of RCTs comparing intermittent vs continuous energy restriction on weight loss and cardiometabolic outcomes; Directly relevant
+SOURCE_SCREENED            S_fe659aaf21: EXCLUDE [randomized_controlled_trial] (model) — Population is post-bariatric surgery patients with recurrent weight gain, not general adults; Wrong population for the question
+SOURCE_SCREENED            S_7f6d6a59cd: INCLUDE [review_site] (model) — Search results summary from Consensus app aggregating meta-analyses, systematic reviews, and RCTs comparing IF vs CR for weight loss; Directly relevant, though secondary aggregator
+SOURCE_SCREENED            S_3adb8485a4: EXCLUDE [blog] (model) — Blog post summarizing research rather than primary source; Commentary/summary only
+SOURCE_SCREENED            S_76942fc561: INCLUDE [peer_reviewed_article] (model) — Article comparing intermittent and continuous calorie restriction strategies in overweight/obese patients; Directly relevant to the question
+SOURCE_SCREENED            S_6e9f5d1241: EXCLUDE [news_article] (model) — News article summarizing a BMJ systematic review rather than primary source; Commentary only
+SOURCE_SCREENED            S_8f70038568: INCLUDE [randomized_controlled_trial] (model) — RCT examining matched weight loss through intermittent or continuous energy restriction; Directly relevant to the question
+SOURCE_SCREENED            S_53d3630d77: INCLUDE [news_article] (model) — Summary of RCT comparing 4:3 intermittent fasting vs daily calorie restriction for weight loss; Directly relevant to the question
+SOURCE_SCREENED            S_013d81a7ec: EXCLUDE [randomized_controlled_trial] (model) — Study population is lean adults, not overweight/obese adults seeking weight loss; Wrong population for the question
+SOURCE_SCREENED            S_842d46354a: INCLUDE [news_article] (model) — Reports on RCT comparing 4:3 intermittent fasting vs daily calorie restriction for weight loss in adults with obesity; Directly relevant to the question
+SOURCE_SCREENED            S_dda23260ca: EXCLUDE [news_article] (model) — Press release summarizing a systematic review rather than primary source; Commentary only
+SOURCE_SELECTED            S_39dbdbf9b8 selected for extraction: https://experts.llu.edu/en/publications/effect-of-intermittent-versus-continuous-energy-restriction-on-we-3
+SOURCE_EXTRACTED           S_39dbdbf9b8 extracted (15,350 chars)
+WARNING evidence_research.llm: Invalid structured output for extract_claims (attempt 1): 1 validation error for ExtractionOutput
+published_at
+  Input should be a valid date or datetime, input is too short [type=date_from_datetime_parsing, input_value='2018-07', input_type=str]
+    For fur
+STOP_DECISION              budget exhausted mid-round: model call budget exhausted (limit 37)
+RESEARCH_GAP_CREATED       G_0d1ef1ec6c [UNVERIFIED_EXTRACTION] C_0f88c5a407: 'Alternate-day fasting does not lower lean body mass compared to continuous energy restriction, time-restricted feeding, or control.' was extracted but its excerpt could not be located in the source (value 0.36)
+RESEARCH_GAP_CREATED       G_55cbdefeef [NO_INDEPENDENT_SOURCE] C_3611b079fc: no independent confirmation of 'There was no difference between ADF and continuous energy restriction, time-restricted feeding, or control with regard to lean body mass.' (value 0.32)
+RESEARCH_GAP_CREATED       G_e01c92e107 [SOURCE_DEPENDENCE] C_5c2cff2244: 2 sources but only 1 independent root (value 0.32)
+RESEARCH_GAP_CREATED       G_2a09e36f79 [NO_INDEPENDENT_SOURCE] C_7347d40528: no independent confirmation of 'Alternate-day fasting lowers body weight, body fat, and total cholesterol in adults with overweight within 6 months compared to the control.' (value 0.32)
+RESEARCH_GAP_CREATED       G_f1fa8515b9 [NO_REPLICATION] C_3611b079fc: supported by a single study (ST_08b177b76f) with no known replication (value 0.32)
+RESEARCH_GAP_CREATED       G_8b35e6b765 [NO_REPLICATION] C_7347d40528: supported by a single study (ST_08b177b76f) with no known replication (value 0.32)
+RESEARCH_GAP_CREATED       G_6cfc148fab [WEAK_INFERENCE] I_663e2df392 → H1: needs evidence on 'Evidence for all intermittent fasting protocols, not only alternate day fasting' (value 0.30)
+RESEARCH_GAP_CREATED       G_8eb007b05e [WEAK_INFERENCE] I_663e2df392 → H1: needs evidence on 'Evidence that total energy intake was matched' (value 0.30)
+RESEARCH_GAP_CREATED       G_5c6abe3238 [WEAK_INFERENCE] I_b0ec275941 → H4: needs evidence on 'Participant-characteristic or subgroup evidence' (value 0.30)
+RESEARCH_GAP_CREATED       G_a64b5d4be2 [WEAK_INFERENCE] I_b0ec275941 → H4: needs evidence on 'Direct protocol-by-protocol comparisons against continuous restriction' (value 0.30)
+RESEARCH_GAP_CREATED       G_4a35efdfac [WEAK_INFERENCE] I_0558ea0bff → H1: needs evidence on 'Any evidence that intermittent fasting produced greater weight loss' (value 0.30)
+RESEARCH_GAP_CREATED       G_611caf7674 [WEAK_INFERENCE] I_0558ea0bff → H1: needs evidence on 'Evidence for matched total energy intake' (value 0.30)
+RESEARCH_GAP_CREATED       G_0e5ad23da4 [WEAK_INFERENCE] I_cd73904e62 → H4: needs evidence on 'Direct comparisons of each protocol to continuous restriction' (value 0.30)
+RESEARCH_GAP_RESOLVED      G_bcf7167f68 resolved: C_7f1cb21778: no independent confirmation of 'Intermittent fasting strategies showed little additional benefit against continuous energy restriction, except for alternate day fasting which showed a reduction in body weight.'
+RESEARCH_GAP_RESOLVED      G_cd39a14572 resolved: C_7f1cb21778: no primary source for 'Intermittent fasting strategies showed little additional benefit against continuous energy restriction, except for alternate day fasting which showed a reduction in body weight.'
+RESEARCH_GAP_RESOLVED      G_dc97c714dd resolved: C_07b6564453: 'The systematic review and meta-analysis included 20 randomized controlled trials comparing isocaloric intermittent fasting with calorie restriction.' was extracted but its excerpt could not be located in the source
+RESEARCH_GAP_RESOLVED      G_0821ed2239 resolved: C_9b1856ee66: 'The combination of intermittent fasting and calorie restriction reduced visceral fat mass by 0.96 kg from baseline to 3 months compared with continuous calorie restriction.' was extracted but its excerpt could not be located in the source
+RESEARCH_GAP_RESOLVED      G_c509fb2ab1 resolved: C_2634ce8fb8: no independent confirmation of 'Alternate day fasting reduced body weight by a mean difference of -1.05 kg (95% CI -1.90 to -0.19) compared with whole day fasting, with moderate certainty of evidence.'
+RESEARCH_GAP_RESOLVED      G_1187686960 resolved: C_5c2cff2244: no independent confirmation of 'In a 2022 meta-analysis by Zhang et al., the difference in BMI between intermittent fasting and continuous energy restriction failed to reach statistical significance.'
+RESEARCH_GAP_RESOLVED      G_cffc47b9e0 resolved: C_7c497de5d2: no independent confirmation of 'There were no significant differences between intermittent fasting and continuous calorie restriction in body weight, BMI, or lean body mass at any time point in the meta-analysis.'
+RESEARCH_GAP_RESOLVED      G_c9bf0e3d65 resolved: C_8508c45c20: no independent confirmation of 'The meta-analysis showed that intermittent fasting regimens resulted in similar weight loss to CER, with a mean difference of 0.26 kg (95% CI: -0.31 to 0.84; p = 0.37).'
+RESEARCH_GAP_RESOLVED      G_04c564b2b2 resolved: C_8fbd6bdded: no independent confirmation of 'A 2022 meta-analysis by Zhang et al. found notable alterations in body weight after intermittent fasting compared to continuous energy restriction (CER).'
+RESEARCH_GAP_RESOLVED      G_15eec24da8 resolved: C_9fdc1d9b81: no independent confirmation of 'Compared with continuous energy restriction, alternate day fasting reduced body weight by a mean difference of -1.29 kg (95% CI -1.99 to -0.59), with moderate certainty of evidence.'
+RESEARCH_GAP_RESOLVED      G_ed5c04c1cc resolved: C_7c497de5d2: supported by a single study (ST_e6da544c2d) with no known replication
+RESEARCH_GAP_RESOLVED      G_dc1110484c resolved: C_8508c45c20: supported by a single study (ST_f67ce204d7) with no known replication
+STOP_DECISION              STOP (BUDGET_EXHAUSTED): model call budget exhausted; new independent roots this round: -1
+REPORT_GENERATED           report: INSUFFICIENT_EVIDENCE, 6 verified sentence(s), 0 rejected, 7 citation(s)
+REPORT_GENERATED           final review passed: 6 statement(s), each → claim → evidence → excerpt → source

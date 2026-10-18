@@ -1,6 +1,6 @@
 from datetime import date
 
-from evidence_research.graph.evidence_graph import EvidenceGraph, Link
+from evidence_research.graph.evidence_graph import SAT_CLAIM_CONFIDENCE, EvidenceGraph, Link
 from evidence_research.models import Claim, TemporalScope, stable_id
 
 from .conftest import make_claim, make_evidence, make_source
@@ -55,6 +55,6 @@ def test_temporal_versions_are_preserved_not_contradictions():
 def test_confidence_history_is_append_only():
     g = EvidenceGraph()
     c = g.add_claim(make_claim())
-    g.observe(c.id, "posterior", {"p": 0.6})
-    g.observe(c.id, "posterior", {"p": 0.4})
+    g.observe(c.id, SAT_CLAIM_CONFIDENCE, {"p": 0.6})
+    g.observe(c.id, SAT_CLAIM_CONFIDENCE, {"p": 0.4})
     assert [o.value["p"] for o in g.history(c.id)] == [0.5, 0.6, 0.4]

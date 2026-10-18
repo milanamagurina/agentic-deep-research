@@ -118,12 +118,22 @@ class NebiusGateway:
                 return schema.model_validate(extract_json(raw))
             except (json.JSONDecodeError, ValidationError) as e:
                 last_error = str(e)[:800]
+                self._dump_failure(op, repair, raw, last_error)
                 log.warning("Invalid structured output for %s (attempt %d): %s", op, repair + 1, last_error[:200])
-                messages = messages + [
-                    {"role": "assistant", "content": _THINK.sub("", raw)[:4000]},
-                    {"role": "user", "content": f"That was not valid for the schema: {last_error}\nReturn only the corrected JSON object."},
-                ]
+                # One fresh user turn quoting the bad output. Replaying it as an assistant turn breaks models
+                # that require their reasoning to be sent back (e.g. reflection/beam).
+                messages = messages[:2] + [{"role": "user", "content": (
+                    f"Your previous reply was not valid for the schema.\nReply (truncated):\n{_THINK.sub('', raw)[:3000]}\n\n"
+                    f"Validation errors:\n{last_error}\n\nReturn only the corrected JSON object.")}]
         raise LLMError(f"{op}: model output failed schema validation twice: {last_error[:300]}")
+
+    def _dump_failure(self, op: str, attempt: int, raw: str, error: str) -> None:
+        """Keep every invalid model reply for audit (data/llm_failures/); never secrets, only the reply."""
+        folder = self.settings.data_dir / "llm_failures"
+        folder.mkdir(parents=True, exist_ok=True)
+        stamp = time.strftime("%Y%m%dT%H%M%S")
+        (folder / f"{stamp}-{op}-{attempt}.txt").write_text(
+            f"finish_reason: {getattr(self, '_last_finish', None)}\nchars: {len(raw)}\nerror: {error}\n\n{raw}", encoding="utf-8")
 
     async def _complete(self, op: str, role: ModelRole, messages: list[dict[str, str]]) -> str:
         from openai import APIConnectionError, APIStatusError, APITimeoutError, RateLimitError
@@ -131,7 +141,7 @@ class NebiusGateway:
         model = self.model_for(role)
         delay = 2.0
         for attempt in range(self.settings.llm_max_retries):
-            self.budget.charge_model_call()
+            self.budget.charge_model_call(final=role is ModelRole.SYNTHESIS)
             t0 = time.monotonic()
             try:
                 async with self._sem:
@@ -139,6 +149,7 @@ class NebiusGateway:
                         model=model,
                         messages=messages,
                         temperature=0.1,
+                        max_tokens=self.settings.llm_max_tokens,
                         response_format={"type": "json_object"},
                     )
             except (APIConnectionError, APITimeoutError, RateLimitError, APIStatusError) as e:
@@ -153,7 +164,9 @@ class NebiusGateway:
             self._record(op, role, model, t0, ok=True,
                          prompt_tokens=getattr(usage, "prompt_tokens", None),
                          completion_tokens=getattr(usage, "completion_tokens", None))
-            return resp.choices[0].message.content or ""
+            choice = resp.choices[0]
+            self._last_finish = getattr(choice, "finish_reason", None)
+            return choice.message.content or ""
         raise LLMError(f"{op}: no attempts made")
 
     def _record(self, op: str, role: ModelRole, model: str, t0: float, ok: bool, **kw: Any) -> None:

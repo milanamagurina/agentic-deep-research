@@ -13,3 +13,17 @@ play_groud.ipynb
 .DS_Store
 .vscode/
 .idea/
+
+# local run data: SQLite sessions, saved invalid model replies
+*.sqlite3
+llm_failures/
+# logs, caches, editor/OS files
+*.log
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.streamlit/secrets.toml
+dist/
+build/
+*.egg-info/

@@ -23,7 +23,9 @@ TASK: Generate 3-5 mutually distinguishable competing hypotheses (explanations o
 question. Do not search. Do not decide which one is correct. Include a null hypothesis such as
 "public information is insufficient to establish X" where appropriate (mark is_null_hypothesis).
 For each non-null hypothesis list 2-5 evidence requirements: the specific kinds of evidence that
-would be needed to establish it (e.g. "independent retention data"). plausibility is a coarse prior."""
+would be needed to establish it (e.g. "independent retention data"). plausibility is a coarse prior.
+Prefer hypotheses whose predictions can be DISTINGUISHED by evidence: if two hypotheses would be
+supported by exactly the same evidence, merge them."""
 
 QUERY_PLANNER = _COMMON + """
 TASK: Write web search queries that would retrieve evidence for the listed research targets.
@@ -38,9 +40,14 @@ lawsuits, failed replications, critical analyses, competing data."""
 
 CLAIM_EXTRACTOR = _COMMON + """
 TASK: Extract only ATOMIC factual claims explicitly stated in the source text that are relevant to
-the question. One fact per claim (subject, predicate, object). Do not infer new facts. Preserve
-numbers, units, currencies, dates and subjects exactly.
-exact_excerpt MUST be copied character-for-character from source_text (one or two sentences).
+the question and its evidence requirements. One fact per claim (subject, predicate, object). Do not
+infer new facts. Preserve numbers, units, currencies, dates and subjects exactly.
+At most 10 claims: the ones most relevant to the evidence requirements, not every number on the page.
+natural_language MUST be self-contained: name the subject, the metric, the value and the period
+("Duolingo revenue was $252.3 million in Q2 2025"), never "the company" or "the year before".
+predicate should name the metric AND the period ("revenue Q2 2025"), so different periods differ.
+exact_excerpt MUST be copied character-for-character from source_text (one or two sentences, or one
+table row copied as it appears).
 REPORTED SPEECH RULE: if the text only reports that someone said something ("the CEO said revenue
 grew 200%"), set attributed_to to the speaker. Code will store both the attribution and the
 underlying fact separately.
@@ -81,10 +88,67 @@ low | medium | high. Return a mapping from gap id to rating."""
 
 SYNTHESIZER = _COMMON + """
 TASK: Write the executive conclusion from the structured findings ONLY. Each sentence must list the
-claim_ids it relies on; a sentence with no supporting claim id will be deleted by code. Use the
+claim_ids it relies on in the claim_ids field (never write IDs inside the sentence text); a sentence with no supporting claim id will be deleted by code. Use the
 provided status labels and say plainly when evidence is insufficient. Never write URLs, never invent
 numbers, never present model-estimated confidence as calibrated probability. Also list 2-4 concrete
 pieces of evidence that would change the conclusion."""
 
 BASELINE_SYNTHESIZER = """You answer a research question from web search results. Write a short report with
 citations as [n] referring to the numbered results. """ + UNTRUSTED_BOUNDARY
+
+SCREENER = _COMMON + """
+TASK: Screen search results BEFORE anything is extracted. For each result decide include, exclude or
+uncertain for answering the question, with short concrete reasons ("directly reports requested
+outcome", "commentary only", "wrong population", "outside temporal scope", "marketing page",
+"duplicate of another result"). relevance: low | medium | high. document_type: classify the page
+(peer_reviewed_article, conference_paper, preprint, systematic_review, meta_analysis,
+randomized_controlled_trial, observational_study, government_publication, regulator_publication,
+official_statistics, company_filing, company_press_release, industry_report, company_whitepaper,
+news_article, blog, social_media, forum, review_site, unknown). Judge only from title, URL and snippet.
+A preprint server (e.g. arXiv) hosts NON-peer-reviewed work: classify such pages as preprint."""
+
+SCIENTIFIC_REVIEWER = _COMMON + """
+TASK: Evaluate this scientific document's study design and methodological limitations, from the text only.
+Do not infer conclusions not supported by the reported methods and results.
+- study: title, authors, venue, year, DOI / arXiv ID if printed, whether it states peer review,
+  design, sample size, control group, randomization, blinding, preregistration, attrition,
+  conflicts of interest / funding, code and data availability, methodological warnings.
+  Use null when the text does not say. Do not assume peer review for a preprint.
+- results: each quantitative result relevant to the question: outcome, effect size and measure,
+  confidence interval, p-value, sample size, and an exact_excerpt copied verbatim from the text.
+- relations: if this study explicitly replicates, fails to replicate, extends, reanalyzes,
+  corrects or retracts ANOTHER named study, give that study's title as written and a verbatim excerpt.
+If the document is not an empirical study (editorial, news, review without data), set
+is_empirical_study=false."""
+
+NECESSITY_TESTER = _COMMON + """
+TASK: Deletion test for a reasoning chain. For each listed premise, imagine it is REMOVED. Could the
+conclusion still be justified from the REMAINING premises alone? Answer still_justified_without_it
+true or false with a one-line reason. Judge only the listed premises; this is a necessity check,
+not a judgement of whether the conclusion is true."""
+
+_RESEARCHER = _COMMON + """
+Write web search queries for the listed targets. Queries are specific: entity names, metric names,
+years. One query per target unless told otherwise. """
+
+AGENT_QUERY_PROMPTS = {
+    "GeneralResearcher": _RESEARCHER + "Goal: broad discovery of evidence for the evidence requirements of every hypothesis.",
+    "GapResearcher": _RESEARCHER + "Goal: close the specific research gaps listed (missing dimensions, weak inferences).",
+    "PrimarySourceResearcher": _RESEARCHER + (
+        "Goal: find PRIMARY sources for the target claims: official filings, regulator or statistics "
+        "publications, the original study or dataset, the company's own investor relations. Avoid news "
+        "rewrites. Add terms like 'annual report', 'filing', 'official statistics', 'original study', 'pdf'."),
+    "IndependenceResearcher": _RESEARCHER + (
+        "Goal: find evidence that is INDEPENDENT of the subject and of the sources already found: third-party "
+        "data (app analytics, panels, surveys), independent analysts, regulators, academic studies, journalism "
+        "with its own reporting. Exclude the subject's own website, filings and press releases and anything "
+        "that only repeats them."),
+    "ContradictionResearcher": _RESEARCHER + (
+        "Goal: RESOLVE the listed contradictions: find the authoritative figure, the exact period each "
+        "value refers to, definitions that differ, or corrections and restatements."),
+    "AdversarialResearcher": ADVERSARIAL_RESEARCHER,
+    "ReplicationResearcher": _RESEARCHER + (
+        "Goal: find replications, failed replications, reanalyses, corrections or retractions of the "
+        "listed studies, and independent studies of the same intervention and outcome. Use the study "
+        "titles and terms like 'replication', 'failed to replicate', 'preregistered', 'meta-analysis'."),
+}

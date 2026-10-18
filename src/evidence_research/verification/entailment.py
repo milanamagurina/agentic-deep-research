@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ..config import Heuristics
-from ..llm.gateway import LLMGateway, ModelRole
+from ..llm.gateway import LLMError, LLMGateway, ModelRole
 from ..llm.prompts import EVIDENCE_JUDGE
 from ..models import StanceJudgement, StanceOutput
 
@@ -46,16 +46,27 @@ def score(j: StanceJudgement, h: Heuristics, reported_speech: bool) -> ScoredSta
     )
 
 
-async def judge_pairs(llm: LLMGateway, pairs: list[JudgePair]) -> dict[str, StanceJudgement]:
+CHUNK = 15
+
+
+async def judge_pairs(llm: LLMGateway, pairs: list[JudgePair], on_error=None) -> dict[str, StanceJudgement]:
+    """Batches of CHUNK pairs. A failed batch is reported via ``on_error`` and its pairs stay unjudged
+    (they then carry no evidential weight); it does not abort the run."""
     if not pairs:
         return {}
     out: dict[str, StanceJudgement] = {}
-    for start in range(0, len(pairs), 25):  # bounded prompt size
-        chunk = pairs[start : start + 25]
+    for start in range(0, len(pairs), CHUNK):  # bounded prompt and output size
+        chunk = pairs[start : start + CHUNK]
         payload = {"pairs": [
             {"pair_id": p.pair_id, "claim": p.claim_text, "excerpt": p.excerpt, "excerpt_is_reported_speech": p.reported_speech}
             for p in chunk
         ]}
-        result = await llm.structured("judge_stance", ModelRole.VERIFIER, EVIDENCE_JUDGE, payload, StanceOutput)
+        try:  # classification task: the fast model (reasoning models can exhaust output tokens on long batches)
+            result = await llm.structured("judge_stance", ModelRole.FAST, EVIDENCE_JUDGE, payload, StanceOutput)
+        except LLMError as e:
+            if on_error is None:
+                raise
+            on_error(f"stance judgement failed for {len(chunk)} pair(s); they stay unjudged: {e}")
+            continue
         out.update({j.pair_id: j for j in result.judgements if j.pair_id in {p.pair_id for p in chunk}})
     return out

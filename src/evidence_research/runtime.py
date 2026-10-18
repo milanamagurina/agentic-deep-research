@@ -11,8 +11,9 @@ from .orchestration.budget import BudgetTracker
 from .orchestration.orchestrator import Orchestrator, RunResult
 
 
-def build(settings: Settings, depth: Depth, demo: bool, on_event: Callable[[ResearchEvent], None] | None = None,
+def build(settings: Settings, depth: Depth, demo: str | None, on_event: Callable[[ResearchEvent], None] | None = None,
           persist: bool = True) -> tuple[Orchestrator, Settings]:
+    """``demo``: None for a live run, or a synthetic scenario name ("business", "science")."""
     settings = settings.with_depth(depth)
     budget = BudgetTracker(settings.budget)
     events = EventLog()
@@ -20,9 +21,10 @@ def build(settings: Settings, depth: Depth, demo: bool, on_event: Callable[[Rese
         events.subscribe(on_event)
     repo = Repository(settings.data_dir / "research.sqlite") if persist else None
     if demo:
-        from .demo.scenario import TODAY, FakeSearch, ScriptedLLM
+        from .demo import FakeSearch, ScriptedLLM, get_scenario
 
-        return Orchestrator(settings, ScriptedLLM(budget), FakeSearch(), budget, events, repo, today=TODAY), settings
+        sc = get_scenario(demo)
+        return Orchestrator(settings, ScriptedLLM(sc, budget), FakeSearch(sc.pages), budget, events, repo, today=sc.today), settings
     settings.require_live()
     from .llm.gateway import NebiusGateway
     from .retrieval.tavily_client import TavilyResearchClient
@@ -30,7 +32,11 @@ def build(settings: Settings, depth: Depth, demo: bool, on_event: Callable[[Rese
     return Orchestrator(settings, NebiusGateway(settings, budget, events), TavilyResearchClient(settings), budget, events, repo), settings
 
 
-async def research(question: str, settings: Settings, depth: Depth = Depth.STANDARD, demo: bool = False,
+async def research(question: str | None, settings: Settings, depth: Depth = Depth.STANDARD, demo: str | None = None,
                    on_event: Callable[[ResearchEvent], None] | None = None, persist: bool = True) -> RunResult:
     orch, _ = build(settings, depth, demo, on_event, persist)
-    return await orch.run(question, depth.value, synthetic=demo)
+    if demo and not question:
+        from .demo import get_scenario
+
+        question = get_scenario(demo).question
+    return await orch.run(question, depth.value, synthetic=bool(demo))

@@ -53,3 +53,12 @@ def test_free_form_url_fails():
 def test_claim_whose_excerpt_is_not_in_source_fails():
     g, cid = _graph(excerpt="Revenue grew 70% thanks to a fabricated quote that is not on the page.")
     assert not CitationVerifier(g).check("Revenue grew 70%.", [cid]).ok
+
+
+def test_ids_echoed_into_prose_are_not_numbers():
+    from evidence_research.verification.citation_verifier import strip_ids
+
+    g, cid = _graph()
+    check = CitationVerifier(g).check(f"Revenue grew 70% [{cid}], consistent with H3.", [cid])
+    assert check.ok, check.reason
+    assert strip_ids(f"Revenue grew 70% [{cid}, C_0123456789].") == "Revenue grew 70%."

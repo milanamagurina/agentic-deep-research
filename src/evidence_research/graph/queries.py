@@ -12,11 +12,18 @@ _STYLE = {
     "claim": 'shape=box style="filled" fillcolor="#f1f5f9"',
     "evidence": 'shape=note fontsize=9',
     "source": 'shape=cylinder style=filled fillcolor="#ecfccb" fontsize=9',
+    "study": 'shape=folder style=filled fillcolor="#ede9fe" fontsize=9',
+    "result": 'shape=note style=filled fillcolor="#f5f3ff" fontsize=9',
 }
 _EDGE = {
     Link.SUPPORTS.value: 'color="#16a34a"', Link.CONTRADICTS.value: 'color="#dc2626" penwidth=2',
     Link.QUALIFIES.value: 'color="#a3a3a3" style=dashed', Link.DERIVED_FROM.value: 'color="#64748b" style=dotted',
     Link.PREMISE_OF.value: 'color="#0369a1"', Link.TEMPORAL_VERSION_OF.value: 'color="#7c3aed" style=dashed',
+    Link.EXTRACTED_FROM.value: 'color="#64748b" style=dotted', Link.SUPPORTS_HYPOTHESIS.value: 'color="#16a34a" penwidth=1.5',
+    Link.CHALLENGES_HYPOTHESIS.value: 'color="#dc2626" penwidth=1.5', Link.REQUIRED_FOR.value: 'color="#0f172a" penwidth=2.5',
+    Link.DUPLICATES.value: 'color="#7c3aed" style=dotted', Link.REPLICATES.value: 'color="#16a34a" style=bold',
+    Link.FAILS_TO_REPLICATE.value: 'color="#dc2626" style=bold', Link.PRODUCES.value: 'color="#7c3aed"',
+    Link.EXTRACTED_AS.value: 'color="#7c3aed" style=dashed',
 }
 
 
@@ -56,6 +63,12 @@ def focus_nodes(g: EvidenceGraph, hypothesis_id: str | None, show_evidence: bool
                 nodes.add(ev.id)
             if show_sources:
                 nodes.add(ev.source_id)
+            if ev.result_id and ev.result_id in g.results:
+                nodes.add(ev.result_id)
+                nodes.add(g.results[ev.result_id].study_id)
+    for rel in g.study_relations.values():  # replication graph between studies already shown
+        if rel.to_study_id in nodes:
+            nodes.add(rel.from_study_id)
     return nodes
 
 

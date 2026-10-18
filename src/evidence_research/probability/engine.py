@@ -11,10 +11,12 @@ from datetime import date
 
 from ..config import Settings
 from ..evidence.source_classifier import is_primary, reliability_for
-from ..graph.evidence_graph import EvidenceGraph
+from ..graph.evidence_graph import SAT_CLAIM_CONFIDENCE, SAT_HYPOTHESIS_POSTERIOR, EvidenceGraph
+from ..models import Claim, Evidence, EvidenceQuality
 from ..observability.events import EventLog, EventType
+from ..science.quality import replication_factor
 from .bayesian import UpdateResult, inference_strength, update_claim, update_hypothesis
-from .evidence_score import evidence_strength
+from .evidence_score import bucket, evidence_strength, likelihood_ratio
 from .uncertainty import claim_sufficiency, classify_claim, classify_hypothesis
 
 
@@ -38,18 +40,43 @@ class BeliefState:
         return max((abs(current.get(k, 0.5) - previous.get(k, 0.5)) for k in keys), default=0.0)
 
 
+def evidence_quality(graph: EvidenceGraph, e: Evidence, claim: Claim, settings: Settings) -> EvidenceQuality:
+    """Keep every dimension separate; only the final strength is a product (section 28)."""
+    a = graph.assessments[e.source_id]
+    source_q = reliability_for(a, claim)
+    study = graph.study_for_source(e.source_id)
+    study_q = replication = result_q = None
+    effective = source_q
+    if study is not None:
+        sa = graph.study_assessments[study.id]
+        study_q = sa.quality_score
+        replication, _ = replication_factor(graph.study_relations_to(study.id))
+        effective = source_q * (0.4 + 0.6 * study_q) * replication
+    if e.result_id and e.result_id in graph.results:
+        r = graph.results[e.result_id]
+        result_q = 1.0 if (r.ci_low is not None or r.p_value is not None) else 0.9
+        effective *= result_q
+    effective = min(0.95, effective)
+    strength = evidence_strength(e, effective)
+    lr, label = likelihood_ratio(e, strength, settings.heuristics)
+    entail = e.entailment_probability if e.stance == "supports" else e.contradiction_probability if e.stance == "contradicts" else 0.0
+    return EvidenceQuality(evidence_id=e.id, source_quality=source_q, study_quality=study_q, result_quality=result_q, entailment=entail,
+                           replication=replication, independence=a.independence, temporal_relevance=e.temporal_relevance,
+                           directness=e.directness, strength=strength, likelihood_ratio=lr, bucket=label if lr != 1 else bucket(strength, settings.heuristics))
+
+
 def recompute(graph: EvidenceGraph, settings: Settings, events: EventLog, today: date) -> BeliefState:
     h = settings.heuristics
     state = BeliefState()
 
     for claim in graph.claims.values():
         items = []
-        for e in graph.evidence_for(claim.id):
-            assessment = graph.assessments.get(e.source_id)
-            if assessment is None:
+        for e in graph.evidence_for(claim.id):  # verified evidence only; unverified carries no weight
+            if e.source_id not in graph.assessments:
                 continue
-            strength = evidence_strength(e, reliability_for(assessment, claim))
-            items.append((e, strength, graph.root_of.get(e.source_id, e.source_id)))
+            q = evidence_quality(graph, e, claim, settings)
+            graph.set_evidence_quality(q)
+            items.append((e, q.strength, graph.root_of.get(e.source_id, e.source_id)))
         result = update_claim(h.claim_prior, items, h)
         informative = [c for c in result.contributions if c.lr != 1.0]
         roots = {c.root_id for c in informative}
@@ -67,7 +94,7 @@ def recompute(graph: EvidenceGraph, settings: Settings, events: EventLog, today:
         state.claims[claim.id] = ClaimBelief(claim.id, result, raw, len(roots), primary, contested)
         if abs(old_p - result.posterior) >= 0.005 or abs(old_s - sufficiency) >= 0.005:
             reason = f"{raw} raw source(s), {len(roots)} independent root(s){', primary source' if primary else ''}"
-            graph.observe(claim.id, "posterior", {"p": result.posterior, "sufficiency": sufficiency, "status": claim.status.value}, reason)
+            graph.observe(claim.id, SAT_CLAIM_CONFIDENCE, {"p": result.posterior, "sufficiency": sufficiency, "status": claim.status.value}, reason)
             events.emit(EventType.CLAIM_POSTERIOR_UPDATED,
                         f"{claim.id} posterior {old_p:.2f} → {result.posterior:.2f}, sufficiency {old_s:.2f} → {sufficiency:.2f} ({reason})",
                         claim_id=claim.id, old=old_p, new=result.posterior, sufficiency=sufficiency,
@@ -114,6 +141,6 @@ def _set_hypothesis(graph, events, hyp, posterior: float, settings: Settings, tr
     hyp.posterior_probability = posterior
     hyp.status = classify_hypothesis(posterior, hyp.evidence_sufficiency, settings.min_claim_confidence, settings.min_evidence_sufficiency)
     if abs(old - posterior) >= 0.005:
-        graph.observe(hyp.id, "posterior", {"p": posterior, "sufficiency": hyp.evidence_sufficiency, "status": hyp.status}, f"{len(trail)} accepted inference(s)")
+        graph.observe(hyp.id, SAT_HYPOTHESIS_POSTERIOR, {"p": posterior, "sufficiency": hyp.evidence_sufficiency, "status": hyp.status}, f"{len(trail)} accepted inference(s)")
         events.emit(EventType.HYPOTHESIS_UPDATED, f"{hyp.id} posterior {old:.2f} → {posterior:.2f} (sufficiency {hyp.evidence_sufficiency:.2f}, {hyp.status})",
                     hypothesis_id=hyp.id, old=old, new=posterior)

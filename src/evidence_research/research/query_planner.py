@@ -1,14 +1,18 @@
-"""Search query generation: discovery, gap-targeted and adversarial (sections 7, 20, 28).
+"""Search query generation per researcher agent (sections 21, 29, 32).
 
-The model writes query text; code decides how many queries, for which targets, and dedups them.
+Each agent has its own specialized prompt (llm/prompts.py AGENT_QUERY_PROMPTS). The model writes the
+query text; code decides which agent runs, for which targets, how many queries, and dedups them.
 """
 
 from __future__ import annotations
 
+from ..graph.active import ActiveResearchGraph
 from ..graph.evidence_graph import EvidenceGraph
 from ..llm.gateway import LLMGateway, ModelRole
-from ..llm.prompts import ADVERSARIAL_RESEARCHER, QUERY_PLANNER
+from ..llm.prompts import AGENT_QUERY_PROMPTS
 from ..models import QueryPlanOutput, QuestionAnalysis, ResearchGap
+
+REASONING_AGENTS = {"AdversarialResearcher", "ContradictionResearcher"}
 
 
 def _dedup(queries: list[str], seen: set[str], limit: int) -> list[str]:
@@ -23,31 +27,36 @@ def _dedup(queries: list[str], seen: set[str], limit: int) -> list[str]:
     return out
 
 
-async def discovery_queries(llm: LLMGateway, analysis: QuestionAnalysis, graph: EvidenceGraph, seen: set[str], limit: int) -> list[str]:
-    targets = [{"target": r.description, "hypothesis": graph.hypotheses[r.hypothesis_id].text}
-               for r in sorted(graph.requirements.values(), key=lambda r: -r.importance)]
-    payload = {"question": analysis.normalized_question, "entities": analysis.key_entities,
-               "temporal_scope": analysis.temporal_scope, "targets": targets[:8], "max_queries": limit}
-    out = await llm.structured("plan_discovery_queries", ModelRole.FAST, QUERY_PLANNER, payload, QueryPlanOutput)
-    return _dedup(out.queries, seen, limit)
+def targets_for(agent: str, analysis: QuestionAnalysis, graph: EvidenceGraph, gaps: list[ResearchGap],
+                active: ActiveResearchGraph, target_ids: list[str]) -> list[dict]:
+    if agent == "GeneralResearcher":
+        reqs = [graph.requirements[t] for t in target_ids if t in graph.requirements] or \
+               sorted(graph.requirements.values(), key=lambda r: -r.importance)
+        return [{"target": r.description, "hypothesis": graph.hypotheses[r.hypothesis_id].text} for r in reqs[:8]]
+    if agent == "AdversarialResearcher":
+        leader = graph.hypotheses.get(target_ids[0]) if target_ids else None
+        return [{"leading_hypothesis": leader.text if leader else None,
+                 "claims_to_attack": [{"id": c["id"], "text": c["text"], "posterior": c["posterior"]} for c in active.claims[:6]]}]
+    by_id = {g.id: g for g in gaps}
+    out = []
+    for gid in target_ids:
+        g = by_id.get(gid)
+        if g is None:
+            continue
+        t = {"gap_id": g.id, "gap_type": g.gap_type, "need": g.description, "hint": g.suggested_query}
+        if g.target_id in graph.studies:
+            t["study_title"] = graph.studies[g.target_id].title
+        out.append(t)
+    return out
 
 
-async def gap_queries(llm: LLMGateway, analysis: QuestionAnalysis, gaps: list[ResearchGap], seen: set[str], limit: int) -> list[str]:
-    payload = {"question": analysis.normalized_question, "entities": analysis.key_entities,
-               "targets": [{"gap_id": g.id, "gap_type": g.gap_type, "need": g.description, "hint": g.suggested_query} for g in gaps],
+async def plan_queries(llm: LLMGateway, agent: str, analysis: QuestionAnalysis, graph: EvidenceGraph, gaps: list[ResearchGap],
+                       active: ActiveResearchGraph, target_ids: list[str], seen: set[str], limit: int) -> list[str]:
+    if limit <= 0:
+        return []
+    payload = {"agent": agent, "question": analysis.normalized_question, "entities": analysis.key_entities,
+               "temporal_scope": analysis.temporal_scope, "targets": targets_for(agent, analysis, graph, gaps, active, target_ids),
                "max_queries": limit}
-    out = await llm.structured("plan_gap_queries", ModelRole.FAST, QUERY_PLANNER, payload, QueryPlanOutput)
-    return _dedup(out.queries, seen, limit)
-
-
-async def adversarial_queries(llm: LLMGateway, analysis: QuestionAnalysis, graph: EvidenceGraph, seen: set[str], limit: int) -> list[str]:
-    leading = max((h for h in graph.hypotheses.values() if not h.is_null_hypothesis), key=lambda h: h.posterior_probability, default=None)
-    targets = sorted(graph.claims.values(), key=lambda c: (-c.importance, -c.truth_probability))[:6]
-    payload = {
-        "question": analysis.normalized_question, "entities": analysis.key_entities,
-        "leading_hypothesis": leading.text if leading else None,
-        "target_claims": [{"id": c.id, "text": c.natural_language, "posterior": round(c.truth_probability, 2)} for c in targets],
-        "max_queries": limit,
-    }
-    out = await llm.structured("plan_adversarial_queries", ModelRole.REASONING, ADVERSARIAL_RESEARCHER, payload, QueryPlanOutput)
+    role = ModelRole.REASONING if agent in REASONING_AGENTS else ModelRole.FAST
+    out = await llm.structured("plan_queries", role, AGENT_QUERY_PROMPTS[agent], payload, QueryPlanOutput)
     return _dedup(out.queries, seen, limit)

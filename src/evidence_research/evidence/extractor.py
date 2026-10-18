@@ -2,7 +2,8 @@
 
 Per round (LLM calls: one extraction per source + one matcher batch + one judge batch):
   A. extract atomic claims with verbatim excerpts (model);
-  B. code rejects any excerpt that is not in the retrieved text;
+  B. code LOCATES every excerpt in the retrieved text and stores the source's own characters;
+     excerpts that cannot be located become UNVERIFIED evidence (kept, zero weight);
   C. reported speech is split into an ATTRIBUTION claim (strongly evidenced) and the underlying
      FACT claim (evidence capped at low directness) - section 22;
   D. claim normalization: canonical-key match, else candidate retrieval + model SAME/DIFFERENT;
@@ -24,9 +25,9 @@ from ..models import (
     Claim, Evidence, ExtractedClaimProposal, ExtractionOutput, QuestionAnalysis, SameClaimOutput, Source, TemporalScope, stable_id,
 )
 from ..observability.events import EventLog, EventType
-from ..verification.citation_verifier import excerpt_in_text
 from ..verification.entailment import JudgePair, judge_pairs, score
 from .claim_normalizer import canonical_key, candidates
+from .excerpts import Located, locate_excerpt, select_passages
 from .source_classifier import assess
 from .temporal import temporal_relevance
 
@@ -41,6 +42,7 @@ class IngestStats:
     merged_claims: int = 0
     evidence: int = 0
     rejected_excerpts: int = 0
+    unverified: int = 0
 
 
 @dataclass
@@ -51,6 +53,7 @@ class _Pending:
     reported_speech: bool
     depends_on_key: str | None = None  # fact claim -> its attribution claim (by key)
     key: str = ""
+    located: Located | None = None
 
 
 class EvidencePipeline:
@@ -64,7 +67,8 @@ class EvidencePipeline:
             "question": question, "source_url": src.url, "source_title": src.title,
             "requirements": [{"id": r.id, "description": r.description} for r in self.graph.requirements.values()],
             "existing_claims": [{"id": c.id, "text": c.natural_language} for c in existing],
-            "source_text": src.raw_text[:MAX_SOURCE_CHARS],
+            "source_text": select_passages(src.raw_text, [question, *analysis.key_entities, *(r.description for r in self.graph.requirements.values())],
+                                           MAX_SOURCE_CHARS),
         }
         try:
             return await self.llm.structured("extract_claims", ModelRole.FAST, CLAIM_EXTRACTOR, payload, ExtractionOutput)
@@ -93,44 +97,55 @@ class EvidencePipeline:
         existing_pairs: list[tuple[str, Source, str]] = []
         for src, out in zip(sources, outputs):
             if src.id not in self.graph.assessments:
-                self.graph.set_assessment(assess(src, analysis.key_entities))
+                screen = self.graph.screening.get(src.id)
+                self.graph.set_assessment(assess(src, analysis.key_entities, screen.document_type if screen else None))
             if out is None:
                 continue
             if src.published_at is None and out.published_at and str(out.published_at.year) in src.raw_text:
                 src.published_at = out.published_at  # only if the year is actually on the page
-            for cp in out.claims:
-                if not excerpt_in_text(cp.exact_excerpt, src.raw_text):
-                    stats.rejected_excerpts += 1
-                    self.events.emit(EventType.EVIDENCE_REJECTED, f"{src.id}: excerpt not found verbatim in source, claim dropped: {cp.natural_language[:80]}",
+            for cp in out.claims[:12]:
+                loc = locate_excerpt(cp.exact_excerpt, src.raw_text)
+                if loc is None:
+                    stats.unverified += 1
+                    self.events.emit(EventType.EVIDENCE_REJECTED,
+                                     f"{src.id}: excerpt not found in source → stored as UNVERIFIED (no weight): {cp.natural_language[:80]}",
                                      source_id=src.id)
-                    continue
+                excerpt = loc.span if loc else cp.exact_excerpt
                 fact = self._claim_from(cp, attribution=False)
                 if cp.attributed_to:
                     att = self._claim_from(cp, attribution=True)
-                    pending.append(_Pending(att, src, cp.exact_excerpt, False, key=att.id))
-                    pending.append(_Pending(fact, src, cp.exact_excerpt, True, depends_on_key=att.id, key=fact.id))
+                    pending.append(_Pending(att, src, excerpt, False, key=att.id, located=loc))
+                    pending.append(_Pending(fact, src, excerpt, True, depends_on_key=att.id, key=fact.id, located=loc))
                 else:
-                    pending.append(_Pending(fact, src, cp.exact_excerpt, False, key=fact.id))
+                    pending.append(_Pending(fact, src, excerpt, False, key=fact.id, located=loc))
             for b in out.bears_on_existing:
-                if b.claim_id in self.graph.claims and excerpt_in_text(b.exact_excerpt, src.raw_text):
-                    existing_pairs.append((b.claim_id, src, b.exact_excerpt))
+                loc = locate_excerpt(b.exact_excerpt, src.raw_text)
+                if b.claim_id in self.graph.claims and loc:
+                    existing_pairs.append((b.claim_id, src, loc))
                 else:
                     stats.rejected_excerpts += 1
 
         resolved = await self._resolve(pending, stats)
 
         pairs: list[JudgePair] = []
+        locations: dict[str, Located] = {}
         for p in pending:
             cid = resolved[p.key]
             if p.depends_on_key:
-                self.graph.link_claims(cid, resolved[p.depends_on_key], Link.DEPENDS_ON)
-            pairs.append(JudgePair(stable_id("P", cid, p.source.id, p.excerpt), cid, self.graph.claims[cid].natural_language,
-                                   p.source.id, p.excerpt, p.reported_speech))
-        for cid, src, excerpt in existing_pairs:
-            pairs.append(JudgePair(stable_id("P", cid, src.id, excerpt), cid, self.graph.claims[cid].natural_language, src.id, excerpt))
+                self.graph.link(cid, resolved[p.depends_on_key], Link.DEPENDS_ON)
+            if p.located is None:
+                self._store_unverified(cid, p)
+                continue
+            pid = stable_id("P", cid, p.source.id, p.excerpt)
+            locations[pid] = p.located
+            pairs.append(JudgePair(pid, cid, self.graph.claims[cid].natural_language, p.source.id, p.excerpt, p.reported_speech))
+        for cid, src, loc in existing_pairs:
+            pid = stable_id("P", cid, src.id, loc.span)
+            locations[pid] = loc
+            pairs.append(JudgePair(pid, cid, self.graph.claims[cid].natural_language, src.id, loc.span))
         pairs = list({p.pair_id: p for p in pairs}.values())
 
-        judgements = await judge_pairs(self.llm, pairs)
+        judgements = await judge_pairs(self.llm, pairs, on_error=lambda msg: self.events.emit(EventType.ERROR, msg))
         for pair in pairs:
             j = judgements.get(pair.pair_id)
             if j is None:
@@ -140,10 +155,10 @@ class EvidencePipeline:
             src, claim = self.graph.sources[pair.source_id], self.graph.claims[pair.claim_id]
             ev = Evidence(
                 id=stable_id("E", pair.source_id, pair.claim_id, pair.excerpt), source_id=pair.source_id, claim_id=pair.claim_id,
-                exact_excerpt=pair.excerpt, stance=sc.stance, entailment_probability=sc.entailment_probability,
+                exact_excerpt=pair.excerpt, location=locations[pair.pair_id].location, verification_status="verified", stance=sc.stance, entailment_probability=sc.entailment_probability,
                 contradiction_probability=sc.contradiction_probability, directness=sc.directness,
                 temporal_relevance=temporal_relevance(src.published_at, claim.temporal_scope, self.today),
-                extraction_confidence=0.9, reported_speech=pair.reported_speech,
+                extraction_confidence=0.9 if locations[pair.pair_id].method == "exact" else 0.75, reported_speech=pair.reported_speech,
             )
             if self.graph.add_evidence(ev):
                 stats.evidence += 1
@@ -156,6 +171,14 @@ class EvidencePipeline:
                     self.events.emit(EventType.CONTRADICTION_FOUND, f"{src.id} contradicts {claim.id}: \"{ev.exact_excerpt[:90]}\"",
                                      claim_id=claim.id, source_id=src.id)
         return stats
+
+    def _store_unverified(self, claim_id: str, p: _Pending) -> None:
+        """Negative provenance: the model's extraction is kept, but carries no evidential weight."""
+        ev = Evidence(id=stable_id("E", p.source.id, claim_id, p.excerpt), source_id=p.source.id, claim_id=claim_id,
+                      exact_excerpt=p.excerpt, verification_status="unverified", stance="neutral", entailment_probability=0.0,
+                      contradiction_probability=0.0, directness=0.0, temporal_relevance=0.0, extraction_confidence=0.0,
+                      reported_speech=p.reported_speech)
+        self.graph.add_evidence(ev)
 
     async def _resolve(self, pending: list[_Pending], stats: IngestStats) -> dict[str, str]:
         """Map each pending claim key to a graph claim id, merging duplicates (section 16)."""

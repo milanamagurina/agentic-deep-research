@@ -100,3 +100,46 @@ def test_tavily_client_parses_and_never_invents_dates():
     pages, failed = asyncio.run(client.extract(["https://a.example/x", "https://b.example/y"]))
     assert pages[0].raw_content == "full text" and failed == ["https://b.example/y"]
     assert parse_date("not a date") is None and parse_date(None) is None
+
+
+def test_repair_retry_never_replays_an_assistant_turn():
+    """Reasoning models (e.g. reflection/beam) reject assistant turns sent back without their reasoning."""
+    gw, fake = _gateway(['{"ok": "nope"', '{"ok": true}'])
+    asyncio.run(gw.structured("op", ModelRole.REASONING, "sys", {}, Out))
+    assert [m["role"] for m in fake.calls[1]["messages"]] == ["system", "user", "user"]
+
+
+def test_model_outputs_ignore_extra_keys_but_domain_objects_do_not():
+    from evidence_research.models import Claim, HypothesisProposal
+
+    h = HypothesisProposal.model_validate({"key": "H1", "text": "t", "title": "extra from the model"})
+    assert not hasattr(h, "title")
+    with pytest.raises(Exception):
+        Claim.model_validate({"id": "c", "subject": "s", "predicate": "p", "object": "o", "natural_language": "n", "bogus": 1})
+
+
+def test_invalid_replies_are_kept_for_audit(tmp_path):
+    gw, _ = _gateway(["not json", '{"ok": true}'], DATA_DIR=str(tmp_path))
+    asyncio.run(gw.structured("judge_stance", ModelRole.VERIFIER, "sys", {}, Out))
+    dumps = list((tmp_path / "llm_failures").glob("*judge_stance*"))
+    assert len(dumps) == 1 and "not json" in dumps[0].read_text()
+
+
+def test_a_failed_judge_batch_degrades_visibly_instead_of_aborting():
+    from evidence_research.verification.entailment import CHUNK, JudgePair, judge_pairs
+
+    class Flaky:
+        records: list = []
+        calls = 0
+
+        async def structured(self, op, role, system, payload, schema):
+            Flaky.calls += 1
+            if Flaky.calls == 1:
+                raise LLMError("model returned garbage")
+            return schema(judgements=[{"pair_id": p["pair_id"], "stance": "supports", "strength": "explicit", "directness": "direct"}
+                                      for p in payload["pairs"]])
+
+    pairs = [JudgePair(f"P{i}", "c", "claim", "s", "excerpt") for i in range(CHUNK + 3)]
+    errors: list[str] = []
+    out = asyncio.run(judge_pairs(Flaky(), pairs, on_error=errors.append))
+    assert len(out) == 3 and len(errors) == 1 and "stay unjudged" in errors[0]

@@ -1,0 +1,580 @@
+SESSION_STARTED            'Does Duolingo have strong product-market fit?' (depth=fast)
+QUESTION_ANALYZED          entities=['Duolingo', 'language-learning market', 'product-market fit'] scope=Current state with multi-year trend context (e.g., last 3-5 years of growth and retention metrics) assumptions=['Product-market fit is a binary or measurable state rather than a spectrum', 'Public financial and user metrics are sufficient proxies for true product-market fit', "Duolingo's freemium model is the only relevant business model to evaluate", 'Strong product-market fit implies sustainable long-term defensibility']
+HYPOTHESIS_CREATED         H1 Duolingo demonstrates strong product-market fit across its core language-learning market, supported by durable engagement, retention, monetization, and organic growth. (heuristic prior 0.50)
+HYPOTHESIS_CREATED         H2 Duolingo's apparent success reflects gamification-driven engagement rather than durable language-learning value, with weak long-term retention, completion, and monetization. (heuristic prior 0.20)
+HYPOTHESIS_CREATED         H3 Duolingo has strong product-market fit among casual or beginner learners but weak fit among serious, advanced, or paid learners. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H4 Duolingo currently shows strong usage metrics, but product-market fit is eroding due to AI-enabled competitors and content commoditization. (heuristic prior 0.35)
+HYPOTHESIS_CREATED         H5 Public financial and user metrics are insufficient proxies to establish whether Duolingo has strong product-market fit. (heuristic prior 0.35)
+REQUIREMENT_CREATED        H1.R1 for H1: Independent cohort retention curves (e.g., D30/D90/D365) by geography and learner segment versus language-learning peers (importance 1.0)
+REQUIREMENT_CREATED        H1.R2 for H1: Paid subscriber conversion, churn, and net revenue retention relative to engagement levels (importance 1.0)
+REQUIREMENT_CREATED        H1.R3 for H1: Organic acquisition share, virality, and customer acquisition cost payback (importance 0.6)
+REQUIREMENT_CREATED        H1.R4 for H1: Learning-outcome or proficiency-gain evidence and customer satisfaction signals such as NPS (importance 0.6)
+REQUIREMENT_CREATED        H2.R1 for H2: Independent long-term retention and course-completion data showing low sustained usage (importance 1.0)
+REQUIREMENT_CREATED        H2.R2 for H2: Evidence that engagement is driven by streaks/gamification rather than measurable learning progress (importance 1.0)
+REQUIREMENT_CREATED        H2.R3 for H2: Monetization weakness relative to engagement, such as low conversion, high churn, or low ARPU (importance 0.6)
+REQUIREMENT_CREATED        H2.R4 for H2: Comparative proficiency-outcome benchmarks versus other language-learning products (importance 0.6)
+REQUIREMENT_CREATED        H3.R1 for H3: Segment-level retention and conversion by learner intent, proficiency level, and use case (importance 1.0)
+REQUIREMENT_CREATED        H3.R2 for H3: Paid subscriber behavior, churn, and feature usage among advanced learners (importance 1.0)
+REQUIREMENT_CREATED        H3.R3 for H3: Outcome evidence showing beginner gains but advanced-user plateau (importance 0.6)
+REQUIREMENT_CREATED        H3.R4 for H3: Willingness-to-pay and price sensitivity by learner segment (importance 0.6)
+REQUIREMENT_CREATED        H4.R1 for H4: Cohort-level trends showing declining retention or engagement among newer users (importance 1.0)
+REQUIREMENT_CREATED        H4.R2 for H4: Competitive AI product adoption, switching, or substitution data (importance 1.0)
+REQUIREMENT_CREATED        H4.R3 for H4: Pricing power, ARPU, or customer acquisition cost trends (importance 0.6)
+REQUIREMENT_CREATED        H4.R4 for H4: User-reported intent to switch or perceived differentiation versus alternatives (importance 0.6)
+AGENT_BIDS                 GeneralResearcher 0.95 · PrimarySourceResearcher 0.00 · IndependenceResearcher 0.00 · ContradictionResearcher 0.00 · GapResearcher 0.00 · ReplicationResearcher 0.00 · Synthesis 0.00
+AGENT_SELECTED             Next agent: GeneralResearcher (utility 0.95). Reason: no evidence collected yet: broad discovery first
+RESEARCH_TASK_CREATED      T_5030d3e11e GeneralResearcher: no evidence collected yet: broad discovery first → queries ['Duolingo D30 D90 retention cohort language learning app', 'Duolingo paid subscriber conversion churn net revenue retention Super Duolingo', 'Duolingo long-term retention course completion rate study independent', 'Duolingo streaks gamification engagement versus learning outcomes research']
+SEARCH_EXECUTED            'Duolingo D30 D90 retention cohort language learning app' → 8 result(s)
+SOURCE_FOUND               S_94747c9d21 udonis.co: Duolingo Statistics (2026): Users, Revenue, Downloads (blog, tavily=0.80625874, diversity_penalty=0.00)
+SOURCE_FOUND               S_adea315d0d bizeract.com: Cohort Retention Calculator — D1 D7 D30 D90 | Bizeract (other, tavily=0.6133529, diversity_penalty=0.00)
+SOURCE_FOUND               S_ea8bca4f3c platformexecutive.com: Language-Learning App Duolingo Files for US Ipo, Reveals Revenue Surge (other, tavily=0.5433243, diversity_penalty=0.00)
+SOURCE_FOUND               S_9cb0254731 amazonaws.com: [PDF] The Duolingo Method for App-based Teaching and Learning - AWS (other, tavily=0.5059329, diversity_penalty=0.00)
+SOURCE_FOUND               S_380695d731 trypropel.ai: Duolingo's Customer Retention Strategy | Propel (other, tavily=0.4804549, diversity_penalty=0.00)
+SOURCE_FOUND               S_6229f2c16e researchgate.net: (PDF) Gamified Learning: Evaluating the Impact of Duolingo on Language (analyst, tavily=0.47957736, diversity_penalty=0.00)
+SOURCE_FOUND               S_155958c2c9 bettermarketing.pub: Duolingo's Excellent User Retention Strategies (other, tavily=0.44767818, diversity_penalty=0.00)
+SOURCE_FOUND               S_33671ef9c4 iphtechnologies.com: Build a Language Learning App | Blog | IPH Technologies (other, tavily=0.42792314, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Duolingo paid subscriber conversion churn net revenue retention Super Duolingo' → 8 result(s)
+SOURCE_FOUND               S_6cc47fe054 moontechnolabs.com: Duolingo Business Model: Stats, Funding & SWOT Analysis (other, tavily=0.7286136, diversity_penalty=0.00)
+SOURCE_FOUND               S_c781067cb8 untaylored.com: How Does Duolingo Make Money? The Business Model and Revenue Streams E (other, tavily=0.71305263, diversity_penalty=0.00)
+SOURCE_FOUND               S_c272c77337 appmakersla.com: How Duolingo Makes Money: A Deep Dive Into Its Revenue Model - AppMake (other, tavily=0.6816637, diversity_penalty=0.00)
+SOURCE_FOUND               S_e33e9d0054 umbrex.com: Duolingo Strategy and Business Model (other, tavily=0.6675167, diversity_penalty=0.00)
+SOURCE_FOUND               S_b725c17610 sec.gov: duol-20251231 (company_filing, tavily=0.6320719, diversity_penalty=0.00)
+SOURCE_FOUND               S_e77c766899 sqmagazine.co.uk: Duolingo Statistics 2026: Users, Revenue and Languages (other, tavily=0.6255073, diversity_penalty=0.00)
+SOURCE_FOUND               S_f0107d7ee7 x.com: Sabba Keynejad on X: "Duolingo is approaching $1Bn in ARR with: – mont (social, tavily=0.7001783, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Duolingo long-term retention course completion rate study independent' → 8 result(s)
+SOURCE_FOUND               S_5f7dfef22e hawaii.edu: The effectiveness of Duolingo in developing receptive and ... (academic, tavily=0.5900477, diversity_penalty=0.00)
+SOURCE_FOUND               S_7da1f41ba0 duolingo.com: Understanding Duolingo’s Time Spent Learning Well Metric (company, tavily=0.63777614, diversity_penalty=0.00)
+SOURCE_FOUND               S_db0ee21ffa nih.gov: Exploring the potential of gamified reading: the effects of duolingo o (academic, tavily=0.44434834, diversity_penalty=0.00)
+SOURCE_FOUND               S_3239451447 comparelanguageapps.com: Duolingo Effectiveness Study (other, tavily=0.6266047, diversity_penalty=0.00)
+SOURCE_FOUND               S_91a8013331 duolingo.com: 4 Learnings from Duolingo Efficacy Studies (company, tavily=0.5760895, diversity_penalty=0.15)
+SOURCE_FOUND               S_cd24d5e840 theproductfolks.com: Duolingo Product Case Study | The Product Folks (other, tavily=0.6139086, diversity_penalty=0.00)
+SOURCE_FOUND               S_763ddf1030 reddit.com: Less than 5% of users reach 12500xp : r/duolingo (social, tavily=0.6533265, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Duolingo streaks gamification engagement versus learning outcomes research' → 8 result(s)
+SOURCE_FOUND               S_6e0143a99e springer.com: The impact of Duolingo usage patterns on motivation and self-perceived (academic, tavily=0.7946564, diversity_penalty=0.00)
+SOURCE_FOUND               S_3d826369ab diva-portal.org: The Influence of Duolingo's Gamified Design Elements (other, tavily=0.9108078, diversity_penalty=0.00)
+SOURCE_FOUND               S_4a274b05c4 behaviouralbydesign.com: 🧠 The Real Effect of Duolingo (other, tavily=0.85097736, diversity_penalty=0.00)
+SOURCE_FOUND               S_aa6dec0f68 strivecloud.io: Duolingo gamification explained | StriveCloud (other, tavily=0.79939574, diversity_penalty=0.00)
+SOURCE_FOUND               S_0d0aa9e50f thedecisionlab.com: Streak Creep: When Gamified Engagement Mechanics Backfire - The Decisi (other, tavily=0.7197191, diversity_penalty=0.00)
+SOURCE_FOUND               S_a4c1f7bc7a ejels.com: Levelling Up Writing: Investigating Duolingo’s Gamification Effect on  (other, tavily=0.7132923, diversity_penalty=0.00)
+SOURCE_FOUND               S_283531649d reddit.com: I don't think gamification and streaks helps with learning (social, tavily=0.7646988, diversity_penalty=0.00)
+SOURCE_SCREENED            S_6e0143a99e: EXCLUDE [peer_reviewed_article] (model) — Study focuses on motivation and self-perceived speaking proficiency in Chinese EFL students, not on Duolingo's product-market fit metrics (growth, retention, monetization)
+SOURCE_SCREENED            S_3d826369ab: EXCLUDE [unknown] (model) — Thesis on gamification design elements and user experience; does not address product-market fit, growth, or retention metrics
+SOURCE_SCREENED            S_5f7dfef22e: EXCLUDE [observational_study] (model) — Study evaluates Duolingo's effectiveness for Spanish learning over 3 months; not about product-market fit
+SOURCE_SCREENED            S_4a274b05c4: EXCLUDE [blog] (model) — Blog commentary on gamification effectiveness vs engagement; no PMF metrics
+SOURCE_SCREENED            S_7da1f41ba0: EXCLUDE [blog] (model) — Duolingo blog post about internal learning metric; not about product-market fit
+SOURCE_SCREENED            S_aa6dec0f68: INCLUDE [industry_report] (model) — Discusses Duolingo's product strategy pivot to gamified streaks and DAU growth (10x), directly relevant to product-market fit
+SOURCE_SCREENED            S_db0ee21ffa: EXCLUDE [peer_reviewed_article] (model) — Study on L2 reading and self-efficacy in Chinese university EFL context; not about PMF
+SOURCE_SCREENED            S_6cc47fe054: INCLUDE [industry_report] (model) — Provides revenue breakdown (subscriptions >80%), user base stats, and business model relevant to PMF assessment
+SOURCE_SCREENED            S_0d0aa9e50f: EXCLUDE [blog] (model) — Commentary on gamification backfire; anecdotal, no PMF metrics
+SOURCE_SCREENED            S_c781067cb8: INCLUDE [blog] (model) — Discusses subscriber engagement virtuous cycle, retention, and churn dynamics relevant to PMF
+SOURCE_SCREENED            S_a4c1f7bc7a: EXCLUDE [peer_reviewed_article] (model) — Study on gamification effect on EFL writing skills; not about PMF
+SOURCE_SCREENED            S_94747c9d21: INCLUDE [industry_report] (model) — Provides D1/D7/D30/D90/D365 retention rates, user acquisition, and growth metrics directly relevant to PMF
+SOURCE_SCREENED            S_c272c77337: INCLUDE [industry_report] (model) — Provides paid subscriber count (12.2M as of end 2025), revenue model details relevant to PMF
+SOURCE_SCREENED            S_e33e9d0054: INCLUDE [industry_report] (model) — Company profile covering subscription pricing, conversion, churn, and retention levers relevant to PMF
+SOURCE_SCREENED            S_b725c17610: INCLUDE [company_filing] (model) — SEC 10-K filing with official paid subscriber counts, conversion metrics, and financial data directly relevant to PMF
+SOURCE_SCREENED            S_3239451447: EXCLUDE [unknown] (model) — Older effectiveness study from 2012; not about PMF metrics
+SOURCE_SCREENED            S_e77c766899: INCLUDE [industry_report] (model) — Provides paid subscriber growth (9.5M to 12.7M), MAU conversion rates, and multi-year trend data relevant to PMF
+SOURCE_SCREENED            S_91a8013331: EXCLUDE [blog] (model) — Duolingo blog about efficacy studies comparing to classroom learning; not about PMF
+SOURCE_SCREENED            S_cd24d5e840: EXCLUDE [blog] (model) — Product case study describing user journey and metrics framework; no actual PMF data
+SOURCE_SCREENED            S_adea315d0d: EXCLUDE [unknown] (model) — Generic cohort retention calculator tool; not Duolingo-specific
+SOURCE_SCREENED            S_283531649d: EXCLUDE [forum] (model) — Reddit forum discussion on gamification; anecdotal, no PMF data
+SOURCE_SCREENED            S_ea8bca4f3c: EXCLUDE [news_article] (model) — News article about IPO filing; older event, limited PMF insight
+SOURCE_SCREENED            S_9cb0254731: EXCLUDE [company_whitepaper] (model) — Duolingo whitepaper on teaching methodology; not about PMF metrics
+SOURCE_SCREENED            S_f0107d7ee7: INCLUDE [social_media] (model) — Provides specific retention metrics: monthly churn 16%, 9% annual sub retention, 40% 13-month retention for annual subs, ARR approaching $1Bn - directly relevant to PMF
+SOURCE_SCREENED            S_380695d731: INCLUDE [blog] (model) — Discusses Duolingo's retention metrics framework, A/B testing scale, and D1/D7/D30 retention rates relevant to PMF
+SOURCE_SCREENED            S_6229f2c16e: EXCLUDE [peer_reviewed_article] (model) — Study on language retention and academic performance in secondary students; not about PMF
+SOURCE_SCREENED            S_763ddf1030: EXCLUDE [forum] (model) — Reddit forum post on course completion rates; anecdotal, limited PMF insight
+SOURCE_SCREENED            S_155958c2c9: INCLUDE [blog] (model) — Reports Duolingo's next-day retention rate of 55% (up from 13% in 2012), directly relevant to PMF and multi-year trend
+SOURCE_SCREENED            S_33671ef9c4: EXCLUDE [blog] (model) — Generic blog about building a language learning app like Duolingo; no PMF data
+SOURCE_SELECTED            S_94747c9d21 selected for extraction: https://www.blog.udonis.co/mobile-marketing/mobile-apps/duolingo
+SOURCE_SELECTED            S_b725c17610 selected for extraction: https://www.sec.gov/Archives/edgar/data/1562088/000162828026012494/duol-20251231.htm
+SOURCE_SELECTED            S_e77c766899 selected for extraction: https://sqmagazine.co.uk/duolingo-statistics
+SOURCE_SELECTED            S_f0107d7ee7 selected for extraction: https://x.com/sab8a/status/1948042185842291184
+SOURCE_SELECTED            S_155958c2c9 selected for extraction: https://bettermarketing.pub/duolingos-excellent-user-retention-strategies-693520caac99
+SOURCE_SELECTED            S_aa6dec0f68 selected for extraction: https://www.strivecloud.io/duolingo-gamification-explained
+SOURCE_EXTRACTED           S_94747c9d21 extracted (21,814 chars)
+SOURCE_EXTRACTED           S_b725c17610 extracted (409,385 chars)
+SOURCE_EXTRACTED           S_e77c766899 extracted (39,604 chars)
+SOURCE_EXTRACTED           S_f0107d7ee7 extracted (5,067 chars)
+SOURCE_EXTRACTED           S_155958c2c9 extracted (6,157 chars)
+SOURCE_EXTRACTED           S_aa6dec0f68 extracted (22,508 chars)
+EVIDENCE_REJECTED          S_94747c9d21: excerpt not found in source → stored as UNVERIFIED (no weight): Duolingo's daily active users (DAU) were consistently above 40 million through t
+EVIDENCE_REJECTED          S_94747c9d21: excerpt not found in source → stored as UNVERIFIED (no weight): Duolingo's monthly active users (MAU) were above 160 million through the first h
+EVIDENCE_REJECTED          S_aa6dec0f68: excerpt not found in source → stored as UNVERIFIED (no weight): 80% of students credited gamification as the primary reason they continued using
+CLAIM_CREATED              C_a6ebdfaa6e [fact] Duolingo's D30 retention rate is 12.0%.
+CLAIM_CREATED              C_5c654f4053 [fact] Duolingo's D90 retention rate is 9.1%.
+CLAIM_CREATED              C_601adee7fa [fact] Duolingo's D365 retention rate is 6.8%.
+CLAIM_CREATED              C_7522de22ef [fact] Duolingo's daily active users (DAU) were consistently above 40 million through the first half of 2026.
+CLAIM_CREATED              C_93db9fc7b6 [fact] Duolingo's monthly active users (MAU) were above 160 million through the first half of 2026.
+CLAIM_CREATED              C_24911db1bb [fact] Duolingo's DAU/MAU ratio is 28.6%, which is high for a non-social app where most education apps sit closer to 10-15%.
+CLAIM_CREATED              C_a2de44915a [fact] Duolingo has generated $2.4 billion in lifetime in-app revenue.
+CLAIM_CREATED              C_614fd6d228 [fact] Duolingo generated $625.1 million in in-app revenue in 2025.
+CLAIM_CREATED              C_a5312bfbf9 [fact] Duolingo's downloads grew about 6% year over year from 2024 to 2025.
+CLAIM_CREATED              C_071585e27c [fact] Duolingo's revenue grew 16% from 2024 to 2025.
+CLAIM_CREATED              C_4ca691f310 [fact] Duolingo learners complete nearly 2 billion exercises every day as stated in the FY2025 10-K.
+CLAIM_CREATED              C_327e244fc4 [attribution] Duolingo internal study stated that according to an internal study cited in Duolingo's FY2025 10-K, learners who completed five sections of Duolingo achieved proficiency comparable to five university semesters of language education.
+CLAIM_CREATED              C_0b18375a05 [fact] According to an internal study cited in Duolingo's FY2025 10-K, learners who completed five sections of Duolingo achieved proficiency comparable to five university semesters of language education.
+CLAIM_CREATED              C_fda59c7d93 [attribution] Independent studies stated that independent studies cited in Duolingo's FY2025 10-K found that Duolingo learners' speaking skills matched those of university students.
+CLAIM_CREATED              C_419617bd73 [fact] Independent studies cited in Duolingo's FY2025 10-K found that Duolingo learners' speaking skills matched those of university students.
+CLAIM_CREATED              C_768836e689 [attribution] Independent studies stated that independent studies cited in Duolingo's FY2025 10-K found that users learning English on Duolingo outperformed students in traditional classroom settings on standardized language proficiency tests.
+CLAIM_CREATED              C_0cdf35a686 [fact] Independent studies cited in Duolingo's FY2025 10-K found that users learning English on Duolingo outperformed students in traditional classroom settings on standardized language proficiency tests.
+CLAIM_CREATED              C_ae31441e58 [fact] As of December 31, 2025, approximately 9% of Duolingo's monthly active users were paid subscribers.
+CLAIM_CREATED              C_163a892fbf [fact] Duolingo scaled to more than 130 million monthly active users for the three months ended December 31, 2025.
+CLAIM_CREATED              C_b03f9f70d5 [fact] Duolingo states in its FY2025 10-K that it has grown its business organically, primarily driven by word-of-mouth and brand buzz, and supplemented by selective and targeted paid user acquisition.
+CLAIM_CREATED              C_73229d09fa [fact] Duolingo's FY2025 10-K states that anyone can download the Duolingo App and use it free; free users see an ad at the end of each lesson, while paid subscribers enjoy an ad-free experience and access to additional features.
+CLAIM_CREATED              C_d7abca872f [fact] Duolingo's FY2025 10-K states that its gamification elements, including bite-sized lessons, points, streaks, collaboration, and friendly competition, are designed to encourage learners to return to learning.
+CLAIM_CREATED              C_98b6970cdc [fact] Duolingo's FY2025 10-K states that certain factors have negatively affected user stickiness, growth and engagement to varying degrees, and that decreases in user stickiness, growth or engagement may have a material adverse impact on revenue.
+CLAIM_CREATED              C_310da5a9a2 [fact] Duolingo averaged 58.7 million daily active users in Q2 2026.
+CLAIM_CREATED              C_6dde148734 [fact] Duolingo averaged 47.7 million daily active users in Q2 2025.
+CLAIM_CREATED              C_8309da802c [fact] Duolingo had 12.7 million paid subscribers at the end of Q2 2026.
+CLAIM_CREATED              C_d32fcb9046 [fact] Duolingo's paid subscriber growth slowed to 17% year over year in Q2 2026, down from 21% in Q1 2026.
+CLAIM_CREATED              C_c837f301c7 [fact] Duolingo's current user retention rate reached an all-time high of 84% in Q2 2026.
+CLAIM_CREATED              C_f2affb36df [fact] Daily users equaled about 41.7% of monthly users in Q2 2026, up from about 32.9% in Q2 2024.
+CLAIM_CREATED              C_936e10a725 [fact] Duolingo's quarterly revenue per daily active user came to about $5.09 in Q2 2026, down from about $5.29 in Q2 2025.
+CLAIM_CREATED              C_5d7606a5a0 [fact] Customers in the United States accounted for 38% of Duolingo's 2025 revenue, down from 45% in 2023.
+CLAIM_CREATED              C_8e17a97300 [attribution] Duolingo stated that duolingo estimated it is investing more than $50 million of foregone bookings into the free user experience.
+CLAIM_CREATED              C_209e1e9855 [fact] Duolingo estimated it is investing more than $50 million of foregone bookings into the free user experience.
+CLAIM_CREATED              C_66b484abb1 [fact] A one-time Streak Revival event in June let 15.4 million learners revive their streaks, including nearly 8 million users who had no active streak when the event began.
+CLAIM_CREATED              C_6f52a07dbe [attribution] Kim, Payant, Skalicky and Namkung stated that a 2026 peer-reviewed study by Kim, Payant, Skalicky and Namkung found that after studying French for one semester, Duolingo learners' communication skills were comparable to classroom learners.
+CLAIM_CREATED              C_c7993b0e8e [fact] A 2026 peer-reviewed study by Kim, Payant, Skalicky and Namkung found that after studying French for one semester, Duolingo learners' communication skills were comparable to classroom learners.
+CLAIM_CREATED              C_5102d9972c [fact] Duolingo's adjusted EBITDA margin fell to 25.9% in Q2 2026 from 31.2% a year earlier.
+CLAIM_CREATED              C_9ed62e68c7 [attribution] Sabba Keynejad (@sab8a) stated that duolingo is approaching $1Bn in ARR (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_854d02ab2b [fact] Duolingo is approaching $1Bn in ARR (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_c31432c360 [attribution] Sabba Keynejad (@sab8a) stated that duolingo's monthly churn is 16% (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_33d139320f [fact] Duolingo's monthly churn is 16% (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_fef0dbafc4 [attribution] Sabba Keynejad (@sab8a) stated that only 9% of Duolingo's monthly subscribers are still paying one year later (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_64bca876eb [fact] Only 9% of Duolingo's monthly subscribers are still paying one year later (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_489934b3b9 [attribution] Sabba Keynejad (@sab8a) stated that duolingo's 13-month retention for annual subscribers is 40% (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_8ed87b5a8c [fact] Duolingo's 13-month retention for annual subscribers is 40% (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_1407c84c78 [attribution] Sabba Keynejad (@sab8a) stated that duolingo is a $16Bn public company (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_e022fb86b9 [fact] Duolingo is a $16Bn public company (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_f179f916d7 [attribution] Sabba Keynejad (@sab8a) stated that duolingo has 10M paid subscribers (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_cf754106d5 [fact] Duolingo has 10M paid subscribers (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_08b87b1092 [attribution] Sabba Keynejad (@sab8a) stated that duolingo is adding 200K paid subscribers every month (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_790c26fde7 [fact] Duolingo is adding 200K paid subscribers every month (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_3e7dbb1842 [attribution] Sabba Keynejad (@sab8a) stated that duolingo has a free user pool of 100M free MAUs (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_3957298b01 [fact] Duolingo has a free user pool of 100M free MAUs (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_dd8f91104f [attribution] Sabba Keynejad (@sab8a) stated that duolingo's free-to-play conversion rate is described as healthy (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_9432ea030c [fact] Duolingo's free-to-play conversion rate is described as healthy (as stated by Sabba Keynejad on Jul 23, 2025).
+CLAIM_CREATED              C_a6150937aa [attribution] Alex Tols (@alto11235813) stated that a 30-40% retention in month 13 is normal for edtech apps, according to Alex Tols (@alto11235813) on Jul 23, 2025.
+CLAIM_CREATED              C_7a69ac0de5 [fact] A 30-40% retention in month 13 is normal for edtech apps, according to Alex Tols (@alto11235813) on Jul 23, 2025.
+CLAIM_CREATED              C_7e0f113ace [fact] The Duolingo user retention strategies article at the source URL returned a 404 Page Not Found.
+CLAIM_CREATED              C_58c73e0dd8 [fact] Duolingo had over 100 million monthly active users as of 2025.
+CLAIM_CREATED              C_3a9ee1d4a8 [fact] Duolingo reported a 36% year-over-year increase in daily active users (DAUs) as of 2025.
+CLAIM_CREATED              C_0a435da87f [fact] Duolingo's monthly churn rate was 47% in mid-2020.
+CLAIM_CREATED              C_bdf5a3e1d1 [fact] Duolingo's monthly churn rate was 37% in early 2023.
+CLAIM_CREATED              C_062263e8bc [fact] Duolingo's monthly churn rate reached a record low of 28% in Western markets by late 2023.
+CLAIM_CREATED              C_2fbf1abe04 [fact] Duolingo's next-day retention rate was 12% in 2012.
+CLAIM_CREATED              C_27d03c0b3b [fact] Duolingo learners offered a streak wager see a 14% boost in day 14 user retention.
+CLAIM_CREATED              C_a4d24653a2 [fact] Duolingo grew its daily active users (DAUs) more than 10x since 2019.
+CLAIM_CREATED              C_79c32ae670 [fact] 80% of students credited gamification as the primary reason they continued using the Duolingo app daily.
+CLAIM_CREATED              C_8ca20c29ae [attribution] Zan Gilani stated that duolingo product leader Zan Gilani stated that the core mission was to encourage people to form a daily learning habit.
+CLAIM_CREATED              C_950cbaa099 [fact] Duolingo product leader Zan Gilani stated that the core mission was to encourage people to form a daily learning habit.
+EVIDENCE_ATTACHED          E_7761a30e65 → C_a6ebdfaa6e STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_2121c90d16 → C_5c654f4053 STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_2a49eb9963 → C_601adee7fa STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_0c64a4f4e9 → C_24911db1bb STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_4d9d8e1703 → C_a2de44915a STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_466d56aaa8 → C_614fd6d228 STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_abcc558b9a → C_a5312bfbf9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_bd72353621 → C_071585e27c STANCE: SUPPORTS p=0.95 directness=1.00 from S_94747c9d21
+EVIDENCE_ATTACHED          E_6076f55e49 → C_4ca691f310 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_3b55037939 → C_327e244fc4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_ba8ce2a7ed → C_0b18375a05 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_b725c17610
+EVIDENCE_ATTACHED          E_a62fc145a3 → C_fda59c7d93 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_8036b55fac → C_419617bd73 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_b725c17610
+EVIDENCE_ATTACHED          E_37ee1b635a → C_768836e689 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_41fbc464e2 → C_0cdf35a686 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_b725c17610
+EVIDENCE_ATTACHED          E_2a47e06605 → C_ae31441e58 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_89923eb6c2 → C_163a892fbf STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_f0271e57f4 → C_b03f9f70d5 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_4a63607dfe → C_73229d09fa STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_359fe92a04 → C_d7abca872f STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_118277aa8e → C_98b6970cdc STANCE: SUPPORTS p=0.95 directness=1.00 from S_b725c17610
+EVIDENCE_ATTACHED          E_c20464d99a → C_310da5a9a2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_cf67f7135b → C_6dde148734 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_8ffb44777a → C_8309da802c STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_b591fd186c → C_d32fcb9046 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_5a49fbaf77 → C_c837f301c7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_8c660e1a62 → C_f2affb36df STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_1571849c7a → C_936e10a725 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_ef6a46b085 → C_5d7606a5a0 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_4d3df82b42 → C_8e17a97300 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_0d34d7b8b5 → C_209e1e9855 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_e77c766899
+EVIDENCE_ATTACHED          E_fbb661b389 → C_66b484abb1 STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_e57e4ae16c → C_6f52a07dbe STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_33839e07a3 → C_c7993b0e8e STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_e77c766899
+EVIDENCE_ATTACHED          E_f6647de2a3 → C_5102d9972c STANCE: SUPPORTS p=0.95 directness=1.00 from S_e77c766899
+EVIDENCE_ATTACHED          E_2523f323e5 → C_9ed62e68c7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_a1c21b6975 → C_854d02ab2b STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_bb989d6605 → C_c31432c360 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_4d1d01ee78 → C_33d139320f STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_618b9469a5 → C_fef0dbafc4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_e0a59b98ab → C_64bca876eb STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_3453ea9d8b → C_489934b3b9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_5238be3a95 → C_8ed87b5a8c STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_8d57acc01e → C_1407c84c78 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_72ff677e3b → C_e022fb86b9 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_17ece153eb → C_f179f916d7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_22b5fe0006 → C_cf754106d5 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_c854320da6 → C_08b87b1092 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_74f4343f38 → C_790c26fde7 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_62b05a6d03 → C_3e7dbb1842 STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_03630b1074 → C_3957298b01 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_f506d5099e → C_dd8f91104f STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_a346c3fb75 → C_9432ea030c STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_23051cc18f → C_a6150937aa STANCE: SUPPORTS p=0.95 directness=1.00 from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_3cc3979f38 → C_7a69ac0de5 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_f0107d7ee7
+EVIDENCE_ATTACHED          E_1181d00ce8 → C_7e0f113ace STANCE: SUPPORTS p=0.95 directness=1.00 from S_155958c2c9
+EVIDENCE_ATTACHED          E_6239bd0c74 → C_58c73e0dd8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_2927c0406f → C_3a9ee1d4a8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_c3df92ffb8 → C_0a435da87f STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_bd663b2551 → C_bdf5a3e1d1 STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_4b3688c561 → C_062263e8bc STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_07e55ac6aa → C_2fbf1abe04 STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_da09f7535d → C_27d03c0b3b STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_ea27e2c7f0 → C_a4d24653a2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_689c9dc53d → C_8ca20c29ae STANCE: SUPPORTS p=0.95 directness=1.00 from S_aa6dec0f68
+EVIDENCE_ATTACHED          E_80555d93b7 → C_950cbaa099 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_aa6dec0f68
+CLAIM_POSTERIOR_UPDATED    C_a6ebdfaa6e posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_5c654f4053 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_601adee7fa posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_24911db1bb posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_a2de44915a posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_614fd6d228 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_a5312bfbf9 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_071585e27c posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_4ca691f310 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_327e244fc4 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0b18375a05 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_fda59c7d93 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_419617bd73 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_768836e689 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0cdf35a686 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_ae31441e58 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_163a892fbf posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b03f9f70d5 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_73229d09fa posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_d7abca872f posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_98b6970cdc posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_310da5a9a2 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_6dde148734 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_8309da802c posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_d32fcb9046 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_c837f301c7 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_f2affb36df posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_936e10a725 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_5d7606a5a0 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_8e17a97300 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_209e1e9855 posterior 0.50 → 0.56, sufficiency 0.00 → 0.24 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_66b484abb1 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_6f52a07dbe posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_c7993b0e8e posterior 0.50 → 0.56, sufficiency 0.00 → 0.24 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_5102d9972c posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_9ed62e68c7 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_c31432c360 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_fef0dbafc4 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_489934b3b9 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_1407c84c78 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_f179f916d7 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_08b87b1092 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_3e7dbb1842 posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_dd8f91104f posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_a6150937aa posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_7e0f113ace posterior 0.50 → 0.56, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_58c73e0dd8 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_3a9ee1d4a8 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_0a435da87f posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_bdf5a3e1d1 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_062263e8bc posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_2fbf1abe04 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_27d03c0b3b posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_a4d24653a2 posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_8ca20c29ae posterior 0.50 → 0.67, sufficiency 0.00 → 0.35 (1 raw source(s), 1 independent root(s))
+CLAIM_POSTERIOR_UPDATED    C_950cbaa099 posterior 0.50 → 0.56, sufficiency 0.00 → 0.24 (1 raw source(s), 1 independent root(s))
+HYPOTHESIS_UPDATED         H5 posterior 0.35 → 0.77 (sufficiency 1.00, supported)
+INDEPENDENCE_SUMMARY       6 URLs with evidence → 6 publication families → 6 independent evidence roots; 1 of them are interested parties (self-reported)
+INFERENCE_PROPOSED         I_f338f103c5: C_062263e8bc, C_0a435da87f, C_33d139320f ⇒ supports H1 (temporal): Monthly churn declined from 47% in mid-2020 to a record low of 28% by late 2023 and is reported at 16% in 2025, indicating improving retention.
+INFERENCE_PROPOSED         I_8aff46b673: C_24911db1bb, C_3a9ee1d4a8, C_4ca691f310 ⇒ supports H1 (inductive): A 28.6% DAU/MAU ratio, 36% year-over-year DAU growth, and nearly 2 billion daily exercises indicate durable engagement.
+INFERENCE_PROPOSED         I_ede04142fb: C_071585e27c ⇒ supports H1 (statistical): Revenue growth of 16% from 2024 to 2025 indicates monetization strength.
+INFERENCE_PROPOSED         I_648eb63920: C_0b18375a05, C_0cdf35a686, C_419617bd73 ⇒ contradicts H2 (inductive): Cited studies found Duolingo learners matched or exceeded university and classroom language proficiency, contradicting the claim that engagement is merely gamification without durable learning value.
+INFERENCE_PROPOSED         I_f518e1d538: C_209e1e9855, C_3957298b01 ⇒ supports H3 (inductive): A 100M free MAU base and more than $50M of foregone bookings invested in the free experience suggest stronger fit among free or casual learners than paid learners.
+INFERENCE_PROPOSED         I_68fd9a2775: C_310da5a9a2, C_58c73e0dd8 ⇒ supports H4 (statistical): Over 100M MAUs and 58.7M average DAUs in Q2 2026 show currently strong usage metrics, though they do not address possible erosion.
+INFERENCE_REJECTED         I_f338f103c5 needs_evidence (weak): Churn decline supports improving retention at most, but the conclusion asserts broad product-market fit across engagement, monetization, and organic growth, which these premises do not establish.; R1: premise not established (weakest posterior 0.50); missing: engagement metrics, monetization metrics, organic growth metrics, causal link from churn decline to product-market fit, consistent churn definition and market scope
+INFERENCE_REJECTED         I_8aff46b673 rejected (weak): The premises indicate high usage and growth, but growth alone does not establish quality, and they do not support the broader product-market-fit conclusion.; missing: retention cohorts, monetization or paid-conversion evidence, learning-quality or outcome measures, causal link from usage volume to product-market fit
+INFERENCE_REJECTED         I_ede04142fb rejected (weak): A 16% revenue increase is consistent with monetization strength but, by itself and with an insufficiently supported premise, does not establish it.; missing: revenue per user, paid conversion rate, margin or profitability evidence, price-change or mix effects, retention and churn data
+INFERENCE_REJECTED         I_648eb63920 rejected (invalid): The premises report proficiency outcomes that conflict with the conclusion's claim that success reflects gamification without durable learning value.; missing: completion rates, long-term retention, monetization outcomes, independent replication and study limitations, real-world language-use outcomes
+INFERENCE_REJECTED         I_f518e1d538 needs_evidence (weak): Free-user scale and foregone bookings do not establish stronger fit among free or casual learners than among paid learners.; R1: premise not established (weakest posterior 0.50); missing: paid-user retention and conversion, segmented outcomes for serious or advanced learners, willingness-to-pay evidence, comparative fit metrics by learner type
+INFERENCE_REJECTED         I_68fd9a2775 rejected (weak): The premises support currently strong usage metrics but do not support the claim that product-market fit is eroding.; missing: competitor-impact evidence, churn or retention trends, content-commoditization evidence, pricing or margin trends, causal link from usage metrics to erosion
+RESEARCH_GAP_CREATED       G_d3abff785d [NO_INDEPENDENT_SOURCE] C_33d139320f: no independent confirmation of 'Duolingo's monthly churn is 16% (as stated by Sabba Keynejad on Jul 23, 2025).' (value 0.48)
+RESEARCH_GAP_CREATED       G_366606bca0 [NO_INDEPENDENT_SOURCE] C_3957298b01: no independent confirmation of 'Duolingo has a free user pool of 100M free MAUs (as stated by Sabba Keynejad on Jul 23, 2025).' (value 0.48)
+RESEARCH_GAP_CREATED       G_6563fc779e [WEAK_INFERENCE] I_f338f103c5 → H1: needs evidence on 'engagement metrics' (value 0.72)
+RESEARCH_GAP_CREATED       G_dceba450b6 [WEAK_INFERENCE] I_f338f103c5 → H1: needs evidence on 'monetization metrics' (value 0.72)
+RESEARCH_GAP_CREATED       G_b4f4f6f15f [WEAK_INFERENCE] I_8aff46b673 → H1: needs evidence on 'retention cohorts' (value 0.72)
+RESEARCH_GAP_CREATED       G_1c76cc3968 [WEAK_INFERENCE] I_8aff46b673 → H1: needs evidence on 'monetization or paid-conversion evidence' (value 0.72)
+RESEARCH_GAP_CREATED       G_4b0c45b21e [WEAK_INFERENCE] I_ede04142fb → H1: needs evidence on 'revenue per user' (value 0.72)
+RESEARCH_GAP_CREATED       G_173ae98032 [WEAK_INFERENCE] I_ede04142fb → H1: needs evidence on 'paid conversion rate' (value 0.72)
+RESEARCH_GAP_CREATED       G_e5496a8f1a [NO_INDEPENDENT_SOURCE] C_071585e27c: no independent confirmation of 'Duolingo's revenue grew 16% from 2024 to 2025.' (value 0.43)
+RESEARCH_GAP_CREATED       G_2c7ac0006d [NO_INDEPENDENT_SOURCE] C_0b18375a05: no independent confirmation of 'According to an internal study cited in Duolingo's FY2025 10-K, learners who completed five sections of Duolingo achieved proficiency comparable to five university semesters of language education.' (value 0.43)
+RESEARCH_GAP_CREATED       G_0114d3eb45 [NO_INDEPENDENT_SOURCE] C_0cdf35a686: no independent confirmation of 'Independent studies cited in Duolingo's FY2025 10-K found that users learning English on Duolingo outperformed students in traditional classroom settings on standardized language proficiency tests.' (value 0.43)
+RESEARCH_GAP_CREATED       G_b0f4e9d4f7 [NO_INDEPENDENT_SOURCE] C_209e1e9855: no independent confirmation of 'Duolingo estimated it is investing more than $50 million of foregone bookings into the free user experience.' (value 0.21)
+RESEARCH_GAP_CREATED       G_fefdc237ea [NO_INDEPENDENT_SOURCE] C_24911db1bb: no independent confirmation of 'Duolingo's DAU/MAU ratio is 28.6%, which is high for a non-social app where most education apps sit closer to 10-15%.' (value 0.43)
+RESEARCH_GAP_CREATED       G_a1894a58dd [NO_INDEPENDENT_SOURCE] C_419617bd73: no independent confirmation of 'Independent studies cited in Duolingo's FY2025 10-K found that Duolingo learners' speaking skills matched those of university students.' (value 0.43)
+RESEARCH_GAP_CREATED       G_9e7453ddb3 [NO_PRIMARY_SOURCE] C_33d139320f: no primary source for 'Duolingo's monthly churn is 16% (as stated by Sabba Keynejad on Jul 23, 2025).' (value 0.42)
+RESEARCH_GAP_CREATED       G_18242e09b3 [NO_PRIMARY_SOURCE] C_3957298b01: no primary source for 'Duolingo has a free user pool of 100M free MAUs (as stated by Sabba Keynejad on Jul 23, 2025).' (value 0.42)
+RESEARCH_GAP_CREATED       G_877ad60f1b [MISSING_REQUIRED_DIMENSION] H4.R2 (H4): no evidence yet on 'Competitive AI product adoption, switching, or substitution data' (value 0.63)
+RESEARCH_GAP_CREATED       G_e60b8fe61f [NO_PRIMARY_SOURCE] C_071585e27c: no primary source for 'Duolingo's revenue grew 16% from 2024 to 2025.' (value 0.37)
+RESEARCH_GAP_CREATED       G_d859a77ea5 [NO_PRIMARY_SOURCE] C_209e1e9855: no primary source for 'Duolingo estimated it is investing more than $50 million of foregone bookings into the free user experience.' (value 0.19)
+RESEARCH_GAP_CREATED       G_c97b3abc39 [NO_PRIMARY_SOURCE] C_24911db1bb: no primary source for 'Duolingo's DAU/MAU ratio is 28.6%, which is high for a non-social app where most education apps sit closer to 10-15%.' (value 0.37)
+RESEARCH_GAP_CREATED       G_565cdec6cb [NO_INDEPENDENT_SOURCE] C_062263e8bc: no independent confirmation of 'Duolingo's monthly churn rate reached a record low of 28% in Western markets by late 2023.' (value 0.32)
+RESEARCH_GAP_CREATED       G_595dc8b2f6 [NO_INDEPENDENT_SOURCE] C_0a435da87f: no independent confirmation of 'Duolingo's monthly churn rate was 47% in mid-2020.' (value 0.16)
+RESEARCH_GAP_CREATED       G_f742434401 [NO_INDEPENDENT_SOURCE] C_310da5a9a2: no independent confirmation of 'Duolingo averaged 58.7 million daily active users in Q2 2026.' (value 0.32)
+RESEARCH_GAP_CREATED       G_4b21acfd45 [NO_INDEPENDENT_SOURCE] C_3a9ee1d4a8: no independent confirmation of 'Duolingo reported a 36% year-over-year increase in daily active users (DAUs) as of 2025.' (value 0.32)
+RESEARCH_GAP_CREATED       G_55c43e74eb [NO_INDEPENDENT_SOURCE] C_4ca691f310: no independent confirmation of 'Duolingo learners complete nearly 2 billion exercises every day as stated in the FY2025 10-K.' (value 0.16)
+AGENT_BIDS                 IndependenceResearcher 1.00 · GapResearcher 1.00 · AdversarialResearcher 0.72 · PrimarySourceResearcher 0.66 · GeneralResearcher 0.17 · ContradictionResearcher 0.00 · ReplicationResearcher 0.00 · Synthesis 0.00
+AGENT_SELECTED             Next agent: IndependenceResearcher (utility 1.00). Reason: [NO_INDEPENDENT_SOURCE] C_33d139320f: no independent confirmation of 'Duolingo's monthly churn is 16% (as stated by Sabba Keynejad on Jul 23, 2025).'
+AGENT_SELECTED             Next agent: GapResearcher (utility 1.00). Reason: [WEAK_INFERENCE] I_f338f103c5 → H1: needs evidence on 'engagement metrics'
+STOP_DECISION              CONTINUE: 15 critical claim(s) below sufficiency, 0 open contradiction(s), 25 researchable gap(s); new independent roots this round: 6
+RESEARCH_TASK_CREATED      T_600700890d IndependenceResearcher: [NO_INDEPENDENT_SOURCE] C_33d139320f: no independent confirmation of 'Duolingo's monthly churn is 16% (as stated by Sabba Keynejad on Jul 23, 2025).' → queries ['Duolingo monthly churn rate 2025 independent analysis', 'Duolingo monthly active users MAU 2025 third-party data', 'Duolingo revenue growth 2024 2025 annual report independent']
+SEARCH_EXECUTED            'Duolingo monthly churn rate 2025 independent analysis' → 8 result(s)
+SOURCE_FOUND               S_c36413b8a8 reuters.com: Duolingo raises 2025 forecast as AI-powered subscription ... (major_news, tavily=0.5015387, diversity_penalty=0.00)
+SOURCE_FOUND               S_fdaefd891d classcentral.com: Duolingo in 2025: Breaks Record Numbers, but Users and Wall Street Rem (other, tavily=0.58408195, diversity_penalty=0.00)
+SOURCE_FOUND               S_a4a8ef698a yahoo.com: Assessing Duolingo Shares After a 44% Monthly Drop (other, tavily=0.46672463, diversity_penalty=0.00)
+SOURCE_FOUND               S_1a90fcf17e getperspective.ai: Duolingo AI Customer Research Strategy 2026: How a Public Edtech Giant (other, tavily=0.4465194, diversity_penalty=0.00)
+SOURCE_FOUND               S_4b30213212 sensortower.com: Duolingo: Redefining Engagement in the EdTech Space (other, tavily=0.4286405, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Duolingo monthly active users MAU 2025 third-party data' → 8 result(s)
+SOURCE_FOUND               S_a187e78926 duolingo.com: Form 10-K for Duolingo INC filed 02/27/2026 (company, tavily=0.8947989, diversity_penalty=0.00)
+SOURCE_FOUND               S_233a4dae93 duolingo.com: Q3FY25 Duolingo 9-30-25 Shareholder Letter (company, tavily=0.86052185, diversity_penalty=0.15)
+SOURCE_FOUND               S_a577459f8d statista.com: Duolingo Inc.: global MAUs 2025 | Statista (other, tavily=0.89030397, diversity_penalty=0.00)
+SOURCE_FOUND               S_2d05b5fbd5 customerexperiencedive.com: Duolingo looks to limit friction as key metric of growth slows (other, tavily=0.84246206, diversity_penalty=0.00)
+SOURCE_FOUND               S_baadc6a84a analyzify.com: Discover Latest Duolingo Statistics (2025) | StatsUp (other, tavily=0.80698997, diversity_penalty=0.00)
+SOURCE_FOUND               S_f62ad87356 reddit.com: Duolingo is Dead (social, tavily=0.9055316, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Duolingo revenue growth 2024 2025 annual report independent' → 8 result(s)
+SOURCE_FOUND               S_4fef278d61 duolingo.com: Duolingo Reports 41% Revenue Growth, 46% Subscription Revenue Growth a (company, tavily=0.9061314, diversity_penalty=0.00)
+SOURCE_FOUND               S_b7ee29621f sec.gov: Document (company_filing, tavily=0.9154545, diversity_penalty=0.00)
+SOURCE_FOUND               S_59b73eab32 yahoo.com: Duolingo Reports 41% Revenue Growth, 46% Subscription Revenue Growth a (other, tavily=0.9154545, diversity_penalty=0.00)
+SOURCE_FOUND               S_57f1d2a85b macrotrends.net: Duolingo Revenue 2020-2026 | DUOL (other, tavily=0.9047265, diversity_penalty=0.00)
+SOURCE_FOUND               S_abb8738129 stocktitan.net: Duolingo details scale, AI focus and key risks | DUOL Annual Report (1 (other, tavily=0.8827621, diversity_penalty=0.00)
+SOURCE_FOUND               S_a15c87c8ae yahoo.com: Duolingo Reports Fourth Quarter and Full Year 2025 Results (other, tavily=0.890761, diversity_penalty=0.15)
+SOURCE_SCREENED            S_4fef278d61: INCLUDE [company_press_release] (model) — Directly reports Duolingo's Q2 2025 revenue growth (41%), subscription revenue growth (46%), and profitability metrics relevant to product-market fit assessment
+SOURCE_SCREENED            S_a187e78926: INCLUDE [company_filing] (model) — 10-K filing contains key engagement metrics: DAU/MAU ratio (39.6%), DAU growth (30%), and retention indicators directly relevant to product-market fit
+SOURCE_SCREENED            S_b7ee29621f: INCLUDE [company_filing] (model) — SEC filing with consolidated financial statements showing revenue ($1.04B in 2025), gross profit, and growth metrics relevant to product-market fit
+SOURCE_SCREENED            S_59b73eab32: INCLUDE [news_article] (model) — Reports Q2 2025 results with CEO commentary on engagement, user growth journey, and new product initiatives - directly relevant to product-market fit
+SOURCE_SCREENED            S_233a4dae93: INCLUDE [company_filing] (model) — Q3 2025 shareholder letter with detailed user metrics (MAU, DAU, paid subscribers) and operating metrics showing growth trends
+SOURCE_SCREENED            S_57f1d2a85b: INCLUDE [industry_report] (model) — Multi-year revenue data (2020-2026) showing consistent growth trajectory relevant to product-market fit assessment
+SOURCE_SCREENED            S_a577459f8d: INCLUDE [official_statistics] (model) — Quarterly MAU data from Q3 2020 to Q4 2025 showing user growth trends over multi-year period
+SOURCE_SCREENED            S_abb8738129: INCLUDE [company_filing] (model) — 10-K annual report summary covering scale, AI focus, and key risks - relevant to product-market fit evaluation
+SOURCE_SCREENED            S_2d05b5fbd5: INCLUDE [news_article] (model) — Reports on DAU growth and key metric slowdown, relevant to assessing current product-market fit and growth trajectory
+SOURCE_SCREENED            S_baadc6a84a: EXCLUDE [review_site] (model) — Statistics page with outdated data (2023 MAU of 83M) and marketing-style framing; superseded by more recent official sources
+SOURCE_SCREENED            S_a15c87c8ae: INCLUDE [news_article] (model) — Q4 and full year 2025 results with CEO commentary on momentum, 50M+ DAUs, and $1B+ bookings - directly relevant to product-market fit
+SOURCE_SCREENED            S_f62ad87356: EXCLUDE [forum] (model) — Reddit forum post with opinion-based title 'Duolingo is Dead'; commentary only, not authoritative data source
+SOURCE_SCREENED            S_c36413b8a8: INCLUDE [news_article] (model) — Reuters report on Duolingo raising 2025 forecast due to AI-powered subscription growth - relevant to product-market fit signals
+SOURCE_SCREENED            S_fdaefd891d: INCLUDE [news_article] (model) — Detailed analysis of Duolingo's 2025 performance including subscription conversion rates, Duolingo Max growth, and course expansion - relevant to product-market fit nuances
+SOURCE_SCREENED            S_a4a8ef698a: EXCLUDE [news_article] (model) — Stock analysis commentary on share price drop; not directly about product-market fit fundamentals
+SOURCE_SCREENED            S_1a90fcf17e: INCLUDE [blog] (model) — Analysis of Duolingo's customer research strategy and user metrics (116.7M MAU in Q1 2025) - relevant to product-market fit assessment
+SOURCE_SCREENED            S_4b30213212: INCLUDE [industry_report] (model) — Sensor Tower analysis comparing Duolingo's churn rate (28%) and retention (68%) against competitors - directly relevant to product-market fit via retention metrics
+SOURCE_SELECTED            S_4fef278d61 selected for extraction: http://investors.duolingo.com/news-releases/news-release-details/duolingo-reports-41-revenue-growth-46-subscription-revenue
+SOURCE_SELECTED            S_a187e78926 selected for extraction: https://investors.duolingo.com/static-files/f19d76fb-dee4-4f13-96ae-138ebfd0f2d3
+SOURCE_SELECTED            S_b7ee29621f selected for extraction: https://www.sec.gov/Archives/edgar/data/1562088/000162828026012246/q4fy25duolingo12-31x25shar.htm
+SOURCE_EXTRACTED           S_4fef278d61 extracted (6,562 chars)
+SOURCE_EXTRACTED           S_a187e78926 extracted (407,463 chars)
+SOURCE_EXTRACTED           S_b7ee29621f extracted (41,973 chars)
+CLAIM_CREATED              C_845e418e46 [fact] Duolingo reported 41% revenue growth in the second quarter of 2025.
+CLAIM_CREATED              C_6ba7e766b9 [fact] Duolingo reported 46% subscription revenue growth in the second quarter of 2025.
+CLAIM_CREATED              C_a8d09d05f7 [fact] Duolingo reported record profitability in the second quarter of 2025.
+CLAIM_CREATED              C_0dfb570b87 [fact] Duolingo raised its full-year 2025 guidance in the second quarter of 2025.
+CLAIM_CREATED              C_a2828613f4 [attribution] Luis von Ahn, Co-Founder and CEO of Duolingo stated that duolingo CEO Luis von Ahn stated that engagement remained strong in the second quarter of 2025.
+CLAIM_CREATED              C_3061d13731 [fact] Duolingo CEO Luis von Ahn stated that engagement remained strong in the second quarter of 2025.
+CLAIM_CREATED              C_94c6d537f1 [attribution] Duolingo, Inc. stated that duolingo stated it delivered strong performance across all subscription tiers in the second quarter of 2025.
+CLAIM_CREATED              C_b20e03edfb [fact] Duolingo stated it delivered strong performance across all subscription tiers in the second quarter of 2025.
+CLAIM_CREATED              C_9eded353b4 [attribution] Luis von Ahn, Co-Founder and CEO of Duolingo stated that duolingo CEO Luis von Ahn reported encouraging early signals from the new Energy mechanic product initiative in the second quarter of 2025.
+CLAIM_CREATED              C_8f1b024503 [fact] Duolingo CEO Luis von Ahn reported encouraging early signals from the new Energy mechanic product initiative in the second quarter of 2025.
+CLAIM_CREATED              C_b975915f9b [attribution] Luis von Ahn, Co-Founder and CEO of Duolingo stated that duolingo CEO Luis von Ahn reported encouraging early signals from the new Chess course product initiative in the second quarter of 2025.
+CLAIM_CREATED              C_251511f898 [fact] Duolingo CEO Luis von Ahn reported encouraging early signals from the new Chess course product initiative in the second quarter of 2025.
+CLAIM_CREATED              C_cd3ef43ff2 [attribution] Duolingo, Inc. stated that duolingo's flagship app is the top-grossing app in the Education category on both Google Play and the Apple App Store, as stated in the August 2025 press release.
+CLAIM_CREATED              C_120611aab4 [fact] Duolingo's flagship app is the top-grossing app in the Education category on both Google Play and the Apple App Store, as stated in the August 2025 press release.
+CLAIM_CREATED              C_b12afd3f91 [attribution] Duolingo, Inc. stated that duolingo stated in August 2025 that its flagship app has organically become the world's most popular way to learn languages.
+CLAIM_CREATED              C_5538520e31 [fact] Duolingo stated in August 2025 that its flagship app has organically become the world's most popular way to learn languages.
+CLAIM_CREATED              C_24d04957c0 [fact] Duolingo's daily active users (DAU) were 52.7 million in Q4 2025.
+CLAIM_CREATED              C_94fafc5eb8 [fact] Duolingo's daily active users (DAU) were 40.5 million in Q4 2024.
+CLAIM_CREATED              C_cc33c490e9 [fact] Duolingo had 12.2 million paid subscribers at the end of Q4 2025.
+CLAIM_CREATED              C_ab22cc5e5c [fact] Duolingo had 9.5 million paid subscribers at the end of Q4 2024.
+CLAIM_CREATED              C_8152bfe4be [fact] Duolingo's revenue was $282.9 million in Q4 2025, up 35% year over year.
+CLAIM_CREATED              C_61127dda19 [fact] Duolingo's revenue was $1,037.6 million in FY 2025, up 39% year over year.
+CLAIM_CREATED              C_f793400505 [fact] Duolingo's total bookings were $1,158.4 million in FY 2025, up 33% year over year.
+CLAIM_CREATED              C_c1a70ea2ec [fact] Duolingo's net income was $414.1 million in FY 2025, including a one-time income-tax benefit of $256.7 million from release of a valuation allowance.
+CLAIM_CREATED              C_a13515424a [fact] Duolingo's adjusted EBITDA margin was 29.5% in FY 2025.
+CLAIM_CREATED              C_7dbec05e84 [attribution] Duolingo management stated that duolingo expects bookings growth of around 11% in 2026, compared to nearly 20% it believes it could achieve operating as in past years.
+CLAIM_CREATED              C_cdd926a062 [fact] Duolingo expects bookings growth of around 11% in 2026, compared to nearly 20% it believes it could achieve operating as in past years.
+EVIDENCE_ATTACHED          E_83fba654ee → C_845e418e46 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_19ea031a49 → C_6ba7e766b9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_63724957d0 → C_a8d09d05f7 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_c0d9a705e0 → C_0dfb570b87 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_cfb11f5bd5 → C_a2828613f4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_256e5a7ae0 → C_3061d13731 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_4fef278d61
+EVIDENCE_ATTACHED          E_413833f505 → C_94c6d537f1 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_3dda2fdfd9 → C_b20e03edfb STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_4fef278d61
+EVIDENCE_ATTACHED          E_a8d35a3f97 → C_9eded353b4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_3ae76a2bd7 → C_8f1b024503 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_4fef278d61
+EVIDENCE_ATTACHED          E_05e388433f → C_b975915f9b STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_c484c3337f → C_251511f898 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_4fef278d61
+EVIDENCE_ATTACHED          E_44b899cd8f → C_cd3ef43ff2 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_44132d2cb4 → C_120611aab4 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_4fef278d61
+EVIDENCE_ATTACHED          E_9428aaac85 → C_b12afd3f91 STANCE: SUPPORTS p=0.95 directness=1.00 from S_4fef278d61
+EVIDENCE_ATTACHED          E_b1d899697a → C_5538520e31 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_4fef278d61
+EVIDENCE_ATTACHED          E_b6f71295d1 → C_24d04957c0 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_426d3fb21a → C_94fafc5eb8 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_4bddc8da35 → C_cc33c490e9 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_dbdaf675f2 → C_ab22cc5e5c STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_600bbe5675 → C_8152bfe4be STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_f9a606df85 → C_61127dda19 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_dd208edf3b → C_f793400505 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_d2214559ae → C_c1a70ea2ec STANCE: QUALIFIES p=0.05 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_b54d19789e → C_a13515424a STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_4e9adcb3e2 → C_7dbec05e84 STANCE: SUPPORTS p=0.95 directness=1.00 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_8009c85ae4 → C_cdd926a062 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_b7ee29621f
+EVIDENCE_ATTACHED          E_5fb213c095 → C_7522de22ef STANCE: NEUTRAL p=0.05 directness=0.50 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_bae0f38251 → C_7522de22ef STANCE: NEUTRAL p=0.05 directness=0.50 from S_b7ee29621f
+EVIDENCE_ATTACHED          E_2c7b757f01 → C_614fd6d228 STANCE: NEUTRAL p=0.05 directness=0.50 from S_b7ee29621f
+CLAIM_POSTERIOR_UPDATED    C_845e418e46 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_6ba7e766b9 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a8d09d05f7 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0dfb570b87 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a2828613f4 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_3061d13731 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_94c6d537f1 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b20e03edfb posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_9eded353b4 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8f1b024503 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b975915f9b posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_251511f898 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cd3ef43ff2 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_120611aab4 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_b12afd3f91 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_5538520e31 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_24d04957c0 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_94fafc5eb8 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cc33c490e9 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_ab22cc5e5c posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_8152bfe4be posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_61127dda19 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_f793400505 posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a13515424a posterior 0.50 → 0.80, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_7dbec05e84 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_cdd926a062 posterior 0.50 → 0.67, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+SOURCE_DEPENDENCY_DETECTED S_4fef278d61 derives from S_b7ee29621f (p=0.80: text reuse: 61% of 6-word phrases shared)
+SOURCE_DEPENDENCY_DETECTED S_a187e78926 derives from S_b725c17610 (p=0.90: text reuse: 96% of 6-word phrases shared; 9 identical quotation(s))
+SOURCE_DEPENDENCY_DETECTED S_b7ee29621f derives from S_b725c17610 (p=0.60: text reuse: 30% of 6-word phrases shared)
+INDEPENDENCE_SUMMARY       8 URLs with evidence → 8 publication families → 6 independent evidence roots; 1 of them are interested parties (self-reported)
+RESEARCH_TASK_CREATED      T_b3b30e4b78 GapResearcher: [WEAK_INFERENCE] I_f338f103c5 → H1: needs evidence on 'engagement metrics' → queries ['Duolingo DAU MAU engagement metrics 2023 2024 quarterly', 'Duolingo ARPU subscribers revenue per user monetization 2023 2024', 'Duolingo retention cohorts daily monthly active users churn 2022 2023 2024']
+SEARCH_EXECUTED            'Duolingo DAU MAU engagement metrics 2023 2024 quarterly' → 8 result(s)
+SOURCE_FOUND               S_ee11172712 duolingo.com: Duolingo Hits 100M MAUs, Reports 59% DAU growth and 41% Revenue Growth (company, tavily=0.9600365, diversity_penalty=0.00)
+SOURCE_FOUND               S_286d958dfa duolingo.com: Duolingo Achieves 54% DAU growth and 40% Revenue Growth in Third Quart (company, tavily=0.9580107, diversity_penalty=0.15)
+SOURCE_FOUND               S_8e5679feb5 yahoo.com: Duolingo Achieves 54% DAU growth and 40% Revenue Growth in Third Quart (other, tavily=0.95539, diversity_penalty=0.00)
+SOURCE_FOUND               S_8cd9318d91 useluminix.com: Analyze Duolingo's publicly reported user base, MAU/DAU metrics, reven (other, tavily=0.94263905, diversity_penalty=0.00)
+SOURCE_FOUND               S_9579f953c7 duolingo.com: Q1FY24 Shareholder Letter (company, tavily=0.9393874, diversity_penalty=0.30)
+SOURCE_FOUND               S_db354fb523 yahoo.com: Duolingo Achieves 54% DAU growth and 40% Revenue Growth in Third Quart (other, tavily=0.95539, diversity_penalty=0.15)
+SOURCE_FOUND               S_4029342245 yahoo.com: Duolingo: The Owl Expands Its Wings Beyond Language (other, tavily=0.9451216, diversity_penalty=0.30)
+SOURCE_FOUND               S_2dea393ada yahoo.com: Duolingo: The Owl Expands Its Wings Beyond Language (other, tavily=0.9451216, diversity_penalty=0.45)
+SEARCH_EXECUTED            'Duolingo ARPU subscribers revenue per user monetization 2023 2024' → 8 result(s)
+SOURCE_FOUND               S_ffd4863c7f duolingo.com: Duolingo Reports 45% Revenue Growth and Record Profitability in First  (company, tavily=0.8467682, diversity_penalty=0.00)
+SOURCE_FOUND               S_23d77574e9 sec.gov: Document (company_filing, tavily=0.8415267, diversity_penalty=0.00)
+SEARCH_EXECUTED            'Duolingo retention cohorts daily monthly active users churn 2022 2023 2024' → 8 result(s)
+SOURCE_FOUND               S_3149a04d58 cooljugator.com: Essential Duolingo Statistics for 2024: Monthly Users, Revenue, and Ti (other, tavily=0.9006087, diversity_penalty=0.00)
+SOURCE_FOUND               S_a275069155 fourweekmba.com: Duolingo Monthly Active Users - FourWeekMBA (other, tavily=0.8380581, diversity_penalty=0.00)
+SOURCE_FOUND               S_e8199b980a electroiq.com: Duolingo Statistics By Revenue, Users and Facts (2025) (other, tavily=0.725824, diversity_penalty=0.00)
+SOURCE_FOUND               S_2efc99d91e usesignhouse.com: Duolingo Users and Growth Statistics (2024) - SignHouse (other, tavily=0.7123327, diversity_penalty=0.00)
+SOURCE_FOUND               S_d659c09051 yahoo.com: Duolingo Inc (DUOL) Reports Record Growth and Profitability in Q4 2023 (other, tavily=0.67192334, diversity_penalty=0.00)
+SOURCE_FOUND               S_1f3780aa28 fourweekmba.com: Duolingo Daily Active Users - FourWeekMBA (other, tavily=0.7230167, diversity_penalty=0.15)
+SOURCE_SCREENED            S_db354fb523: EXCLUDE [unknown] (rule) — duplicate source: same title on the same site as S_8e5679feb5
+SOURCE_SCREENED            S_2dea393ada: EXCLUDE [unknown] (rule) — duplicate source: same title on the same site as S_4029342245
+SOURCE_SCREENED            S_ee11172712: INCLUDE [company_press_release] (model) — Directly reports Duolingo MAU, DAU, and revenue growth metrics for Q2 2024 vs Q2 2023, relevant to product-market fit assessment
+SOURCE_SCREENED            S_ffd4863c7f: INCLUDE [company_press_release] (model) — Directly reports Q1 2024 revenue growth, paid subscriber growth, DAU/MAU metrics year-over-year
+SOURCE_SCREENED            S_286d958dfa: INCLUDE [company_press_release] (model) — Directly reports Q3 2024 DAU and revenue growth metrics with year-over-year comparison
+SOURCE_SCREENED            S_8e5679feb5: EXCLUDE [news_article] (model) — Duplicate of S_286d958dfa (same Q3 2024 press release content)
+SOURCE_SCREENED            S_8cd9318d91: INCLUDE [industry_report] (model) — Industry analysis reporting Duolingo 2024 revenue, MAU, paid subscription conversion, and freemium model performance
+SOURCE_SCREENED            S_3149a04d58: INCLUDE [blog] (model) — Reports Duolingo user base, revenue, and engagement statistics for 2024
+SOURCE_SCREENED            S_23d77574e9: INCLUDE [company_filing] (model) — SEC filing with Q4 2024 and FY 2024 financial metrics including revenue, DAU, net income, and bookings
+SOURCE_SCREENED            S_9579f953c7: INCLUDE [company_filing] (model) — Q1 2024 shareholder letter with detailed MAU, DAU, paid subscriber metrics and YoY growth
+SOURCE_SCREENED            S_a275069155: INCLUDE [blog] (model) — Reports Duolingo MAU figures and growth trends over time
+SOURCE_SCREENED            S_e8199b980a: INCLUDE [blog] (model) — Statistics compilation covering Duolingo revenue, MAU, downloads, and course offerings for 2024
+SOURCE_SCREENED            S_2efc99d91e: INCLUDE [blog] (model) — Reports Duolingo revenue and user statistics across multiple years
+SOURCE_SCREENED            S_d659c09051: INCLUDE [news_article] (model) — Reports Q4 2023 bookings, subscription growth, and subscriber metrics relevant to retention and monetization
+SOURCE_SCREENED            S_4029342245: INCLUDE [news_article] (model) — Reports Q1 2025 DAU growth, seasonal engagement patterns, and user retention signals
+SOURCE_SCREENED            S_1f3780aa28: INCLUDE [blog] (model) — Reports Duolingo DAU figures across multiple years (2021-2023), useful for multi-year trend context
+SOURCE_SELECTED            S_ee11172712 selected for extraction: http://investors.duolingo.com/news-releases/news-release-details/duolingo-hits-100m-maus-reports-59-dau-growth-and-41-revenue
+SOURCE_EXTRACTED           S_ee11172712 extracted (25,841 chars)
+CLAIM_CREATED              C_fba287d204 [fact] Duolingo's monthly active users (MAUs) were 103.6 million in Q2 2024, an increase of 4[%] from the prior year quarter.
+CLAIM_CREATED              C_312cc68851 [fact] Duolingo's daily active users (DAUs) were 34.1 million in Q2 2024, an increase of 59% from the prior year quarter.
+CLAIM_CREATED              C_39b455b6aa [fact] Duolingo's paid subscribers totaled 8.0 million at the end of Q2 2024, an increase of 52% from the prior year quarter.
+CLAIM_CREATED              C_0a297fecad [fact] Duolingo's total bookings were $190.1 million in Q2 2024, an increase of 38% from the prior year quarter.
+CLAIM_CREATED              C_343b1e9793 [fact] Duolingo's subscription bookings were $156.5 million in Q2 2024, an increase of 47% from the prior year quarter.
+CLAIM_CREATED              C_099d202bdd [attribution] Luis von Ahn, Co-Founder and CEO of Duolingo stated that over 20% of Duolingo's daily active users had streaks longer than a year as of Q2 2024.
+CLAIM_CREATED              C_a4c5aa6d59 [fact] Over 20% of Duolingo's daily active users had streaks longer than a year as of Q2 2024.
+CLAIM_CREATED              C_bf8f6b4b2b [attribution] Luis von Ahn, Co-Founder and CEO of Duolingo stated that duolingo surpassed 100 million monthly active users in Q2 2024.
+CLAIM_CREATED              C_204baa4f88 [fact] Duolingo surpassed 100 million monthly active users in Q2 2024.
+CLAIM_CREATED              C_0e14a8b5b3 [attribution] Luis von Ahn, Co-Founder and CEO of Duolingo stated that duolingo reported steady progress on strategic priorities in Q2 2024, specifically driving increased family plan penetration and the broader roll out of Duolingo Max.
+CLAIM_CREATED              C_135f6dc361 [fact] Duolingo reported steady progress on strategic priorities in Q2 2024, specifically driving increased family plan penetration and the broader roll out of Duolingo Max.
+CLAIM_MERGED               'Duolingo's flagship app is the top-grossing app in the Education categ' merged into C_120611aab4
+EVIDENCE_ATTACHED          E_f254c520f5 → C_fba287d204 STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_90fc8e31b9 → C_312cc68851 STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_b4aa685155 → C_39b455b6aa STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_54955875b7 → C_0a297fecad STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_09955cd066 → C_343b1e9793 STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_9a6ce524ea → C_099d202bdd STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_c7112cb340 → C_a4c5aa6d59 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_ee11172712
+EVIDENCE_ATTACHED          E_17615c2668 → C_bf8f6b4b2b STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_93ea271385 → C_204baa4f88 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_ee11172712
+EVIDENCE_ATTACHED          E_05b6e7c1e6 → C_120611aab4 STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_aa4468a6a6 → C_0e14a8b5b3 STANCE: SUPPORTS p=0.95 directness=1.00 from S_ee11172712
+EVIDENCE_ATTACHED          E_2de0539763 → C_135f6dc361 STANCE: SUPPORTS p=0.95 directness=0.35 (reported speech) from S_ee11172712
+EVIDENCE_ATTACHED          E_bb542eb5b5 → C_7522de22ef STANCE: CONTRADICTS p=0.95 directness=1.00 from S_ee11172712
+CONTRADICTION_FOUND        S_ee11172712 contradicts C_7522de22ef: "Daily active users (DAUs) were 34.1 million, an increase of 59% from the prior year quarte"
+EVIDENCE_ATTACHED          E_5413e6242b → C_93db9fc7b6 STANCE: CONTRADICTS p=0.95 directness=1.00 from S_ee11172712
+CONTRADICTION_FOUND        S_ee11172712 contradicts C_93db9fc7b6: "Daily active users (DAUs) were 34.1 million, an increase of 59% from the prior year quarte"
+EVIDENCE_ATTACHED          E_f6c15af711 → C_24911db1bb STANCE: NEUTRAL p=0.05 directness=0.50 from S_ee11172712
+CLAIM_POSTERIOR_UPDATED    C_7522de22ef posterior 0.50 → 0.44, sufficiency 0.00 → 0.50 (2 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_93db9fc7b6 posterior 0.50 → 0.44, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_120611aab4 posterior 0.56 → 0.61, sufficiency 0.34 → 0.75 (2 raw source(s), 2 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_fba287d204 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_312cc68851 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_39b455b6aa posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0a297fecad posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_343b1e9793 posterior 0.50 → 0.67, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_099d202bdd posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_a4c5aa6d59 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_bf8f6b4b2b posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_204baa4f88 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_0e14a8b5b3 posterior 0.50 → 0.89, sufficiency 0.00 → 0.50 (1 raw source(s), 1 independent root(s), primary source)
+CLAIM_POSTERIOR_UPDATED    C_135f6dc361 posterior 0.50 → 0.56, sufficiency 0.00 → 0.34 (1 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.77 → 0.69 (sufficiency 1.00, active)
+SOURCE_DEPENDENCY_DETECTED S_4fef278d61 is from the same publisher as S_ee11172712 (p=0.90: same publisher domain; text reuse: 63% of 6-word phrases shared)
+SOURCE_DEPENDENCY_DETECTED S_ee11172712 derives from S_b7ee29621f (p=0.80: text reuse: 53% of 6-word phrases shared)
+INDEPENDENCE_SUMMARY       9 URLs with evidence → 8 publication families → 6 independent evidence roots; 1 of them are interested parties (self-reported)
+CLAIM_POSTERIOR_UPDATED    C_120611aab4 posterior 0.61 → 0.56, sufficiency 0.75 → 0.50 (2 raw source(s), 1 independent root(s), primary source)
+HYPOTHESIS_UPDATED         H5 posterior 0.69 → 0.75 (sufficiency 1.00, supported)
+INFERENCE_PROPOSED         I_1d817216e5: C_24911db1bb, C_312cc68851 ⇒ supports H1 (statistical): Duolingo's 59% year-over-year DAU growth and unusually high DAU/MAU ratio indicate durable engagement and organic growth in its core market.
+INFERENCE_PROPOSED         I_3a8d318742: C_062263e8bc, C_0a435da87f ⇒ supports H1 (temporal): Monthly churn fell from 47% in mid-2020 to a record low of 28% in Western markets by late 2023, indicating improving retention.
+INFERENCE_PROPOSED         I_2330671fbf: C_071585e27c, C_0a297fecad, C_343b1e9793 ⇒ supports H1 (statistical): Revenue growth plus strong growth in total and subscription bookings indicates expanding monetization.
+INFERENCE_PROPOSED         I_4fa1f0955e: C_0b18375a05, C_0cdf35a686 ⇒ contradicts H2 (abductive): Cited studies showing Duolingo learners achieve proficiency comparable to or better than traditional instruction contradict the claim that its engagement lacks durable language-learning value.
+INFERENCE_PROPOSED         I_001ebaa295: C_163a892fbf, C_310da5a9a2 ⇒ contradicts H4 (temporal): Duolingo averaged 58.7 million DAUs in Q2 2026 and scaled to more than 130 million MAUs by late 2025, contradicting the claim that product-market fit is currently eroding.
+INFERENCE_REJECTED         I_1d817216e5 rejected (weak): The premises show engagement and user growth, but the conclusion also requires retention, monetization, organic growth, and durability, which are not established.; missing: retention or churn evidence, monetization evidence, organic versus paid acquisition evidence, cohort-level durability evidence, causal link from engagement metrics to product-market fit
+INFERENCE_REJECTED         I_3a8d318742 rejected (weak): The premises show improved churn in Western markets over time, but the conclusion requires broader retention, engagement, monetization, and organic growth evidence.; missing: global churn or retention data, cohort retention definitions, engagement metrics, monetization evidence, organic acquisition evidence, causal link from churn reduction to product-market fit
+INFERENCE_REJECTED         I_2330671fbf rejected (weak): The premises show monetization growth, but the conclusion also requires durable engagement, retention, and organic growth, which are not established.; missing: engagement metrics, retention or churn evidence, organic acquisition evidence, cohort lifetime value, price-effect separation, causal link from bookings growth to product-market fit
+INFERENCE_REJECTED         I_4fa1f0955e needs_evidence (weak): The cited studies partially challenge the claim that engagement lacks durable learning value, but they do not address retention, completion, or monetization and are subject to selection and citation bias.; R3: causal/abductive inference with unexcluded confounders; missing: long-term retention data, completion data, monetization data, independent replication of proficiency claims, selection criteria for studied learners, causal link from proficiency outcomes to durable product value
+INFERENCE_REJECTED         I_001ebaa295 rejected (weak): The premises show strong current usage, but they do not establish that product-market fit is not eroding or address AI competitors and commoditization.; missing: competitor impact evidence, retention or cohort trend evidence, monetization evidence, causal link from usage metrics to product-market fit, leading indicators of erosion
+RESEARCH_GAP_CREATED       G_efebc8a55b [WEAK_INFERENCE] I_1d817216e5 → H1: needs evidence on 'retention or churn evidence' (value 0.72)
+RESEARCH_GAP_CREATED       G_5a5ad364fc [WEAK_INFERENCE] I_1d817216e5 → H1: needs evidence on 'monetization evidence' (value 0.72)
+RESEARCH_GAP_CREATED       G_d2310fe12d [WEAK_INFERENCE] I_3a8d318742 → H1: needs evidence on 'global churn or retention data' (value 0.72)
+RESEARCH_GAP_CREATED       G_01640555cd [WEAK_INFERENCE] I_3a8d318742 → H1: needs evidence on 'cohort retention definitions' (value 0.43)
+RESEARCH_GAP_CREATED       G_fe5ecc7271 [WEAK_INFERENCE] I_2330671fbf → H1: needs evidence on 'engagement metrics' (value 0.43)
+RESEARCH_GAP_CREATED       G_496d678413 [WEAK_INFERENCE] I_2330671fbf → H1: needs evidence on 'retention or churn evidence' (value 0.72)
+RESEARCH_GAP_CREATED       G_299918b185 [SOURCE_DEPENDENCE] C_24911db1bb: 2 sources but only 1 independent root (value 0.21)
+RESEARCH_GAP_RESOLVED      G_fefdc237ea resolved: C_24911db1bb: no independent confirmation of 'Duolingo's DAU/MAU ratio is 28.6%, which is high for a non-social app where most education apps sit closer to 10-15%.'
+RESEARCH_GAP_RESOLVED      G_a1894a58dd resolved: C_419617bd73: no independent confirmation of 'Independent studies cited in Duolingo's FY2025 10-K found that Duolingo learners' speaking skills matched those of university students.'
+RESEARCH_GAP_RESOLVED      G_877ad60f1b resolved: H4.R2 (H4): no evidence yet on 'Competitive AI product adoption, switching, or substitution data'
+RESEARCH_GAP_RESOLVED      G_4b21acfd45 resolved: C_3a9ee1d4a8: no independent confirmation of 'Duolingo reported a 36% year-over-year increase in daily active users (DAUs) as of 2025.'
+RESEARCH_GAP_RESOLVED      G_55c43e74eb resolved: C_4ca691f310: no independent confirmation of 'Duolingo learners complete nearly 2 billion exercises every day as stated in the FY2025 10-K.'
+STOP_DECISION              STOP (BUDGET_EXHAUSTED): search budget exhausted; new independent roots this round: 0
+REPORT_GENERATED           report: INSUFFICIENT_EVIDENCE, 3 verified sentence(s), 0 rejected, 6 citation(s)
+REPORT_GENERATED           final review passed: 3 statement(s), each → claim → evidence → excerpt → source

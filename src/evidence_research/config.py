@@ -33,9 +33,9 @@ class Budget(BaseModel):
 
 
 DEPTH_BUDGETS: dict[Depth, Budget] = {
-    Depth.FAST: Budget(max_iterations=2, max_search_queries=6, max_extracted_sources=8, max_model_calls=25),
-    Depth.STANDARD: Budget(max_iterations=4, max_search_queries=14, max_extracted_sources=18, max_model_calls=45),
-    Depth.DEEP: Budget(max_iterations=6, max_search_queries=24, max_extracted_sources=32, max_model_calls=80),
+    Depth.FAST: Budget(max_iterations=3, max_search_queries=10, max_extracted_sources=10, max_model_calls=40),
+    Depth.STANDARD: Budget(max_iterations=5, max_search_queries=18, max_extracted_sources=20, max_model_calls=70),
+    Depth.DEEP: Budget(max_iterations=7, max_search_queries=30, max_extracted_sources=36, max_model_calls=110),
 }
 
 
@@ -90,6 +90,10 @@ class Heuristics(BaseModel):
         "WEAK_INFERENCE": 0.8,
         "SOURCE_DEPENDENCE": 0.8,
         "OUTDATED_EVIDENCE": 0.7,
+        "NO_REPLICATION": 0.8,
+        "FAILED_REPLICATION": 0.6,
+        "MISSING_METHOD_INFORMATION": 0.5,
+        "UNVERIFIED_EXTRACTION": 0.6,
     })
     # Convergence stop rule (section 29).
     convergence_epsilon: float = 0.03
@@ -112,7 +116,8 @@ class Settings(BaseModel):
     min_evidence_sufficiency: float = 0.70
     heuristics: Heuristics = Field(default_factory=Heuristics)
 
-    llm_timeout_s: float = 120.0
+    llm_timeout_s: float = 180.0
+    llm_max_tokens: int = 8192  # reasoning models spend output tokens on hidden reasoning before the JSON
     llm_max_retries: int = 3
     llm_concurrency: int = 4
     tavily_concurrency: int = 4
@@ -150,6 +155,7 @@ class Settings(BaseModel):
             min_evidence_sufficiency=num("MIN_EVIDENCE_SUFFICIENCY", 0.70, float),
             heuristics=Heuristics(dependent_evidence_discount=num("DEPENDENT_EVIDENCE_DISCOUNT", 0.15, float)),
             data_dir=Path(e.get("DATA_DIR") or "data"),
+            llm_max_tokens=num("LLM_MAX_TOKENS", 8192),
         )
 
     def require_live(self) -> None:
@@ -171,6 +177,9 @@ class Settings(BaseModel):
 
 
 def load_dotenv_if_present() -> None:
+    """Load .env unless EVIDENCE_NO_DOTENV=1 (tests, CI). Real environment variables always win."""
+    if os.environ.get("EVIDENCE_NO_DOTENV") == "1":
+        return
     try:
         from dotenv import load_dotenv
     except ImportError:

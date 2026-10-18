@@ -54,11 +54,9 @@ class RetrievalService:
                       publisher=registrable_domain(hit.url), published_at=hit.published_date, snippet=hit.content,
                       search_query=query, search_origin=origin, tavily_score=hit.score, raw_metadata=hit.raw)
 
-    async def extract(self, candidates: list[Source], k: int) -> list[Source]:
-        k = min(k, self.budget.remaining_extractions())
-        selected = candidates[:k]
-        for s in candidates[k:]:
-            self.events.emit(EventType.SOURCE_REJECTED, f"{s.id} not extracted (ranked below cutoff {k})", source_id=s.id)
+    async def extract(self, selected: list[Source]) -> list[Source]:
+        """Extract only the screened-in selection (never every search result)."""
+        selected = selected[: self.budget.remaining_extractions()]
         if not selected:
             return []
         self.budget.charge_extractions(len(selected))
