@@ -51,6 +51,12 @@ def to_markdown(r: Report) -> str:
     if r.synthetic:
         out += ["> **SYNTHETIC DEMO RUN** — fictional entities, scripted corpus and model responses. Not real-world evidence.", ""]
 
+    # 0. The public contract (sections 1, 11): a substantive answer and one confidence number.
+    out += ["## Research answer", "", r.answer.answer, "", f"**Confidence: {r.answer.confidence:.0%}**", ""]
+    if r.qualification:
+        out += [f"_{r.qualification}_", ""]
+    out += ["---", ""]
+
     # 1. Answer first (governing thought)
     g = r.governing_thought
     out += ["## Answer", f"**{g.text}** {_cites(g.citations)}".rstrip(), ""]
@@ -62,7 +68,7 @@ def to_markdown(r: Report) -> str:
     # 2. Key lines (MECE), each with its supporting facts
     out += ["## Why"]
     for i, kl in enumerate(r.key_lines, 1):
-        out.append(f"**{i}. {kl.statement.text}** {_cites(kl.statement.citations)}".rstrip())
+        out.append(f"**{i}. {kl.statement.text}** _(confidence {kl.confidence:.0%})_ {_cites(kl.statement.citations)}".rstrip())
         out += [f"   - {sp.text} {_cites(sp.citations)}".rstrip() for sp in kl.support]
     if not r.key_lines:
         out.append("- No key line passed citation verification; see the supporting detail below.")
@@ -87,6 +93,13 @@ def to_markdown(r: Report) -> str:
     out += [f"{i}. {d}" for i, d in enumerate(r.decision_trace, 1)]
 
     out += ["", "---", "", "# Supporting detail", ""]
+    d = r.diagnostics
+    pen = "; ".join(r.confidence_breakdown.get("penalties", [])) or "no penalties applied"
+    out += ["## Research diagnostics",
+            f"- Evidence status: **{r.status.value.replace('_', ' ')}** · question type: `{r.question_type}`",
+            f"- Evidence sufficiency: {_pct(d.evidence_sufficiency)} · inference validity: {_pct(d.inference_validity)} · independent roots: {d.independent_roots}",
+            f"- Answer confidence {r.answer.confidence:.0%} — importance-weighted over {r.confidence_breakdown.get('used_claims', 0)} used claim(s); {pen}",
+            f"- Stop reason: {d.stop_reason or 'n/a'}", ""]
     by_id = {h.id: h for h in r.hypotheses}
     out += ["", "## Surviving hypotheses", "| ID | Hypothesis | Prior | Posterior | Sufficiency | Inference validity | Status |", "|---|---|---|---|---|---|---|"]
     for h in r.hypotheses:

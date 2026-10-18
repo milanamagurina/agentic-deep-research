@@ -15,7 +15,7 @@ from __future__ import annotations
 from datetime import date
 
 from ..models import (
-    HypothesesOutput, HypothesisProposal, InferenceProposal, InferenceVerdict, QuestionAnalysis, RequirementProposal, ResultProposal,
+    HypothesesOutput, HypothesisProposal, InferenceProposal, InferenceVerdict, QuestionAnalysis, QuestionType, RequirementProposal, ResultProposal,
     ScientificReviewOutput, StudyProposal, StudyRelationProposal, SynthesisOutput, KeyLine, PyramidPoint,
 )
 from .base import Page, PageClaim, Scenario, find
@@ -164,7 +164,8 @@ class ScienceScenario(Scenario):
 
     def analysis(self) -> QuestionAnalysis:
         return QuestionAnalysis(
-            normalized_question=self.question, decision_context="whether a university should license MemoLoop for first-year courses",
+            normalized_question=self.question, question_type=QuestionType.CAUSAL,
+            decision_context="whether a university should license MemoLoop for first-year courses",
             key_entities=["MemoLoop"], temporal_scope="2023 to 2026", geographic_scope=None,
             hidden_assumptions=["'materially' means an effect of at least 0.2 standard deviations"],
             dimensions=["randomized evidence", "effect size", "independent replication", "conflicts of interest"],

@@ -3,6 +3,7 @@ comes from the model, and every sentence of it must pass the CitationVerifier or
 
 from __future__ import annotations
 
+import re
 from datetime import date, datetime
 
 from pydantic import BaseModel, Field
@@ -13,8 +14,11 @@ from ..graph.active import ActiveResearchGraph
 from ..graph.evidence_graph import EvidenceGraph
 from ..llm.gateway import LLMError, LLMGateway, ModelRole
 from ..llm.prompts import SYNTHESIZER
-from ..models import EvidenceStatus, QuestionAnalysis, ResearchSession, SynthesisOutput
+from ..models import (
+    EvidenceStatus, QuestionAnalysis, ResearchAnswer, ResearchDiagnostics, ResearchSession, SynthesisOutput,
+)
 from ..observability.events import EventLog, EventType
+from ..probability.confidence import answer_confidence
 from ..probability.engine import BeliefState
 from ..probability.uncertainty import overall_status
 from ..verification.citation_verifier import CitationVerifier, strip_ids
@@ -85,6 +89,7 @@ class Statement(BaseModel):
 class PyramidLine(BaseModel):
     statement: Statement
     support: list[Statement] = Field(default_factory=list)
+    confidence: float = 0.0  # per-factor confidence, from the claims under this key line
 
 
 class StudyView(BaseModel):
@@ -113,7 +118,13 @@ class GapView(BaseModel):
 
 class Report(BaseModel):
     question: str
+    question_type: str
     synthetic: bool
+    # The public contract (sections 1, 5): a substantive answer and one confidence number.
+    answer: ResearchAnswer
+    confidence_breakdown: dict
+    diagnostics: ResearchDiagnostics
+    qualification: str
     status: EvidenceStatus
     stop_reason: str | None
     stop_explanation: str | None
@@ -145,6 +156,16 @@ class Report(BaseModel):
 
 def _debt(value: float) -> str:
     return "HIGH" if value >= 0.35 else "MEDIUM" if value >= 0.15 else "LOW"
+
+
+# A governing thought that refuses instead of answering. When supported factors exist, such a line is
+# demoted to the qualification and the strongest factor leads instead (sections 4, 8).
+_HEDGE = re.compile(r"\b(insufficient|not sufficient|cannot be (?:ranked|established|verified|determined)|"
+                    r"cannot (?:rank|establish|verify|determine)|unable to|no (?:available |direct )?evidence|"
+                    r"not possible to|impossible to|too little evidence|does not (?:allow|permit))\b", re.I)
+
+# Question types whose answer is a synthesis of supported factors, not a win/lose verdict on a hypothesis.
+_FACTOR_TYPES = {"explanatory", "comparative", "causal", "fact_lookup"}
 
 
 async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: ResearchSession, analysis: QuestionAnalysis,
@@ -200,32 +221,49 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
     ) for x in hyps]
 
     # Executive answer as a Minto pyramid: the model writes, the verifier gates every sentence.
+    # An overclaim with an unsupported figure is NARROWED to its supportable form, not deleted (section 3).
     conclusion: list[Statement] = []
     rejected: list[dict] = []
+    narrowed: list[dict] = []
     change: list[str] = []
+    qualification = ""
     governing: Statement | None = None
     key_lines: list[PyramidLine] = []
 
     def verified(text: str, claim_ids: list[str], level: str) -> Statement | None:
-        check = verifier.check(text, claim_ids)
+        check = verifier.check_or_narrow(text, claim_ids)
         if not check.ok:
             rejected.append({"text": text, "claim_ids": claim_ids, "level": level, "reason": check.reason})
             events.emit(EventType.STATEMENT_REJECTED, f"{level} dropped ({check.reason}): {text[:90]}")
             return None
+        final_text = strip_ids(check.supported_rewrite or text)
+        if check.decision == "narrow":
+            narrowed.append({"from": strip_ids(text), "to": final_text, "level": level})
+            events.emit(EventType.STATEMENT_REJECTED, f"{level} narrowed to the supportable form: {final_text[:90]}")
         cites = sorted({cite(graph.evidence[eid].source_id) for eid in check.evidence_ids})
-        st = Statement(text=strip_ids(text), claim_ids=claim_ids, evidence_ids=check.evidence_ids, citations=cites)
+        st = Statement(text=final_text, claim_ids=claim_ids, evidence_ids=check.evidence_ids, citations=cites)
         conclusion.append(st)
         return st
+    entity = analysis.key_entities[0] if analysis.key_entities else ""
+    factor_answer = analysis.question_type.value in _FACTOR_TYPES
+
+    def line_conf(claim_ids: list[str]) -> float:
+        return answer_confidence(graph, beliefs, claim_ids).confidence if claim_ids else 0.0
+
     if llm is not None:
         payload = {
-            "question": session.question, "overall_status": status.value,
-            "hypotheses": [{"id": h.id, "text": h.text, "model_estimated_posterior": round(h.posterior, 2),
-                            "evidence_sufficiency": round(h.sufficiency, 2), "status": h.status} for h in hyp_views],
+            "question": session.question, "question_type": analysis.question_type.value,
+            "subject": entity, "dimensions": analysis.dimensions,
             "claims": [{"id": c.id, "text": c.text, "posterior": round(c.posterior, 2), "sufficiency": round(c.sufficiency, 2),
                         "status": c.status, "independent_roots": c.independent_roots, "raw_sources": c.raw_sources} for c in claim_views],
             "top_gaps": [g.description for g in open_gaps[:5]],
             "recent_updates": active.recent_updates if active else [],
         }
+        # For factor questions the answer is a synthesis of the supported claims, so hypotheses (each of which
+        # tests a RANKING the evidence rarely settles) are withheld to stop the model answering "cannot rank".
+        if not factor_answer:
+            payload["hypotheses"] = [{"id": h.id, "text": h.text, "model_estimated_posterior": round(h.posterior, 2),
+                                      "evidence_sufficiency": round(h.sufficiency, 2), "status": h.status} for h in hyp_views]
         try:
             out = await llm.structured("synthesize", ModelRole.SYNTHESIS, SYNTHESIZER, payload, SynthesisOutput)
             change = out.what_would_change_our_mind[:4]
@@ -238,17 +276,43 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
                     if support:
                         rejected.append({"text": kl.text, "claim_ids": ids, "level": "key line", "reason": "key line failed verification"})
                     continue
-                key_lines.append(PyramidLine(statement=line, support=support))
+                key_lines.append(PyramidLine(statement=line, support=support,
+                                             confidence=line_conf(sorted({c for st in [line] + support for c in st.claim_ids}))))
             g_ids = out.governing_thought.claim_ids or sorted({c for kl in key_lines for c in kl.statement.claim_ids})
             governing = verified(out.governing_thought.text, g_ids, "governing thought") if key_lines else None
+            # Qualification: a meta-sentence on what the evidence does vs does not establish.
+            used_ids = sorted({c for st in conclusion for c in st.claim_ids})
+            if out.qualification and used_ids:
+                qc = verifier.check_or_narrow(out.qualification, used_ids)
+                qualification = strip_ids(qc.supported_rewrite or out.qualification) if qc.ok else ""
+            # Hedge guard: if the model still refuses in the governing thought while supported factors exist,
+            # demote the refusal to the qualification and lead with the strongest supported factor instead.
+            if governing is not None and key_lines and _HEDGE.search(governing.text):
+                if not qualification:
+                    qualification = governing.text
+                best = max(key_lines, key=lambda kl: kl.confidence)
+                governing = best.statement
+                events.emit(EventType.STATEMENT_REJECTED, "governing thought hedged; led with the strongest supported factor instead")
         except LLMError as e:
             events.emit(EventType.ERROR, f"synthesis failed, using structured summary only: {e}")
     change += [f"Evidence resolving: {g.description}" for g in open_gaps[:3] if g.estimated_value >= 0.15]
+    # Fallback (section 8): never refuse when supported claims exist. Build a substantive answer from the
+    # best grounded claims; only when there are none do we say the evidence is insufficient.
     system_summary = governing is None
-    if system_summary:  # labelled, number-free fallback built by code from the leading hypothesis
-        text = (f"{status.value.replace('_', ' ').capitalize()}: {lead.text}" if lead else
-                f"{status.value.replace('_', ' ').capitalize()}: no hypothesis is supported by the evidence found.")
-        governing = Statement(text=text, claim_ids=[])
+    if system_summary:
+        grounded = [c for c in claim_views if verifier.grounded_evidence(c.id)]
+        grounded.sort(key=lambda c: (-c.posterior, -c.sufficiency))
+        if grounded:
+            lead_claim = grounded[0]
+            governing = verified(lead_claim.text, [lead_claim.id], "governing thought (fallback)") \
+                or Statement(text=strip_ids(lead_claim.text), claim_ids=[lead_claim.id], evidence_ids=[], citations=[])
+            for c in grounded[1:4]:
+                st = verified(c.text, [c.id], "key line (fallback)")
+                if st:
+                    key_lines.append(PyramidLine(statement=st, support=[], confidence=line_conf([c.id])))
+            system_summary = False
+        else:
+            governing = Statement(text="The public evidence gathered is not sufficient to answer this question.", claim_ids=[])
 
     used = {e.source_id for e in graph.evidence.values() if e.verification_status == "verified"}
     raw = len(used)
@@ -287,6 +351,31 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
     for c in citations.values():
         c.deep_link = c.uses[0]["deep_link"] if c.uses else c.url
     decisions = _decision_trace(events)
+
+    # Public contract: a substantive answer (3-8 sentences) and one confidence number, computed ONLY
+    # from the claims the answer actually uses (section 6). The rich report below stays as debug detail.
+    used_claim_ids = sorted({cid for st in conclusion for cid in st.claim_ids})
+    inf_validity = lead.inference_validity if (lead and lead.status in ("supported", "active") and lead.inference_validity is not None) else None
+    cb = answer_confidence(graph, beliefs, used_claim_ids, inf_validity)
+    gov_text = governing.text.strip()
+    parts = [gov_text if gov_text.endswith((".", "!", "?")) else gov_text + "."]
+    for kl in key_lines:  # each factor with its own confidence; skip one that merely repeats the lead
+        t = kl.statement.text.strip().rstrip(".")
+        if t == gov_text.rstrip("."):
+            continue
+        parts.append(f"{t} (confidence {kl.confidence:.0%}).")
+    if qualification:
+        q = qualification.strip()
+        parts.append(q if q.endswith((".", "!", "?")) else q + ".")
+    answer_text = " ".join(parts)
+    answer = ResearchAnswer(answer=answer_text, confidence=0.0 if system_summary and not used_claim_ids else cb.confidence)
+    diagnostics = ResearchDiagnostics(
+        evidence_sufficiency=round(lead.evidence_sufficiency, 3) if lead else cb.mean_sufficiency,
+        inference_validity=lead.inference_validity if lead else None, independent_roots=roots,
+        unresolved_gaps=[g.description for g in open_gaps[:10]],
+        stop_reason=session.stop_reason.value if session.stop_reason else "",
+        citations=[f"[{c.n}] {c.url}" for c in sorted(citations.values(), key=lambda c: c.n)],
+    )
     method = [
         "Hypothesis-first research: competing hypotheses and evidence requirements were generated before searching.",
         "LLMs proposed claims, stances and inferences; code verified excerpts verbatim, counted sources and computed every score.",
@@ -302,7 +391,8 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
         method.insert(0, "SYNTHETIC DEMO: the corpus and model responses are scripted fixtures, not real-world evidence.")
 
     report = Report(
-        question=session.question, synthetic=session.synthetic, status=status,
+        question=session.question, question_type=analysis.question_type.value, synthetic=session.synthetic,
+        answer=answer, confidence_breakdown=cb.__dict__, diagnostics=diagnostics, qualification=qualification, status=status,
         stop_reason=session.stop_reason.value if session.stop_reason else None, stop_explanation=session.stop_explanation,
         leading_hypothesis=lead.id if lead else None, counter_hypothesis=counter.id if counter else None,
         governing_thought=governing, governing_is_system_summary=system_summary, key_lines=key_lines, caveats=caveats,
@@ -317,8 +407,9 @@ async def build_report(llm: LLMGateway | None, graph: EvidenceGraph, session: Re
         stats={"iterations": session.iteration, "searches": session.search_count, "extractions": session.extract_count,
                "model_calls": session.model_call_count, **graph.stats()},
     )
-    events.emit(EventType.REPORT_GENERATED, f"report: {status.value}, {len(conclusion)} verified sentence(s), {len(rejected)} rejected, "
-                                            f"{len(report.citations)} citation(s)", status=status.value)
+    events.emit(EventType.REPORT_GENERATED, f"report: answer confidence {answer.confidence:.0%} ({status.value}), {len(conclusion)} verified "
+                                            f"sentence(s), {len(narrowed)} narrowed, {len(rejected)} rejected, {len(report.citations)} citation(s)",
+                status=status.value, confidence=answer.confidence)
     return report
 
 

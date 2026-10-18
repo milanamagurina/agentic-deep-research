@@ -120,6 +120,12 @@ class GapEngine:
         found = self.detect(graph, beliefs, analysis)
         # Keep the most valuable gaps (provisional value with 'medium' impact); the rest is noise for planning.
         found.sort(key=lambda g: -(g.importance * g.uncertainty * h.gap_searchability[g.gap_type]))
+        # Normalize (section 7): merge equivalent gaps (same target and type) into the highest-value one,
+        # so repeated rounds and near-duplicate detail do not flood the planner with the same gap.
+        merged: dict[tuple[str, str], ResearchGap] = {}
+        for g in found:
+            merged.setdefault((g.target_id, g.gap_type), g)
+        found = list(merged.values())
         detected = {g.id: g for g in found[:limit]}
         new = [g for gid, g in detected.items() if gid not in graph.gaps]
         if new and llm is not None:
@@ -131,8 +137,10 @@ class GapEngine:
                 self.events.emit(EventType.ERROR, f"gap impact rating failed ({type(e).__name__}); using 'medium'")
         for g in detected.values():
             impact = self.s.heuristics.impact_scores[self._impact.get(g.id, "medium")]
-            # = research_priority(importance, p, impact, searchability), with uncertainty(p) precomputed
-            g.estimated_value = round(g.importance * g.uncertainty * impact * self.s.heuristics.gap_searchability[g.gap_type], 4)
+            # answer_relevance: gaps on claims/requirements that carry the answer rank above incidental ones.
+            relevance = 1.0 if (g.target_id in graph.claims or g.target_id in graph.requirements) else 0.8
+            # = research_priority(importance, p, impact, searchability) x answer_relevance, uncertainty(p) precomputed
+            g.estimated_value = round(g.importance * g.uncertainty * impact * self.s.heuristics.gap_searchability[g.gap_type] * relevance, 4)
             if graph.upsert_gap(g):
                 self.events.emit(EventType.RESEARCH_GAP_CREATED, f"{g.id} [{g.gap_type}] {g.description} (value {g.estimated_value:.2f})",
                                  gap_id=g.id, gap_type=g.gap_type, value=g.estimated_value)

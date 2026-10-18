@@ -1,0 +1,2050 @@
+{
+  "question": "What factors beyond GPU model most influence real-world AI infrastructure performance, and how does Nebius address them across compute, networking, storage, and software?",
+  "question_type": "explanatory",
+  "synthetic": false,
+  "answer": {
+    "answer": "Beyond the GPU model, real-world AI infrastructure performance is shaped by four interacting layers — compute host configuration, networking fabric, storage throughput, and software stack — and Nebius addresses each with purpose-built choices: rack-scale Blackwell Ultra systems with liquid cooling, topology-aware InfiniBand scheduling, high-bandwidth shared filesystems with non-replicated disks for model weights, and an in-house open-source Slurm operator plus a managed vLLM serving stack. Compute layer: Nebius deploys rack-scale, fully liquid-cooled NVIDIA GB300 NVL72 systems (72 Blackwell Ultra GPUs and 36 Grace CPUs per rack) purpose-built for frontier training and inference (confidence 42%). Networking layer: Nebius uses an InfiniBand fabric with topology-aware scheduling to manage east-west traffic and latency-sensitive collectives across large clusters (confidence 42%). Storage layer: Nebius pairs high-bandwidth shared filesystems with non-replicated disks for model weights to remove I/O bottlenecks during loading and checkpointing (confidence 45%). Software layer: Nebius runs an in-house open-source Kubernetes operator for Slurm (Soperator) for resilient training orchestration and a managed vLLM-based Token Factory on bare-metal Hopper/Blackwell for inference serving (confidence 42%). The evidence establishes that Nebius has specific, named offerings in each of the four layers and that these have been exercised in MLPerf benchmarks, but it does not establish the relative weight of each layer in real-world performance, nor that Nebius's implementations are differentiated from competitors on those layers.",
+    "confidence": 0.42
+  },
+  "confidence_breakdown": {
+    "confidence": 0.42,
+    "base": 0.63,
+    "mean_sufficiency": 0.483,
+    "independence": 0.5,
+    "contested": false,
+    "inference_validity": null,
+    "used_claims": 9,
+    "penalties": [
+      "thin evidence sufficiency (48%)",
+      "limited independent corroboration (independence 50%)"
+    ]
+  },
+  "diagnostics": {
+    "evidence_sufficiency": 0.235,
+    "inference_validity": null,
+    "independent_roots": 3,
+    "unresolved_gaps": [
+      "I_b3fcb76582 → H1: needs evidence on 'Evidence that storage I/O is a dominant non-GPU factor in real-world AI performance (not j'",
+      "I_2bcb04d585 → H1: needs evidence on 'Direct evidence of InfiniBand/NVLink-class fabric deployment (the premises only mention 'c'",
+      "I_3e5ae6eae6 → H2: needs evidence on 'Evidence that software-stack efficiency is among the 'most influential' non-GPU factors'",
+      "I_92f12d1fbc → H1: needs evidence on 'Evidence that topology-aware scheduling actually translates to measurable performance gain'",
+      "I_9dd819501d → H1: needs evidence on 'Evidence that 15 GiB/s is sufficient or insufficient for feeding large GPU clusters'",
+      "I_6530f986d1 → H2: needs evidence on 'Evidence that software-stack efficiency is a dominant non-GPU factor rather than networkin'",
+      "I_57cbc181b1 → H1: needs evidence on 'Evidence that Nebius's GPU-to-GPU interconnects are InfiniBand/NVLink-class and that these'",
+      "I_783169c10f → H2: needs evidence on 'Evidence that software-stack efficiency and host-level compute balance are the most influe'",
+      "C_3c2f9e1617: no independent confirmation of 'Nebius states that for large-scale clusters spanning multiple SUs or the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small-size network exchanges that are more sensitive to latency.'",
+      "C_136d016ce5: no independent confirmation of 'Nebius posted a leading server result of 591,368 tokens/s on DeepSeek R1 with the Nebius system with NVIDIA Vera Rubin NVL72 (36 NVIDIA Rubin GPUs across nine nodes) in the MLPerf Inference v6.1 preview category.'"
+    ],
+    "stop_reason": "SUCCESS",
+    "citations": [
+      "[1] https://docs.nebius.com/compute/storage/types",
+      "[2] https://nebius.com/blog/posts/mlperf-inference-v6-1-results",
+      "[3] https://nebius.com/compute",
+      "[4] https://nebius.com/orchestration",
+      "[5] https://nebius.com/blog/posts/industry-leading-ai-training-performance-in-mlperf",
+      "[6] https://nebius.com/customer-stories/vllm",
+      "[7] https://nebius.com/blog/posts/how-we-build-reliable-clusters",
+      "[8] https://nebius.com/blog/posts/leveraging-nvidia-gb200-nvl72-gpu-interconnect",
+      "[9] https://nebius.com/blog/posts/mlperf-training-v6-0-results",
+      "[10] https://saturncloud.io/blog/building-models-with-saturn-cloud-and-deploying-via-nebius-token-factory"
+    ]
+  },
+  "qualification": "The evidence establishes that Nebius has specific, named offerings in each of the four layers and that these have been exercised in MLPerf benchmarks, but it does not establish the relative weight of each layer in real-world performance, nor that Nebius's implementations are differentiated from competitors on those layers.",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "stop_reason": "SUCCESS",
+  "stop_explanation": "enough verified evidence to give a substantive answer; remaining gaps are low-value",
+  "leading_hypothesis": "H1",
+  "counter_hypothesis": "H2",
+  "governing_thought": {
+    "text": "Beyond the GPU model, real-world AI infrastructure performance is shaped by four interacting layers — compute host configuration, networking fabric, storage throughput, and software stack — and Nebius addresses each with purpose-built choices: rack-scale Blackwell Ultra systems with liquid cooling, topology-aware InfiniBand scheduling, high-bandwidth shared filesystems with non-replicated disks for model weights, and an in-house open-source Slurm operator plus a managed vLLM serving stack.",
+    "claim_ids": [
+      "C_32e080bff7",
+      "C_3c2f9e1617",
+      "C_0458a7c13d",
+      "C_167e2fefa5",
+      "C_3ca49c4350",
+      "C_1f2056cccb"
+    ],
+    "evidence_ids": [
+      "E_b37a7e1f5e",
+      "E_3fa4ae7f40",
+      "E_7bec77f6c0",
+      "E_7cef43b6f9",
+      "E_9a56ebfbe0",
+      "E_0afba3e8e3"
+    ],
+    "citations": [
+      1,
+      3,
+      4,
+      6,
+      8,
+      10
+    ]
+  },
+  "governing_is_system_summary": false,
+  "key_lines": [
+    {
+      "statement": {
+        "text": "Compute layer: Nebius deploys rack-scale, fully liquid-cooled NVIDIA GB300 NVL72 systems (72 Blackwell Ultra GPUs and 36 Grace CPUs per rack) purpose-built for frontier training and inference.",
+        "claim_ids": [
+          "C_32e080bff7"
+        ],
+        "evidence_ids": [
+          "E_b37a7e1f5e"
+        ],
+        "citations": [
+          3
+        ]
+      },
+      "support": [
+        {
+          "text": "The GB300 NVL72 on Nebius is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace CPUs, designed for frontier model training, AI reasoning, and agentic AI.",
+          "claim_ids": [
+            "C_32e080bff7"
+          ],
+          "evidence_ids": [
+            "E_b37a7e1f5e"
+          ],
+          "citations": [
+            3
+          ]
+        },
+        {
+          "text": "Nebius submitted six MLPerf Training 6.0 configurations across NVIDIA HGX B300 and GB300 NVL72 systems, showing the compute layer is exercised at both node and rack scale.",
+          "claim_ids": [
+            "C_36a110c26a"
+          ],
+          "evidence_ids": [
+            "E_ca977d604d"
+          ],
+          "citations": [
+            9
+          ]
+        }
+      ],
+      "confidence": 0.42
+    },
+    {
+      "statement": {
+        "text": "Networking layer: Nebius uses an InfiniBand fabric with topology-aware scheduling to manage east-west traffic and latency-sensitive collectives across large clusters.",
+        "claim_ids": [
+          "C_3c2f9e1617"
+        ],
+        "evidence_ids": [
+          "E_3fa4ae7f40"
+        ],
+        "citations": [
+          8
+        ]
+      },
+      "support": [
+        {
+          "text": "Nebius states that for large-scale clusters spanning multiple SUs or the whole InfiniBand fabric, topology-aware scheduling is beneficial, especially for small-size network exchanges that are more sensitive to latency.",
+          "claim_ids": [
+            "C_3c2f9e1617"
+          ],
+          "evidence_ids": [
+            "E_3fa4ae7f40"
+          ],
+          "citations": [
+            8
+          ]
+        },
+        {
+          "text": "The full-rack GB300 NVL72 system ranked first in MLPerf Inference v6.1 DeepSeek R1 server and offline scenarios at 603,023 and 689,961 tokens/s, indicating the fabric sustains frontier inference throughput.",
+          "claim_ids": [
+            "C_16e7a3dc83"
+          ],
+          "evidence_ids": [
+            "E_12f7ea37dd"
+          ],
+          "citations": [
+            2
+          ]
+        }
+      ],
+      "confidence": 0.42
+    },
+    {
+      "statement": {
+        "text": "Storage layer: Nebius pairs high-bandwidth shared filesystems with non-replicated disks for model weights to remove I/O bottlenecks during loading and checkpointing.",
+        "claim_ids": [
+          "C_0458a7c13d",
+          "C_167e2fefa5"
+        ],
+        "evidence_ids": [
+          "E_7bec77f6c0",
+          "E_7cef43b6f9"
+        ],
+        "citations": [
+          1,
+          6
+        ]
+      },
+      "support": [
+        {
+          "text": "Nebius Compute shared filesystems deliver tested read bandwidth per client of up to 15 GiB/s.",
+          "claim_ids": [
+            "C_0458a7c13d"
+          ],
+          "evidence_ids": [
+            "E_7bec77f6c0"
+          ],
+          "citations": [
+            1
+          ]
+        },
+        {
+          "text": "Nebius provided vLLM with non-replicated disks (NRD) as a high-throughput storage solution for handling model weights, allowing large-scale weights to be stored and quickly loaded without bottlenecks or unnecessary redundancy costs.",
+          "claim_ids": [
+            "C_167e2fefa5"
+          ],
+          "evidence_ids": [
+            "E_7cef43b6f9"
+          ],
+          "citations": [
+            6
+          ]
+        }
+      ],
+      "confidence": 0.45
+    },
+    {
+      "statement": {
+        "text": "Software layer: Nebius runs an in-house open-source Kubernetes operator for Slurm (Soperator) for resilient training orchestration and a managed vLLM-based Token Factory on bare-metal Hopper/Blackwell for inference serving.",
+        "claim_ids": [
+          "C_3ca49c4350",
+          "C_222dc5bc6e",
+          "C_1f2056cccb"
+        ],
+        "evidence_ids": [
+          "E_9a56ebfbe0",
+          "E_31bed3bd35",
+          "E_0afba3e8e3"
+        ],
+        "citations": [
+          4,
+          5,
+          10
+        ]
+      },
+      "support": [
+        {
+          "text": "Nebius Soperator is built and maintained in-house, fully open-sourced, and available on GitHub.",
+          "claim_ids": [
+            "C_3ca49c4350"
+          ],
+          "evidence_ids": [
+            "E_9a56ebfbe0"
+          ],
+          "citations": [
+            4
+          ]
+        },
+        {
+          "text": "Nebius launched its MLPerf benchmarks using Soperator, its in-house Kubernetes operator for Slurm, which enables AI clusters to run with high resiliency and availability and provides simplicity for ML operational teams.",
+          "claim_ids": [
+            "C_222dc5bc6e"
+          ],
+          "evidence_ids": [
+            "E_31bed3bd35"
+          ],
+          "citations": [
+            5
+          ]
+        },
+        {
+          "text": "Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware.",
+          "claim_ids": [
+            "C_1f2056cccb"
+          ],
+          "evidence_ids": [
+            "E_0afba3e8e3"
+          ],
+          "citations": [
+            10
+          ]
+        }
+      ],
+      "confidence": 0.42
+    }
+  ],
+  "caveats": [
+    "Source independence: 15 sources with evidence reduce to 3 independent roots; 2 of these are interested parties (self-reported).",
+    "Thinly sourced: 12 of 12 key claims rest on a single independent source.",
+    "Open gap [WEAK_INFERENCE]: I_b3fcb76582 → H1: needs evidence on 'Evidence that storage I/O is a dominant non-GPU factor in real-world AI performance (not j'",
+    "Open gap [WEAK_INFERENCE]: I_2bcb04d585 → H1: needs evidence on 'Direct evidence of InfiniBand/NVLink-class fabric deployment (the premises only mention 'c'",
+    "Confidence values are model-estimated evidence beliefs from explicit heuristics, not calibrated probabilities."
+  ],
+  "decision_trace": [
+    "agent selected: Next agent: GeneralResearcher (utility 0.95). Reason: no evidence collected yet: broad discovery first",
+    "independence summary: 6 URLs with evidence → 1 publication families → 1 independent evidence roots; 1 of them are interested parties (self-reported)",
+    "inference rejected: I_b3fcb76582 rejected (weak): The premises establish that Nebius has high storage bandwidth figures, but do not establish that storage I/O is a 'dominant' non-GPU factor in real-world AI performance. The leap from 'Nebiu",
+    "inference rejected: I_2bcb04d585 rejected (weak): The premises describe a rack-scale GPU system and pre-validated clusters, but do not directly establish that Nebius uses InfiniBand/NVLink-class fabrics or that networking is a dominant fact",
+    "inference rejected: I_3e5ae6eae6 rejected (weak): The premises show Nebius has an in-house Kubernetes operator and claims full-stack control, but do not establish that software-stack efficiency or host-level compute balance are the 'most in",
+    "inference rejected: I_4c7bc119cd needs_evidence (weak): This is an abductive inference claiming H3 (vertical integration) best explains the evidence, but the premises only show Nebius has capabilities in storage, rack-scale compute, and orc",
+    "agent selected: Next agent: IndependenceResearcher (utility 1.00). Reason: [NO_INDEPENDENT_SOURCE] C_1235173107: no independent confirmation of 'Nebius achieved a training step time of 244.6 minutes for Llama 3.1 405B on the 64-node (51",
+    "agent selected: Next agent: GapResearcher (utility 0.93). Reason: [WEAK_INFERENCE] I_b3fcb76582 → H1: needs evidence on 'Evidence that storage I/O is a dominant non-GPU factor in real-world AI performance (not j'",
+    "stop decision: CONTINUE: 15 critical claim(s) below sufficiency, 0 open contradiction(s), 23 researchable gap(s); new independent roots this round: 1",
+    "independence summary: 9 URLs with evidence → 1 publication families → 1 independent evidence roots; 1 of them are interested parties (self-reported)",
+    "independence summary: 12 URLs with evidence → 3 publication families → 3 independent evidence roots; 2 of them are interested parties (self-reported)",
+    "agent selected: Next agent: GapResearcher (utility 0.98). Reason: [WEAK_INFERENCE] I_b3fcb76582 → H1: needs evidence on 'Evidence that storage I/O is a dominant non-GPU factor in real-world AI performance (not j'",
+    "agent selected: Next agent: AdversarialResearcher (utility 0.72). Reason: leading hypothesis H1 (posterior 0.50) has not been challenged yet",
+    "stop decision: CONTINUE: 15 critical claim(s) below sufficiency, 0 open contradiction(s), 26 researchable gap(s); new independent roots this round: 2",
+    "independence summary: 15 URLs with evidence → 3 publication families → 3 independent evidence roots; 2 of them are interested parties (self-reported)",
+    "research gap unresolvable: G_9aa9e2da22 unresolvable with public data after 2 attempts: I_b3fcb76582 → H1: needs evidence on 'Evidence that storage I/O is a dominant non-GPU factor in real-world AI performance (not j'",
+    "research gap unresolvable: G_68936e9248 unresolvable with public data after 2 attempts: I_2bcb04d585 → H1: needs evidence on 'Direct evidence of InfiniBand/NVLink-class fabric deployment (the premises only mention 'c'",
+    "research gap unresolvable: G_a42d13ef6d unresolvable with public data after 2 attempts: I_3e5ae6eae6 → H2: needs evidence on 'Evidence that software-stack efficiency is among the 'most influential' non-GPU factors'",
+    "stop decision: STOP (SUCCESS): enough verified evidence to give a substantive answer; remaining gaps are low-value; new independent roots this round: 0"
+  ],
+  "conclusion": [
+    {
+      "text": "The GB300 NVL72 on Nebius is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace CPUs, designed for frontier model training, AI reasoning, and agentic AI.",
+      "claim_ids": [
+        "C_32e080bff7"
+      ],
+      "evidence_ids": [
+        "E_b37a7e1f5e"
+      ],
+      "citations": [
+        3
+      ]
+    },
+    {
+      "text": "Nebius submitted six MLPerf Training 6.0 configurations across NVIDIA HGX B300 and GB300 NVL72 systems, showing the compute layer is exercised at both node and rack scale.",
+      "claim_ids": [
+        "C_36a110c26a"
+      ],
+      "evidence_ids": [
+        "E_ca977d604d"
+      ],
+      "citations": [
+        9
+      ]
+    },
+    {
+      "text": "Compute layer: Nebius deploys rack-scale, fully liquid-cooled NVIDIA GB300 NVL72 systems (72 Blackwell Ultra GPUs and 36 Grace CPUs per rack) purpose-built for frontier training and inference.",
+      "claim_ids": [
+        "C_32e080bff7"
+      ],
+      "evidence_ids": [
+        "E_b37a7e1f5e"
+      ],
+      "citations": [
+        3
+      ]
+    },
+    {
+      "text": "Nebius states that for large-scale clusters spanning multiple SUs or the whole InfiniBand fabric, topology-aware scheduling is beneficial, especially for small-size network exchanges that are more sensitive to latency.",
+      "claim_ids": [
+        "C_3c2f9e1617"
+      ],
+      "evidence_ids": [
+        "E_3fa4ae7f40"
+      ],
+      "citations": [
+        8
+      ]
+    },
+    {
+      "text": "The full-rack GB300 NVL72 system ranked first in MLPerf Inference v6.1 DeepSeek R1 server and offline scenarios at 603,023 and 689,961 tokens/s, indicating the fabric sustains frontier inference throughput.",
+      "claim_ids": [
+        "C_16e7a3dc83"
+      ],
+      "evidence_ids": [
+        "E_12f7ea37dd"
+      ],
+      "citations": [
+        2
+      ]
+    },
+    {
+      "text": "Networking layer: Nebius uses an InfiniBand fabric with topology-aware scheduling to manage east-west traffic and latency-sensitive collectives across large clusters.",
+      "claim_ids": [
+        "C_3c2f9e1617"
+      ],
+      "evidence_ids": [
+        "E_3fa4ae7f40"
+      ],
+      "citations": [
+        8
+      ]
+    },
+    {
+      "text": "Nebius Compute shared filesystems deliver tested read bandwidth per client of up to 15 GiB/s.",
+      "claim_ids": [
+        "C_0458a7c13d"
+      ],
+      "evidence_ids": [
+        "E_7bec77f6c0"
+      ],
+      "citations": [
+        1
+      ]
+    },
+    {
+      "text": "Nebius provided vLLM with non-replicated disks (NRD) as a high-throughput storage solution for handling model weights, allowing large-scale weights to be stored and quickly loaded without bottlenecks or unnecessary redundancy costs.",
+      "claim_ids": [
+        "C_167e2fefa5"
+      ],
+      "evidence_ids": [
+        "E_7cef43b6f9"
+      ],
+      "citations": [
+        6
+      ]
+    },
+    {
+      "text": "Storage layer: Nebius pairs high-bandwidth shared filesystems with non-replicated disks for model weights to remove I/O bottlenecks during loading and checkpointing.",
+      "claim_ids": [
+        "C_0458a7c13d",
+        "C_167e2fefa5"
+      ],
+      "evidence_ids": [
+        "E_7bec77f6c0",
+        "E_7cef43b6f9"
+      ],
+      "citations": [
+        1,
+        6
+      ]
+    },
+    {
+      "text": "Nebius Soperator is built and maintained in-house, fully open-sourced, and available on GitHub.",
+      "claim_ids": [
+        "C_3ca49c4350"
+      ],
+      "evidence_ids": [
+        "E_9a56ebfbe0"
+      ],
+      "citations": [
+        4
+      ]
+    },
+    {
+      "text": "Nebius launched its MLPerf benchmarks using Soperator, its in-house Kubernetes operator for Slurm, which enables AI clusters to run with high resiliency and availability and provides simplicity for ML operational teams.",
+      "claim_ids": [
+        "C_222dc5bc6e"
+      ],
+      "evidence_ids": [
+        "E_31bed3bd35"
+      ],
+      "citations": [
+        5
+      ]
+    },
+    {
+      "text": "Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware.",
+      "claim_ids": [
+        "C_1f2056cccb"
+      ],
+      "evidence_ids": [
+        "E_0afba3e8e3"
+      ],
+      "citations": [
+        10
+      ]
+    },
+    {
+      "text": "Software layer: Nebius runs an in-house open-source Kubernetes operator for Slurm (Soperator) for resilient training orchestration and a managed vLLM-based Token Factory on bare-metal Hopper/Blackwell for inference serving.",
+      "claim_ids": [
+        "C_3ca49c4350",
+        "C_222dc5bc6e",
+        "C_1f2056cccb"
+      ],
+      "evidence_ids": [
+        "E_9a56ebfbe0",
+        "E_31bed3bd35",
+        "E_0afba3e8e3"
+      ],
+      "citations": [
+        4,
+        5,
+        10
+      ]
+    },
+    {
+      "text": "Beyond the GPU model, real-world AI infrastructure performance is shaped by four interacting layers — compute host configuration, networking fabric, storage throughput, and software stack — and Nebius addresses each with purpose-built choices: rack-scale Blackwell Ultra systems with liquid cooling, topology-aware InfiniBand scheduling, high-bandwidth shared filesystems with non-replicated disks for model weights, and an in-house open-source Slurm operator plus a managed vLLM serving stack.",
+      "claim_ids": [
+        "C_32e080bff7",
+        "C_3c2f9e1617",
+        "C_0458a7c13d",
+        "C_167e2fefa5",
+        "C_3ca49c4350",
+        "C_1f2056cccb"
+      ],
+      "evidence_ids": [
+        "E_b37a7e1f5e",
+        "E_3fa4ae7f40",
+        "E_7bec77f6c0",
+        "E_7cef43b6f9",
+        "E_9a56ebfbe0",
+        "E_0afba3e8e3"
+      ],
+      "citations": [
+        1,
+        3,
+        4,
+        6,
+        8,
+        10
+      ]
+    }
+  ],
+  "rejected_statements": [],
+  "hypotheses": [
+    {
+      "id": "H5",
+      "text": "Public information about Nebius's current platform is insufficient to determine which non-GPU factors it most strongly addresses, because detailed technical specifications of its compute, networking, storage, and software layers are not publicly disclosed at the depth required.",
+      "is_null": true,
+      "prior": 0.35,
+      "posterior": 0.6875,
+      "sufficiency": 1.0,
+      "inference_validity": null,
+      "status": "active",
+      "accepted_inferences": [],
+      "rejected_inferences": [],
+      "history": [
+        0.35,
+        0.7652,
+        0.7398,
+        0.7652,
+        0.6875,
+        0.6562,
+        0.6875
+      ]
+    },
+    {
+      "id": "H1",
+      "text": "The dominant non-GPU factors in real-world AI infrastructure performance are inter-GPU networking (bandwidth, topology, RDMA/InfiniBand fabric) and storage I/O for data loading and checkpointing, and Nebius addresses these primarily through high-bandwidth GPU-to-GPU interconnects (e.g., InfiniBand/NVLink-class fabrics) and high-throughput parallel/object storage tightly coupled to compute nodes.",
+      "is_null": false,
+      "prior": 0.5,
+      "posterior": 0.5,
+      "sufficiency": 0.2348,
+      "inference_validity": null,
+      "status": "insufficient",
+      "accepted_inferences": [],
+      "rejected_inferences": [
+        "I_b3fcb76582 (rejected): Nebius's documented storage bandwidth figures (1.9 TiB/s aggregate, 15 GiB/s per client, 30% read gains in Object Storage) indicate a high-throughput parallel/object storage layer tightly coupled to compute, consistent with H1's claim that storage I/O is a dominant non-GPU factor Nebius addresses. — The premises establish that Nebius has high storage bandwidth figures, but do not establish that storage I/O is a 'dominant' non-GPU factor in real-world AI performance. The leap from 'Nebius has high storage bandwidth' to 'storage I/O is dominant and Nebius addresses it' is not justified by these premises alone. The premises are also self-reported/vendor-tested figures, not independent benchmarks.",
+        "I_2bcb04d585 (rejected): The GB300 NVL72 rack-scale system with non-virtualized GPUs/network and pre-validated cluster interconnect and topology-aware scheduling implies a high-bandwidth GPU-to-GPU fabric (InfiniBand/NVLink-class) that supports H1's networking-centric framing. — The premises describe a rack-scale GPU system and pre-validated clusters, but do not directly establish that Nebius uses InfiniBand/NVLink-class fabrics or that networking is a dominant factor. The inference assumes the conclusion about networking dominance rather than deriving it. The premises are also largely descriptive of standard NVIDIA reference architecture features.",
+        "I_92f12d1fbc (rejected): Nebius's emphasis on topology-aware scheduling across InfiniBand fabrics and pre-validated cluster interconnects on rack-scale NVL72 systems indicates networking is a meaningful performance lever, consistent with H1's claim that inter-GPU networking is a dominant non-GPU factor. — The premises show Nebius invests in topology-aware scheduling and pre-validated interconnects, but this only demonstrates that networking is one area of investment. The conclusion claims networking is a 'dominant non-GPU factor,' which requires comparative evidence showing networking outweighs other factors. Vendor emphasis on a feature does not establish its dominance as a performance lever.",
+        "I_9dd819501d (rejected): High per-client read bandwidth (up to 15 GiB/s) on shared filesystems combined with rack-scale GPU systems suggests Nebius invests in storage throughput to feed large GPU clusters, aligning with H1's storage-I/O emphasis. — The premises establish that Nebius offers high per-client read bandwidth and rack-scale GPU systems, but this does not demonstrate that storage I/O is a dominant non-GPU factor. The conclusion makes a strong claim about dominance that requires comparative evidence against other factors. Having a capability does not establish it as the binding constraint.",
+        "I_57cbc181b1 (rejected): Evidence of high per-client read bandwidth (15 GiB/s), a vLLM-integrated non-replicated disk solution for fast weight loading, and topology-aware scheduling over InfiniBand collectively indicate Nebius invests in storage throughput and fabric-level networking as key non-GPU performance levers. — The premises show Nebius offers certain storage and networking features, but do not establish that these are the dominant non-GPU factors in real-world AI performance, nor that Nebius's specific implementations are differentiated or tightly coupled to compute. The inference leaps from feature existence to industry-wide causal dominance."
+      ],
+      "history": [
+        0.5
+      ]
+    },
+    {
+      "id": "H2",
+      "text": "Beyond GPUs, the most influential factors are software-stack efficiency (orchestration, scheduling, kernel libraries, compilers, and MLOps tooling) and host-level compute balance (CPU, host memory, PCIe/NVLink generation), and Nebius addresses these through a vertically integrated software platform plus tightly tuned host configurations rather than through raw hardware differentiation.",
+      "is_null": false,
+      "prior": 0.5,
+      "posterior": 0.5,
+      "sufficiency": 0.2348,
+      "inference_validity": null,
+      "status": "insufficient",
+      "accepted_inferences": [],
+      "rejected_inferences": [
+        "I_3e5ae6eae6 (rejected): Nebius's claims of full-stack control (proprietary firmware, custom servers, optimized compute engine, unique orchestration) plus an in-house open-sourced Kubernetes operator for Slurm indicate a vertically integrated software platform addressing orchestration and scheduling, supporting H2. — The premises show Nebius has an in-house Kubernetes operator and claims full-stack control, but do not establish that software-stack efficiency or host-level compute balance are the 'most influential' non-GPU factors. The inference relies on self-reported vendor claims (one premise is marked 'insufficient') and assumes the conclusion about factor importance rather than deriving it.",
+        "I_6530f986d1 (rejected): Nebius's in-house Soperator, Slurm-based orchestration, Dstack support, and managed vLLM-based Token Factory demonstrate a vertically integrated software stack addressing orchestration, scheduling, and serving, which supports H2's software-stack-efficiency framing. — The premises show Nebius has various software components (Soperator, Dstack, Token Factory), but this only demonstrates vertical integration, not that software-stack efficiency is a dominant non-GPU factor. The conclusion requires evidence that software outweighs networking, storage, and host balance as performance drivers, which is not provided.",
+        "I_783169c10f (rejected): A managed vLLM-based serving stack, an in-house open-sourced Kubernetes operator for Slurm (Soperator), and in-house orchestration tooling demonstrate that Nebius addresses non-GPU performance through a vertically integrated software platform rather than hardware alone. — The premises establish that Nebius has certain software offerings, but do not demonstrate that software-stack efficiency is the most influential non-GPU factor, nor that Nebius's software is differentiated or that host configurations are tightly tuned. The inference overgeneralizes from product existence to causal dominance."
+      ],
+      "history": [
+        0.5
+      ]
+    },
+    {
+      "id": "H3",
+      "text": "No single layer dominates; real-world AI performance is determined by end-to-end system balance, and Nebius's competitive advantage comes from vertical integration across all four layers (compute, networking, storage, software) rather than excellence in any one layer.",
+      "is_null": false,
+      "prior": 0.35,
+      "posterior": 0.35,
+      "sufficiency": 0.3125,
+      "inference_validity": null,
+      "status": "weakened",
+      "accepted_inferences": [],
+      "rejected_inferences": [
+        "I_4c7bc119cd (needs_evidence): Evidence of strong capabilities across storage bandwidth, rack-scale GPU systems, and proprietary orchestration together best fits H3's explanation that Nebius's advantage stems from vertical integration across compute, networking, storage, and software rather than any single layer. — This is an abductive inference claiming H3 (vertical integration) best explains the evidence, but the premises only show Nebius has capabilities in storage, rack-scale compute, and orchestration. The premises do not establish that vertical integration is the *best* explanation versus alternatives, nor do they establish that 'no single layer dominates.' The inference is circular: it uses evidence of multi-layer capability to conclude multi-layer integration is the advantage.; R3: causal/abductive inference with unexcluded confounders",
+        "I_bbb61cb1c2 (needs_evidence): Evidence of deliberate investment across orchestration (Soperator/Dstack), storage (15 GiB/s filesystems), networking (topology-aware scheduling over InfiniBand), and serving software (Token Factory) best explains Nebius's MLPerf results as vertical integration rather than excellence in any single layer, supporting H3. — This is an abductive inference claiming vertical integration is the best explanation for MLPerf results, but the premises only show Nebius has offerings across categories—they do not include the MLPerf results themselves or comparative data. The inference assumes that having multiple offerings equals balanced capability, which is not justified. Alternative explanations like hardware access or single-layer excellence are not ruled out.; R3: causal/abductive inference with unexcluded confounders",
+        "I_ad729bfa41 (needs_evidence): SemiAnalysis's characterization of Nebius as 'strong in every category,' combined with pre-validated end-to-end clusters, is best explained by balanced cross-layer capability rather than single-layer dominance, supporting H3. — This abductive inference claims balanced cross-layer capability is the best explanation for SemiAnalysis's assessment, but the premises only provide a qualitative industry assessment and a process claim (pre-validation). The inference assumes that being 'strong in every category' requires balanced technical capability, but this is not justified. Alternative explanations like marketing positioning or hardware access are equally plausible.; R3: causal/abductive inference with unexcluded confounders",
+        "I_c14f140aa8 (needs_evidence): Simultaneous evidence of differentiated capabilities across storage (15 GiB/s shared FS, NRD for vLLM), networking (topology-aware scheduling over InfiniBand), software (Soperator, Token Factory), and compute (rack-scale GB300 NVL72) best explains Nebius's benchmark leadership as the result of balanced vertical integration rather than any single layer. — The premises list capabilities across four layers but do not establish that Nebius has benchmark leadership, that vertical integration causes it, or that no single layer dominates. The abductive inference assumes its conclusion (balanced integration explains leadership) without premises that rule out simpler explanations like hardware access or workload-specific tuning.; R3: causal/abductive inference with unexcluded confounders",
+        "I_cc8c482d92 (needs_evidence): An external analyst's characterization of Nebius as 'an industry leader with strong offerings in every category,' corroborated by concrete capabilities spanning rack-scale compute, in-house orchestration, and high-bandwidth storage, is most plausibly explained by balanced excellence across layers rather than dominance in one. — The premises include a subjective analyst characterization and a selection of Nebius capabilities, but do not establish that balanced excellence across layers is the best explanation. The abductive inference assumes its conclusion (balanced integration) rather than weighing it against simpler explanations like hardware access advantages.; R3: causal/abductive inference with unexcluded confounders"
+      ],
+      "history": [
+        0.35
+      ]
+    },
+    {
+      "id": "H4",
+      "text": "The most influential non-GPU factors are workload-dependent: networking and collective communication dominate large-scale training, while storage latency and inference-serving software dominate production inference, and Nebius addresses each with distinct, workload-targeted offerings rather than a one-size-fits-all stack.",
+      "is_null": false,
+      "prior": 0.35,
+      "posterior": 0.35,
+      "sufficiency": 0.25,
+      "inference_validity": null,
+      "status": "insufficient",
+      "accepted_inferences": [],
+      "rejected_inferences": [
+        "I_6fdf48dc70 (rejected): Near-linear 1.97x scaling from 512 to 1,024 GPUs on Llama 3.1 405B training suggests collective communication/networking is well-tuned for large-scale training workloads, supporting H4's claim that networking dominates large-scale training and that Nebius targets it specifically. — The premises show a specific scaling result on a specific benchmark, but do not establish that networking is the cause of that scaling or that networking 'dominates' large-scale training. The inference makes a causal claim (networking causes scaling) from a correlational observation (scaling occurred). The conclusion about workload-dependent factors is also not supported by these premises alone.",
+        "I_dfdb610fbe (rejected): The fractional-allocation benchmark showing 86% user capacity retention at 0.5 GPU, combined with non-virtualized GPU/network performance, indicates workload-aware scheduling and resource sharing suited to inference-serving scenarios, supporting H4's workload-dependent framing. — The premises show a fractional allocation benchmark result and non-virtualized infrastructure, but do not establish that storage latency or inference-serving software dominates production inference, nor that Nebius specifically targets inference with distinct offerings. The inference assumes the workload-dependent conclusion rather than deriving it from the evidence.",
+        "I_db85f3c976 (needs_evidence): Nebius's distinct MLPerf results across large-scale training (Llama 3.1 405B on 512 GPUs) and inference (DeepSeek R1 on NVL72 systems) indicate workload-specific optimization, consistent with H4's claim that dominant non-GPU factors differ by workload. — The premises show Nebius achieved results across training and inference workloads, but this does not establish that different non-GPU factors dominate each workload type. The conclusion makes a strong claim about workload-dependent dominance that requires evidence isolating which factors drove each result. Having results in multiple categories does not prove workload-specific optimization of different infrastructure layers.; R1: premise not established (weakest posterior 0.50)",
+        "I_30de9f0290 (rejected): Large-scale training results (Llama 3.1 405B on 512 GPUs) combined with multi-workload training times on smaller HGX B300 nodes and reported cluster reliability metrics indicate Nebius operates distinct configurations tuned to different workload scales and types rather than a uniform stack. — The premises show Nebius ran different benchmarks on different cluster sizes, but do not establish that Nebius has distinct workload-targeted offerings, nor that networking vs. storage/inference-software are the dominant factors for each workload type. The inference imports an industry framework (workload-dependent dominance) not supported by the evidence.",
+        "I_1186805107 (needs_evidence): Leading inference results on DeepSeek R1 across both server and offline scenarios using a managed vLLM-based Token Factory indicate Nebius targets inference-serving workloads with a software-stack-specific offering distinct from its training-oriented rack-scale systems. — The premises show Nebius achieved leading inference results using Token Factory on new hardware, but do not establish that Token Factory is a distinct, software-specific offering for inference, nor that inference-serving software dominates inference performance. The inference conflates hardware access with software differentiation.; R1: premise not established (weakest posterior 0.50)"
+      ],
+      "history": [
+        0.35
+      ]
+    }
+  ],
+  "critical_claims": [
+    {
+      "id": "C_0458a7c13d",
+      "text": "Nebius Compute shared filesystems deliver tested read bandwidth per client of up to 15 GiB/s.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.6667,
+      "sufficiency": 0.5,
+      "status": "likely",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_7bec77f6c0",
+          "stance": "supports",
+          "excerpt": "Tested read bandwidth per client: up to 15 GiB/s¹",
+          "location": "chars 11377-11426 (exact)",
+          "citation": 1,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.411,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.3153,
+            "likelihood_ratio": 2.0,
+            "bucket": "moderate_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_0458a7c13d: no independent confirmation of 'Nebius Compute shared filesystems deliver tested read bandwidth per client of up to 15 GiB/s.'"
+      ],
+      "history": [
+        0.5,
+        0.6667
+      ]
+    },
+    {
+      "id": "C_16e7a3dc83",
+      "text": "The full-rack Nebius system with NVIDIA GB300 NVL72 (72 NVIDIA Blackwell Ultra GPUs across 18 nodes) ranked first in both server and offline scenarios for DeepSeek R1 in MLPerf Inference v6.1, at 603,023 and 689,961 tokens/s respectively.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.5556,
+      "sufficiency": 0.5,
+      "status": "insufficient",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_12f7ea37dd",
+          "stance": "supports",
+          "excerpt": "On the full-rack Nebius system with NVIDIA GB300 NVL72, 72 NVIDIA Blackwell Ultra GPUs across 18 nodes served large-scale inference workloads. With this configuration, we ranked first in both the server and offline scenarios for DeepSeek R1, at 603,023 and 689,961 tokens/s respectively [3][7]",
+          "location": "chars 3830-4123 (exact)",
+          "citation": 2,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.363,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.2785,
+            "likelihood_ratio": 1.25,
+            "bucket": "weak_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_16e7a3dc83: no independent confirmation of 'The full-rack Nebius system with NVIDIA GB300 NVL72 (72 NVIDIA Blackwell Ultra GPUs across 18 nodes) ranked first in both server and offline scenarios for DeepSeek R1 in MLPerf Inference v6.1, at 603,023 and 689,961 tokens/s respectively.'"
+      ],
+      "history": [
+        0.5,
+        0.5556
+      ]
+    },
+    {
+      "id": "C_32e080bff7",
+      "text": "The NVIDIA GB300 NVL72 on Nebius is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace CPUs, purpose-built for frontier model training, AI reasoning, and agentic AI.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.6667,
+      "sufficiency": 0.5,
+      "status": "likely",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_b37a7e1f5e",
+          "stance": "supports",
+          "excerpt": "The NVIDIA GB300 NVL72 is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace™ CPUs, purpose-built for frontier model training, AI reasoning, and agentic AI at the highest scale",
+          "location": "chars 1139-1361 (exact)",
+          "citation": 3,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.411,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.3153,
+            "likelihood_ratio": 2.0,
+            "bucket": "moderate_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_32e080bff7: no independent confirmation of 'The NVIDIA GB300 NVL72 on Nebius is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace CPUs, purpose-built for frontier model training, AI reasoning, and agentic AI.'"
+      ],
+      "history": [
+        0.5,
+        0.6667
+      ]
+    },
+    {
+      "id": "C_3ca49c4350",
+      "text": "Nebius Soperator is built and maintained in-house, fully open-sourced, and available on GitHub.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.6667,
+      "sufficiency": 0.5,
+      "status": "likely",
+      "raw_sources": 3,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_9a56ebfbe0",
+          "stance": "supports",
+          "excerpt": "Soperator is built and maintained in-house, fully open-sourced, and available on GitHub. Use it as a managed service on Nebius or deploy it yourself on any cloud.​",
+          "location": "chars 1822-1985 (exact)",
+          "citation": 4,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.411,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.3153,
+            "likelihood_ratio": 2.0,
+            "bucket": "moderate_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_3ca49c4350: 3 sources but only 1 independent root"
+      ],
+      "history": [
+        0.5,
+        0.6667
+      ]
+    },
+    {
+      "id": "C_1235173107",
+      "text": "Nebius achieved a training step time of 244.6 minutes for Llama 3.1 405B on the 64-node (512 GPU) cluster in MLPerf Training v5.0.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.5556,
+      "sufficiency": 0.5,
+      "status": "insufficient",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_248f1d3c04",
+          "stance": "supports",
+          "excerpt": "We achieved training step times of 124.5 min and 244.6 min for Llama 3.1 405B on the 128-node cluster and 64-node cluster, respectively¹",
+          "location": "chars 3546-3682 (exact)",
+          "citation": 5,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.363,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.2785,
+            "likelihood_ratio": 1.25,
+            "bucket": "weak_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_1235173107: no independent confirmation of 'Nebius achieved a training step time of 244.6 minutes for Llama 3.1 405B on the 64-node (512 GPU) cluster in MLPerf Training v5.0.'"
+      ],
+      "history": [
+        0.5,
+        0.5556
+      ]
+    },
+    {
+      "id": "C_222dc5bc6e",
+      "text": "Nebius launched its MLPerf benchmarks using Soperator, its in-house Kubernetes operator for Slurm, which enables AI clusters to run with high resiliency and availability and provides exceptional simplicity for ML operational teams.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.6667,
+      "sufficiency": 0.5,
+      "status": "likely",
+      "raw_sources": 4,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_31bed3bd35",
+          "stance": "supports",
+          "excerpt": "we launched these benchmarks by using Soperator, our in-house Kubernetes operator for Slurm. This software enables AI clusters to run with a high level of resiliency and availability, while providing exceptional simplicity for ML operational teams",
+          "location": "chars 4700-4947 (exact)",
+          "citation": 5,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.411,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.3153,
+            "likelihood_ratio": 2.0,
+            "bucket": "moderate_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_222dc5bc6e: 4 sources but only 1 independent root"
+      ],
+      "history": [
+        0.5,
+        0.6667
+      ]
+    },
+    {
+      "id": "C_167e2fefa5",
+      "text": "Nebius provided vLLM with non-replicated disks (NRD) as a high-throughput storage solution for handling model weights, allowing large-scale model weights to be stored and quickly loaded without bottlenecks or unnecessary redundancy costs.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.6667,
+      "sufficiency": 0.5,
+      "status": "likely",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_7cef43b6f9",
+          "stance": "supports",
+          "excerpt": "For efficient inference, vLLM required a high throughput storage solution to handle model weights. With Nebius’ non-replicated disks (NRD), vLLM could store large-scale model weights while maintaining high data throughput without incurring unnecessary redundancy costs",
+          "location": "chars 6001-6269 (exact)",
+          "citation": 6,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.411,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.3153,
+            "likelihood_ratio": 2.0,
+            "bucket": "moderate_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_167e2fefa5: no independent confirmation of 'Nebius provided vLLM with non-replicated disks (NRD) as a high-throughput storage solution for handling model weights, allowing large-scale model weights to be stored and quickly loaded without bottlenecks or unnecessary redundancy costs.'"
+      ],
+      "history": [
+        0.5,
+        0.6667
+      ]
+    },
+    {
+      "id": "C_0650800caa",
+      "text": "The Nebius 3,000-GPU (375-node) cluster achieved an average MTBF of 33.0 hours over the past several weeks.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.5556,
+      "sufficiency": 0.5,
+      "status": "insufficient",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_9ab1ed2c50",
+          "stance": "supports",
+          "excerpt": "This system achieved a peak MTBF of 56.6 hours (169,800 GPU hours), with an average of 33.0 hours over the past several weeks",
+          "location": "chars 24334-24459 (exact)",
+          "citation": 7,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.363,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.2785,
+            "likelihood_ratio": 1.25,
+            "bucket": "weak_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_0650800caa: no independent confirmation of 'The Nebius 3,000-GPU (375-node) cluster achieved an average MTBF of 33.0 hours over the past several weeks.'"
+      ],
+      "history": [
+        0.5,
+        0.5556
+      ]
+    },
+    {
+      "id": "C_3c2f9e1617",
+      "text": "Nebius states that for large-scale clusters spanning multiple SUs or the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small-size network exchanges that are more sensitive to latency.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.6667,
+      "sufficiency": 0.5,
+      "status": "likely",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_3fa4ae7f40",
+          "stance": "supports",
+          "excerpt": "For a large-scale cluster, which spans multiple SUs or even occupies the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small size network exchanges, which are more sensitive to latency",
+          "location": "chars 3658-3888 (exact)",
+          "citation": 8,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.411,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.3153,
+            "likelihood_ratio": 2.0,
+            "bucket": "moderate_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_3c2f9e1617: no independent confirmation of 'Nebius states that for large-scale clusters spanning multiple SUs or the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small-size network exchanges that are more sensitive to latency.'"
+      ],
+      "history": [
+        0.5,
+        0.6667
+      ]
+    },
+    {
+      "id": "C_2146aa4a2c",
+      "text": "On the eight-node HGX B300 configuration (64 GPUs), Nebius completed Llama-3.1-8B in 14.42 minutes, FLUX.1 in 46.71 minutes, and GPT-OSS 20B in 23.48 minutes in MLPerf Training 6.0.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.5556,
+      "sufficiency": 0.5,
+      "status": "insufficient",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_e0e93d0b37",
+          "stance": "supports",
+          "excerpt": "On the eight-node configuration, HGX B300 completed Llama-3.1-8B in 14.42 minutes, FLUX.1 in 46.71 minutes, and GPT-OSS 20B in 23.48 minutes, extending the platform’s coverage to larger training runs",
+          "location": "chars 3803-4002 (exact)",
+          "citation": 9,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.363,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.2785,
+            "likelihood_ratio": 1.25,
+            "bucket": "weak_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_2146aa4a2c: no independent confirmation of 'On the eight-node HGX B300 configuration (64 GPUs), Nebius completed Llama-3.1-8B in 14.42 minutes, FLUX.1 in 46.71 minutes, and GPT-OSS 20B in 23.48 minutes in MLPerf Training 6.0.'"
+      ],
+      "history": [
+        0.5,
+        0.5556
+      ]
+    },
+    {
+      "id": "C_36a110c26a",
+      "text": "For MLPerf Training 6.0, Nebius submitted six configurations powered by NVIDIA Blackwell Ultra systems: NVIDIA HGX B300 and NVIDIA GB300 NVL72.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.5556,
+      "sufficiency": 0.5,
+      "status": "insufficient",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_ca977d604d",
+          "stance": "supports",
+          "excerpt": "For MLPerf® Training 6.0, we submitted six configurations powered by NVIDIA Blackwell Ultra systems: NVIDIA HGX B300 and NVIDIA GB300 NVL72. [1]-[12]",
+          "location": "chars 377-526 (exact)",
+          "citation": 9,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.363,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 0.5,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.2785,
+            "likelihood_ratio": 1.25,
+            "bucket": "weak_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_36a110c26a: no independent confirmation of 'For MLPerf Training 6.0, Nebius submitted six configurations powered by NVIDIA Blackwell Ultra systems: NVIDIA HGX B300 and NVIDIA GB300 NVL72.'"
+      ],
+      "history": [
+        0.5,
+        0.5556
+      ]
+    },
+    {
+      "id": "C_1f2056cccb",
+      "text": "Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware.",
+      "kind": "fact",
+      "period": "period unknown",
+      "posterior": 0.5556,
+      "sufficiency": 0.35,
+      "status": "insufficient",
+      "raw_sources": 1,
+      "independent_roots": 1,
+      "support": [
+        {
+          "evidence_id": "E_0afba3e8e3",
+          "stance": "supports",
+          "excerpt": "Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware",
+          "location": "chars 9596-9709 (exact)",
+          "citation": 10,
+          "directness": 1.0,
+          "reported_speech": false,
+          "quality": {
+            "source_quality": 0.251,
+            "study_quality": null,
+            "result_quality": null,
+            "entailment": 0.95,
+            "replication": null,
+            "independence": 1.0,
+            "temporal_relevance": 0.7,
+            "directness": 1.0,
+            "strength": 0.1925,
+            "likelihood_ratio": 1.25,
+            "bucket": "weak_support"
+          }
+        }
+      ],
+      "against": [],
+      "missing": [
+        "C_1f2056cccb: no independent confirmation of 'Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware.'",
+        "C_1f2056cccb: no primary source for 'Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware.'"
+      ],
+      "history": [
+        0.5,
+        0.5556
+      ]
+    }
+  ],
+  "raw_source_count": 15,
+  "publication_family_count": 3,
+  "independent_root_count": 3,
+  "clusters": [
+    {
+      "root": "S_949fa80fe3",
+      "root_title": "Nebius and Eigen AI partner to accelerate frontier open-source AI inference",
+      "members": [
+        "S_08bc752e5f",
+        "S_0fd1b13130",
+        "S_3e23934f39",
+        "S_8585def078",
+        "S_949fa80fe3",
+        "S_a2f0b27ab8",
+        "S_bbc080ff66",
+        "S_c374af6966",
+        "S_cc58d9c63a",
+        "S_edd7f8f950",
+        "S_fa14cd7e68",
+        "S_fa6d3d3570",
+        "S_fbad4493ac"
+      ]
+    }
+  ],
+  "studies": [],
+  "screened_out": [
+    {
+      "source_id": "S_15840d92e5",
+      "title": "InfiniBand vs. Ethernet for AI Clusters",
+      "url": "https://www.arccompute.io/resources/arc-blog/infiniband-vs-ethernet-choosing-the-right-network-fabric-for-ai-clusters",
+      "reasons": [
+        "General industry comparison of InfiniBand vs Ethernet, not Nebius-specific",
+        "Commentary only on networking fabrics"
+      ]
+    },
+    {
+      "source_id": "S_e12a356c06",
+      "title": "GPU Orchestration & CUDA: Scheduling, MIG, and Topology-Aware Architecture",
+      "url": "https://www.rack2cloud.com/gpu-orchestration-cuda-strategy-guide",
+      "reasons": [
+        "General GPU orchestration/CUDA strategy guide, not Nebius-specific",
+        "Commentary only"
+      ]
+    },
+    {
+      "source_id": "S_f917779831",
+      "title": "Topology-Aware Workload Scheduling with NVIDIA Topograph | NVIDIA Technical Blog",
+      "url": "https://developer.nvidia.com/blog/topology-aware-workload-scheduling-with-nvidia-topograph",
+      "reasons": [
+        "NVIDIA technical blog about Topograph, not Nebius-specific",
+        "General tooling commentary"
+      ]
+    },
+    {
+      "source_id": "S_460a545037",
+      "title": "Nebius: Review, Pricing & Alternatives",
+      "url": "https://getdeploying.com/nebius",
+      "reasons": [
+        "Pricing-focused review page, limited technical detail on performance factors",
+        "Marketing/pricing summary"
+      ]
+    },
+    {
+      "source_id": "S_d4b22b6547",
+      "title": "how to select EC2 Instance with NVLINK support | AWS re:Post",
+      "url": "https://repost.aws/questions/QUzEQfmURVRnWpiF7G3Q1Lcw/how-to-select-ec2-instance-with-nvlink-support",
+      "reasons": [
+        "AWS-specific Q&A about NVLink, not related to Nebius",
+        "Wrong platform"
+      ]
+    },
+    {
+      "source_id": "S_d38c0dcc67",
+      "title": "Monitor TAS and gang scheduling for AI training in Kubernetes | Datadog",
+      "url": "https://www.datadoghq.com/blog/monitor-tas-and-gang-scheduling-for-ai-training-in-kubernetes",
+      "reasons": [
+        "Datadog blog about TAS/gang scheduling, not Nebius-specific",
+        "General commentary"
+      ]
+    },
+    {
+      "source_id": "S_8baf09827b",
+      "title": "Smarter Scheduling for AI Workloads: Topology-Aware ...",
+      "url": "https://www.reddit.com/r/kubernetes/comments/1p8ku4a/smarter_scheduling_for_ai_workloads_topologyaware",
+      "reasons": [
+        "Reddit discussion on topology-aware scheduling, not Nebius-specific",
+        "General commentary"
+      ]
+    },
+    {
+      "source_id": "S_b1eb5f2b5d",
+      "title": "ClusterMAX 3.0: The Industry Standard GPU Cloud Rating ...",
+      "url": "https://www.instagram.com/reel/DdrlxaBkjsw",
+      "reasons": [
+        "duplicate source: same title on the same site as S_6d5589feb2"
+      ]
+    },
+    {
+      "source_id": "S_740610584e",
+      "title": "MLPerf™ Training v5.0 Test Results Overview",
+      "url": "https://infohub.delltechnologies.com/zh-cn/p/mlperf-tm-training-v5-0-test-results-overview",
+      "reasons": [
+        "Dell Technologies MLPerf Training v5.0 overview, not about Nebius infrastructure"
+      ]
+    },
+    {
+      "source_id": "S_6d5589feb2",
+      "title": "ClusterMAX 3.0: The Industry Standard GPU Cloud Rating ...",
+      "url": "https://www.instagram.com/reel/DdpwxiRiZhq",
+      "reasons": [
+        "Instagram reel about ClusterMAX testing, social media format with limited substantive content"
+      ]
+    },
+    {
+      "source_id": "S_606a157eed",
+      "title": "NVIDIA Blackwell Architecture Sweeps MLPerf Training v5.1 Benchmarks | NVIDIA Technical Blog",
+      "url": "https://developer.nvidia.com/blog/nvidia-blackwell-architecture-sweeps-mlperf-training-v5-1-benchmarks",
+      "reasons": [
+        "NVIDIA technical blog about Blackwell MLPerf results, not specific to Nebius infrastructure factors"
+      ]
+    },
+    {
+      "source_id": "S_011b0ed092",
+      "title": "MLPerf Training Adds Llama 3.1 8B Benchmark - MLCommons",
+      "url": "https://mlcommons.org/2025/10/training-llama-3-1-8b",
+      "reasons": [
+        "MLCommons announcement about new benchmark, not about Nebius-specific infrastructure factors"
+      ]
+    },
+    {
+      "source_id": "S_43403f5036",
+      "title": "MLCommons Releases New MLPerf Inference v5.0 ...",
+      "url": "https://www.techpowerup.com/forums/threads/mlcommons-releases-new-mlperf-inference-v5-0-benchmark-results.334977",
+      "reasons": [
+        "TechPowerUp forum thread about MLPerf Inference v5.0, not Nebius-specific"
+      ]
+    },
+    {
+      "source_id": "S_e64c183c1c",
+      "title": "Reproducing NVIDIA MLPerf v5.0 Training Scores for LLM Benchmarks | NVIDIA Technical Blog",
+      "url": "https://developer.nvidia.com/blog/reproducing-nvidia-mlperf-v5-0-training-scores-for-llm-benchmarks",
+      "reasons": [
+        "NVIDIA technical blog about reproducing MLPerf scores, not about Nebius infrastructure factors"
+      ]
+    },
+    {
+      "source_id": "S_731a646254",
+      "title": "Nebius' Post - mlperf #inference #mlcommons",
+      "url": "https://www.linkedin.com/posts/nebius_mlperf-inference-mlcommons-activity-7506004510641696768-va3v",
+      "reasons": [
+        "Nebius LinkedIn post about MLPerf results, social media format with limited detail on infrastructure factors"
+      ]
+    },
+    {
+      "source_id": "S_39c6e5a6de",
+      "title": "MLPerf Training Archives - MLCommons",
+      "url": "https://mlcommons.org/category/mlperf-training",
+      "reasons": [
+        "MLCommons MLPerf Training archives page, general listing not specific to Nebius infrastructure factors"
+      ]
+    },
+    {
+      "source_id": "S_a781eee00c",
+      "title": "CoreWeave: Only Provider with 3x Platinum ClusterMAX | Blog",
+      "url": "https://www.coreweave.com/blog/coreweave-becomes-the-only-provider-to-earn-three-consecutive-platinum-clustermax-tm-ratings",
+      "reasons": [
+        "CoreWeave blog about their ClusterMAX rating, competitor-focused not Nebius-specific"
+      ]
+    },
+    {
+      "source_id": "S_afa1e0e481",
+      "title": "MLCommons MLPerf Training Expands with Llama 3.1 405B - MLCommons",
+      "url": "https://mlcommons.org/2025/05/training-llama31405b",
+      "reasons": [
+        "MLCommons announcement about MLPerf Training benchmark expansion, not Nebius-specific"
+      ]
+    },
+    {
+      "source_id": "S_4f4dbedda1",
+      "title": "Nebius leads MLPerf Inference v6.1 with 7 system configs",
+      "url": "https://www.linkedin.com/posts/james1_mlperf-inference-mlcommons-activity-7507687601743601664-QBX-",
+      "reasons": [
+        "LinkedIn post about Nebius MLPerf results, social media format with limited detail"
+      ]
+    },
+    {
+      "source_id": "S_f7f3a3c7d7",
+      "title": "MLCommons Releases MLPerf Training v5.1 Results - MLCommons",
+      "url": "https://mlcommons.org/2025/11/training-v5-1-results",
+      "reasons": [
+        "MLCommons MLPerf Training v5.1 results announcement, general listing not focused on Nebius infrastructure factors"
+      ]
+    },
+    {
+      "source_id": "S_8b18c6fa44",
+      "title": "AI Inference vs Training Infrastructure | Introl Blog",
+      "url": "https://introl.com/blog/ai-inference-vs-training-infrastructure-economics-diverging-2025",
+      "reasons": [
+        "General industry commentary on AI inference vs training economics, not specific to Nebius",
+        "Does not address Nebius's specific compute, networking, storage, or software solutions"
+      ]
+    },
+    {
+      "source_id": "S_29d0ec6d42",
+      "title": "AI Inference at Scale: Cost Breakdown and Optimization Best",
+      "url": "https://www.gmicloud.ai/en/blog/ai-inference-at-scale-cost-breakdown-and-optimization-best-6-practices",
+      "reasons": [
+        "General industry blog on AI inference cost optimization, not specific to Nebius",
+        "Does not address Nebius's platform specifics"
+      ]
+    },
+    {
+      "source_id": "S_e142ca407a",
+      "title": "AI Inference Optimization Software Market Size & Forecast 2036",
+      "url": "https://www.factmr.com/report/ai-inference-optimization-software-market",
+      "reasons": [
+        "Market research report on AI inference optimization software, not specific to Nebius",
+        "Does not address Nebius's platform capabilities"
+      ]
+    },
+    {
+      "source_id": "S_8566536cf7",
+      "title": "Beyond Throughput: Benchmarking Storage for the Complex I/O Patterns of AI with MLPerf Storage and DLIO | SNIA | Experts on Data",
+      "url": "https://www.snia.org/sniadeveloper/session/19306",
+      "reasons": [
+        "SNIA educational session on storage benchmarking, not specific to Nebius",
+        "General industry content on storage benchmarking methodology"
+      ]
+    },
+    {
+      "source_id": "S_2d81eee301",
+      "title": "MLPerf Storage Benchmark - Alluxio Results",
+      "url": "https://www.alluxio.io/blog/alluxio-demonstrates-strong-performance-in-mlperf-storage-v2-0-benchmarks",
+      "reasons": [
+        "Alluxio blog about their own MLPerf Storage benchmark results, not about Nebius",
+        "Vendor-specific content not related to Nebius platform"
+      ]
+    },
+    {
+      "source_id": "S_ff78da811f",
+      "title": "AMD vs NVIDIA Inference Benchmark: Who Wins? - Performance & Cost Per Million Tokens",
+      "url": "https://newsletter.semianalysis.com/p/amd-vs-nvidia-inference-benchmark-who-wins-performance-cost-per-million-tokens",
+      "reasons": [
+        "SemiAnalysis newsletter on AMD vs NVIDIA inference benchmarks, not about Nebius",
+        "Does not address Nebius's specific infrastructure solutions"
+      ]
+    },
+    {
+      "source_id": "S_09452ff37e",
+      "title": "EMLIO: Minimizing I/O Latency and Energy Consumption for Large-Scale AI Training",
+      "url": "https://arxiv.org/html/2508.11035v1",
+      "reasons": [
+        "Academic preprint on I/O optimization for AI training, not specific to Nebius",
+        "General research on storage I/O bottlenecks, not Nebius-specific"
+      ]
+    },
+    {
+      "source_id": "S_12ca2f78e4",
+      "title": "AI Storage Architecture: Overcoming the Bottleneck Limiting AI Scale in 2026",
+      "url": "https://www.min.io/blog/ai-storage-architecture-bottleneck-2026",
+      "reasons": [
+        "MinIO blog on AI storage architecture, vendor-specific content not about Nebius",
+        "General industry content on storage bottlenecks"
+      ]
+    },
+    {
+      "source_id": "S_cc2062edcb",
+      "title": "NVIDIA: MLPerf AI Benchmarks",
+      "url": "https://www.nvidia.com/en-us/data-center/resources/mlperf-benchmarks",
+      "reasons": [
+        "NVIDIA MLPerf benchmarks page, not specific to Nebius",
+        "General NVIDIA benchmark results, not Nebius platform details"
+      ]
+    },
+    {
+      "source_id": "S_54ccdf1e3c",
+      "title": "AI Training: GPU Performance Depends on Storage - WEKA",
+      "url": "https://www.weka.io/learn/ai-ml/ai-storage-for-training",
+      "reasons": [
+        "WEKA vendor blog on AI storage, not specific to Nebius",
+        "General content on storage requirements for AI training"
+      ]
+    },
+    {
+      "source_id": "S_ea4c10960e",
+      "title": "Storage Benchmarking for AI Workloads: What Actually Matters",
+      "url": "https://hammerspace.com/storage-performance-benchmarking-for-ai-infrastructure-what-the-numbers-actually-mean",
+      "reasons": [
+        "Hammerspace blog on storage benchmarking, not specific to Nebius",
+        "General industry content on storage benchmarking"
+      ]
+    },
+    {
+      "source_id": "S_b029bfc231",
+      "title": "Trends in AI | Epoch AI",
+      "url": "https://epoch.ai/trends",
+      "reasons": [
+        "Epoch AI trends page with general AI industry statistics, not about Nebius",
+        "Does not address Nebius's specific infrastructure solutions"
+      ]
+    },
+    {
+      "source_id": "S_3059c3f53c",
+      "title": "I/O in Machine Learning Applications on HPC Systems: A 360-degree Survey",
+      "url": "https://arxiv.org/html/2404.10386v1",
+      "reasons": [
+        "Academic survey on I/O in ML applications, not specific to Nebius",
+        "General research content, not Nebius platform details"
+      ]
+    },
+    {
+      "source_id": "S_d3028a0082",
+      "title": "Get started with AI Inference",
+      "url": "https://www.redhat.com/en/resources/get-started-with-ai-inference-ebook",
+      "reasons": [
+        "Red Hat ebook on AI inference, not specific to Nebius",
+        "General content on inference optimization, not Nebius-specific"
+      ]
+    },
+    {
+      "source_id": "S_7752565db2",
+      "title": "Optimize AI Inference Performance with NVIDIA Full-Stack Solutions | NVIDIA Technical Blog",
+      "url": "https://developer.nvidia.com/blog/optimize-ai-inference-performance-with-nvidia-full-stack-solutions",
+      "reasons": [
+        "NVIDIA technical blog on inference optimization, not specific to Nebius",
+        "General NVIDIA software stack content, not Nebius platform details"
+      ]
+    },
+    {
+      "source_id": "S_383f05b711",
+      "title": "CoreWeave's Benchmark Tests Expose AI's Silent Storage Bottleneck - VAST Data",
+      "url": "https://www.vastdata.com/blog/coreweaves-benchmark-tests-expose-ais-silent-storage-bottleneck",
+      "reasons": [
+        "duplicate source: same title on the same site as S_4dd532310a"
+      ]
+    },
+    {
+      "source_id": "S_f02e36cc1a",
+      "title": "AI Infrastructure Stack: Essentials & Guidelines | Mirantis",
+      "url": "https://www.mirantis.com/blog/ai-infrastructure-stack",
+      "reasons": [
+        "General AI infrastructure blog from Mirantis, not about Nebius",
+        "Does not address Nebius's specific platform offerings"
+      ]
+    },
+    {
+      "source_id": "S_158a738321",
+      "title": "Full-stack optimization is critical for the next era of AI infrastructure",
+      "url": "https://drivenets.com/blog/why-full-stack-optimization-is-critical-for-the-next-era-of-ai-infrastructure",
+      "reasons": [
+        "DriveNets/AMD/VAST Data collaboration blog, not about Nebius",
+        "Discusses full-stack optimization but for different vendors"
+      ]
+    },
+    {
+      "source_id": "S_d382717cad",
+      "title": "AI Inference Software Innovator Gimlet Labs Ushers in New Era of Breakthrough AI Performance for Frontier Labs and Leading AI Companies With $80 Million in Series A Funding Led by Menlo Ventures",
+      "url": "https://finance.yahoo.com/sectors/technology/articles/ai-inference-software-innovator-gimlet-160200955.html",
+      "reasons": [
+        "Gimlet Labs funding announcement, not about Nebius",
+        "Inference software company press release, unrelated to Nebius platform"
+      ]
+    },
+    {
+      "source_id": "S_b232062b80",
+      "title": "The Shift From AI Training to AI Inference: What It Means for Cloud Computing in 2026. | AWS Builder Center",
+      "url": "https://builder.aws.com/content/3JVRQpBjLdPBENB8emX0yOQM1bQ/the-shift-from-ai-training-to-ai-inference-what-it-means-for-cloud-computing-in-2026",
+      "reasons": [
+        "AWS Builder Center article about cloud computing trends, not about Nebius",
+        "General industry commentary on AI infrastructure competition"
+      ]
+    },
+    {
+      "source_id": "S_4dd532310a",
+      "title": "CoreWeave's Benchmark Tests Expose AI's Silent Storage Bottleneck - VAST Data",
+      "url": "https://www.vastdata.com/ja/blog/coreweaves-benchmark-tests-expose-ais-silent-storage-bottleneck",
+      "reasons": [
+        "VAST Data blog about CoreWeave storage benchmarks, not about Nebius",
+        "Discusses storage bottlenecks but for different provider"
+      ]
+    },
+    {
+      "source_id": "S_8fdbbb1d3b",
+      "title": "Why AI performance is a full-stack question | Nscale",
+      "url": "https://www.nscale.com/blog/why-ai-performance-is-a-full-stack-question",
+      "reasons": [
+        "Nscale blog about AI performance metrics, not about Nebius",
+        "General industry discussion without Nebius-specific information"
+      ]
+    },
+    {
+      "source_id": "S_e68ffe71bc",
+      "title": "How Storage Bottlenecks Cause GPU Underutilization in AI Model Training - Hammerspace",
+      "url": "https://hammerspace.com/how-storage-bottlenecks-cause-gpu-underutilization-in-ai-model-training",
+      "reasons": [
+        "Hammerspace blog about storage bottlenecks, not about Nebius",
+        "General technical discussion of GPU underutilization causes"
+      ]
+    },
+    {
+      "source_id": "S_397e97d94e",
+      "title": "GPU Utilization: What Is It and How to Maximize It",
+      "url": "https://www.alluxio.io/blog/maximize-gpu-utilization-for-model-training",
+      "reasons": [
+        "Alluxio blog about GPU utilization, not about Nebius",
+        "General guidance on maximizing GPU usage"
+      ]
+    },
+    {
+      "source_id": "S_2a2d6227e2",
+      "title": "Exxact | Deep Learning, HPC, AV, Distribution & More",
+      "url": "https://www.exxactcorp.com/blog/hpc/how-you-feed-your-gpus-is-the-real-ai-bottleneck",
+      "reasons": [
+        "Exxact blog about GPU feeding bottlenecks, not about Nebius",
+        "General HPC/AI infrastructure discussion"
+      ]
+    },
+    {
+      "source_id": "S_095d120bcf",
+      "title": "Optimized Inference Software Boosts AI Performance ...",
+      "url": "https://www.linkedin.com/posts/nvidia-ai_an-optimized-inference-software-stack-continuously-activity-7478479759090434048-baF6",
+      "reasons": [
+        "NVIDIA LinkedIn post about inference software, not about Nebius",
+        "Social media post unrelated to Nebius platform"
+      ]
+    },
+    {
+      "source_id": "S_86cc9bfb74",
+      "title": "Maximizing GPU utilization & minimize the environmental impact of AI | Fujitsu Global",
+      "url": "https://global.fujitsu/en-global/technology/key-technologies/news/ta-maximizing-gpu-utilization-20251009",
+      "reasons": [
+        "Fujitsu article about GPU utilization, not about Nebius",
+        "General industry analysis without Nebius-specific content"
+      ]
+    },
+    {
+      "source_id": "S_da70982d6b",
+      "title": "Service Level Agreement - Nebius AI Cloud",
+      "url": "https://docs.nebius.com/legal/sla",
+      "reasons": [
+        "SLA legal document, not about performance factors or platform capabilities",
+        "Focuses on availability exclusions and maintenance terms, not compute/networking/storage/software design"
+      ]
+    },
+    {
+      "source_id": "S_0d739398b0",
+      "title": "Nebius Token Factory vs. vLLM Comparison",
+      "url": "https://sourceforge.net/software/compare/Nebius-Token-Factory-vs-VLLM",
+      "reasons": [
+        "Comparison listing page with minimal substantive content",
+        "Snippet only shows product names and a tangential Runpod description, not Nebius platform details"
+      ]
+    },
+    {
+      "source_id": "S_ff2ecb7678",
+      "title": "Nebius is rated \"Average\" with 2.9 / 5 on Trustpilot",
+      "url": "https://www.trustpilot.com/review/nebius.ai",
+      "reasons": [
+        "Trustpilot user complaint about billing, not about infrastructure performance factors",
+        "Negative user experience commentary, not technical platform details"
+      ]
+    },
+    {
+      "source_id": "S_677f775a12",
+      "title": "Nebius Token Factory - AI Models & Developer Tools AI Tool | HyperStore",
+      "url": "https://store.hypergpt.ai/nebius-token-factory",
+      "reasons": [
+        "Third-party AI tool directory listing with marketing-style description",
+        "Limited technical detail on compute/networking/storage/software factors"
+      ]
+    },
+    {
+      "source_id": "S_42f94ff6ef",
+      "title": "Top Nebius Token Factory Alternatives in 2026",
+      "url": "https://slashdot.org/software/p/Nebius-Token-Factory/alternatives",
+      "reasons": [
+        "Slashdot alternatives listing page with no substantive Nebius platform detail",
+        "Marketing/comparison directory, not technical content"
+      ]
+    },
+    {
+      "source_id": "S_94fb1c776a",
+      "title": "9 Free Nebius Token Factory Alternatives (2026) | Flocci AI Tools",
+      "url": "https://aitools.flocci.in/alternatives/nebius-token-factory",
+      "reasons": [
+        "AI tools directory listing Nebius Token Factory alternatives",
+        "No substantive detail on Nebius infrastructure factors"
+      ]
+    },
+    {
+      "source_id": "S_bb42acb70a",
+      "title": "Nebius Status",
+      "url": "https://status.nebius.com",
+      "reasons": [
+        "Nebius status page showing incident updates",
+        "Operational status data, not descriptive of platform design or performance factors"
+      ]
+    },
+    {
+      "source_id": "S_b3a476af74",
+      "title": "Best Nebius Token Factory Alternatives & Competitors",
+      "url": "https://sourceforge.net/software/product/Nebius-Token-Factory/alternatives",
+      "reasons": [
+        "SourceForge alternatives comparison page with no substantive Nebius platform detail",
+        "Directory/listing page"
+      ]
+    },
+    {
+      "source_id": "S_ec684df78d",
+      "title": "Nebius excels in mlperf ai benchmark results",
+      "url": "https://www.facebook.com/groups/2355224927981488/posts/2784854515018525",
+      "reasons": [
+        "Facebook group post commenting on MLPerf results",
+        "Social media commentary, not primary technical source"
+      ]
+    },
+    {
+      "source_id": "S_f6279cfa21",
+      "title": "Nebius data center uptime status in EU regions",
+      "url": "https://www.facebook.com/groups/2355224927981488/posts/2888668427970466",
+      "reasons": [
+        "Facebook group post about Nebius data center outage",
+        "Social media commentary, not detailed platform information"
+      ]
+    }
+  ],
+  "why_stopped": [
+    "SUCCESS: enough verified evidence to give a substantive answer; remaining gaps are low-value",
+    "Final agent bids: GapResearcher 0.98, AdversarialResearcher 0.72, PrimarySourceResearcher 0.56, IndependenceResearcher 0.50, GeneralResearcher 0.15, Synthesis 0.01, ContradictionResearcher 0.00, ReplicationResearcher 0.00"
+  ],
+  "gaps": [
+    {
+      "id": "G_9aa9e2da22",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_b3fcb76582 → H1: needs evidence on 'Evidence that storage I/O is a dominant non-GPU factor in real-world AI performance (not j'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 2,
+      "unresolvable": true
+    },
+    {
+      "id": "G_68936e9248",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_2bcb04d585 → H1: needs evidence on 'Direct evidence of InfiniBand/NVLink-class fabric deployment (the premises only mention 'c'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 2,
+      "unresolvable": true
+    },
+    {
+      "id": "G_a42d13ef6d",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_3e5ae6eae6 → H2: needs evidence on 'Evidence that software-stack efficiency is among the 'most influential' non-GPU factors'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 2,
+      "unresolvable": true
+    },
+    {
+      "id": "G_23a70ef550",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_92f12d1fbc → H1: needs evidence on 'Evidence that topology-aware scheduling actually translates to measurable performance gain'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 0,
+      "unresolvable": false
+    },
+    {
+      "id": "G_bca75666c0",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_9dd819501d → H1: needs evidence on 'Evidence that 15 GiB/s is sufficient or insufficient for feeding large GPU clusters'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 0,
+      "unresolvable": false
+    },
+    {
+      "id": "G_ec2e90fb69",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_6530f986d1 → H2: needs evidence on 'Evidence that software-stack efficiency is a dominant non-GPU factor rather than networkin'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 0,
+      "unresolvable": false
+    },
+    {
+      "id": "G_9494273c57",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_57cbc181b1 → H1: needs evidence on 'Evidence that Nebius's GPU-to-GPU interconnects are InfiniBand/NVLink-class and that these'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 0,
+      "unresolvable": false
+    },
+    {
+      "id": "G_e6f4164a2d",
+      "gap_type": "WEAK_INFERENCE",
+      "description": "I_783169c10f → H2: needs evidence on 'Evidence that software-stack efficiency and host-level compute balance are the most influe'",
+      "value": 0.576,
+      "level": "HIGH",
+      "attempts": 0,
+      "unresolvable": false
+    },
+    {
+      "id": "G_a37368a880",
+      "gap_type": "NO_INDEPENDENT_SOURCE",
+      "description": "C_3c2f9e1617: no independent confirmation of 'Nebius states that for large-scale clusters spanning multiple SUs or the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small-size network exchanges that are more sensitive to latency.'",
+      "value": 0.5333,
+      "level": "HIGH",
+      "attempts": 0,
+      "unresolvable": false
+    },
+    {
+      "id": "G_163975f5f6",
+      "gap_type": "NO_INDEPENDENT_SOURCE",
+      "description": "C_136d016ce5: no independent confirmation of 'Nebius posted a leading server result of 591,368 tokens/s on DeepSeek R1 with the Nebius system with NVIDIA Vera Rubin NVL72 (36 NVIDIA Rubin GPUs across nine nodes) in the MLPerf Inference v6.1 preview category.'",
+      "value": 0.48,
+      "level": "HIGH",
+      "attempts": 0,
+      "unresolvable": false
+    }
+  ],
+  "what_would_change": [
+    "Direct measurements showing that 15 GiB/s per-client shared filesystem bandwidth is insufficient to feed large GPU clusters during checkpointing or weight loading, materially limiting training throughput.",
+    "Evidence that Nebius's InfiniBand fabric lacks NVLink-class GPU-to-GPU bandwidth or that topology-aware scheduling does not translate into measurable latency or throughput gains versus topology-agnostic placement.",
+    "Comparative benchmarks showing Nebius's Soperator or Token Factory deliver no measurable performance or resiliency advantage over alternative Slurm/Kubernetes operators or vLLM deployments.",
+    "Evidence that a single layer (e.g., networking or storage) dominates real-world AI performance for a given workload, undermining the four-layer balanced framing.",
+    "Evidence resolving: I_b3fcb76582 → H1: needs evidence on 'Evidence that storage I/O is a dominant non-GPU factor in real-world AI performance (not j'",
+    "Evidence resolving: I_2bcb04d585 → H1: needs evidence on 'Direct evidence of InfiniBand/NVLink-class fabric deployment (the premises only mention 'c'",
+    "Evidence resolving: I_3e5ae6eae6 → H2: needs evidence on 'Evidence that software-stack efficiency is among the 'most influential' non-GPU factors'"
+  ],
+  "method_limitations": [
+    "Hypothesis-first research: competing hypotheses and evidence requirements were generated before searching.",
+    "LLMs proposed claims, stances and inferences; code verified excerpts verbatim, counted sources and computed every score.",
+    "Probabilities are model-estimated evidence beliefs from heuristic likelihood ratios, NOT calibrated probabilities.",
+    "Evidence from one provenance cluster counts once; derivatives add 15% of their weight.",
+    "Source credibility uses heuristic priors by source type, adjusted per claim category; no audited ratings.",
+    "Scientific evidence is weighted by a deterministic study-quality score and replication factors; peer review alone is not decisive.",
+    "Research agents were chosen each round by heuristic utility bids, not by a fixed pipeline.",
+    "57 source(s) were screened out before extraction; reasons are preserved (negative provenance).",
+    "Stop reason: SUCCESS — enough verified evidence to give a substantive answer; remaining gaps are low-value"
+  ],
+  "citations": [
+    {
+      "n": 1,
+      "source_id": "S_cc58d9c63a",
+      "title": "Types of storage volumes in Compute - Nebius AI Cloud",
+      "url": "https://docs.nebius.com/compute/storage/types",
+      "deep_link": "https://docs.nebius.com/compute/storage/types#:~:text=Tested%20read%20bandwidth%20per%20client%3A,to%2015%20GiB%2Fs%C2%B9",
+      "excerpts": [
+        "Tested read bandwidth per client: up to 15 GiB/s¹"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_7bec77f6c0",
+          "claim_id": "C_0458a7c13d",
+          "claim": "Nebius Compute shared filesystems deliver tested read bandwidth per client of up to 15 GiB/s.",
+          "stance": "supports",
+          "excerpt": "Tested read bandwidth per client: up to 15 GiB/s¹",
+          "location": "chars 11377-11426 (exact)",
+          "deep_link": "https://docs.nebius.com/compute/storage/types#:~:text=Tested%20read%20bandwidth%20per%20client%3A,to%2015%20GiB%2Fs%C2%B9"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:53:14.077363Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 2,
+      "source_id": "S_a2f0b27ab8",
+      "title": "MLPerf® Inference v6.1 Results: NVIDIA Vera Rubin NVL72",
+      "url": "https://nebius.com/blog/posts/mlperf-inference-v6-1-results",
+      "deep_link": "https://nebius.com/blog/posts/mlperf-inference-v6-1-results#:~:text=On%20the%20full-rack%20Nebius%20system,tokens%2Fs%20respectively%20%5B3%5D%5B7%5D",
+      "excerpts": [
+        "On the full-rack Nebius system with NVIDIA GB300 NVL72, 72 NVIDIA Blackwell Ultra GPUs across 18 nodes served large-scale inference workloads. With this configuration, we ranked first in both the server and offline scenarios for DeepSeek R1, at 603,023 and 689,961 tokens/s respectively [3][7]"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_12f7ea37dd",
+          "claim_id": "C_16e7a3dc83",
+          "claim": "The full-rack Nebius system with NVIDIA GB300 NVL72 (72 NVIDIA Blackwell Ultra GPUs across 18 nodes) ranked first in both server and offline scenarios for DeepSeek R1 in MLPerf Inference v6.1, at 603,023 and 689,961 tokens/s respectively.",
+          "stance": "supports",
+          "excerpt": "On the full-rack Nebius system with NVIDIA GB300 NVL72, 72 NVIDIA Blackwell Ultra GPUs across 18 nodes served large-scale inference workloads. With this configuration, we ranked first in both the server and offline scenarios for DeepSeek R1, at 603,023 and 689,961 tokens/s respectively [3][7]",
+          "location": "chars 3830-4123 (exact)",
+          "deep_link": "https://nebius.com/blog/posts/mlperf-inference-v6-1-results#:~:text=On%20the%20full-rack%20Nebius%20system,tokens%2Fs%20respectively%20%5B3%5D%5B7%5D"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:53:58.949632Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 3,
+      "source_id": "S_8585def078",
+      "title": "Compute — GPU and CPU infrastructure for AI on Nebius",
+      "url": "https://nebius.com/compute",
+      "deep_link": "https://nebius.com/compute#:~:text=The%20NVIDIA%20GB300%20NVL72%20is,the%20highest%20scale",
+      "excerpts": [
+        "The NVIDIA GB300 NVL72 is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace™ CPUs, purpose-built for frontier model training, AI reasoning, and agentic AI at the highest scale"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_b37a7e1f5e",
+          "claim_id": "C_32e080bff7",
+          "claim": "The NVIDIA GB300 NVL72 on Nebius is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace CPUs, purpose-built for frontier model training, AI reasoning, and agentic AI.",
+          "stance": "supports",
+          "excerpt": "The NVIDIA GB300 NVL72 is a fully liquid-cooled, rack-scale system with 72 NVIDIA Blackwell Ultra GPUs and 36 NVIDIA Grace™ CPUs, purpose-built for frontier model training, AI reasoning, and agentic AI at the highest scale",
+          "location": "chars 1139-1361 (exact)",
+          "deep_link": "https://nebius.com/compute#:~:text=The%20NVIDIA%20GB300%20NVL72%20is,the%20highest%20scale"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:53:14.093571Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 4,
+      "source_id": "S_3e23934f39",
+      "title": "AI Orchestration — Schedule GPU jobs with Soperator, SkyPilot, and Ray on Nebius",
+      "url": "https://nebius.com/orchestration",
+      "deep_link": "https://nebius.com/orchestration#:~:text=Soperator%20is%20built%20and%20maintained,on%20any%20cloud.%E2%80%8B",
+      "excerpts": [
+        "Soperator is built and maintained in-house, fully open-sourced, and available on GitHub. Use it as a managed service on Nebius or deploy it yourself on any cloud.​"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_9a56ebfbe0",
+          "claim_id": "C_3ca49c4350",
+          "claim": "Nebius Soperator is built and maintained in-house, fully open-sourced, and available on GitHub.",
+          "stance": "supports",
+          "excerpt": "Soperator is built and maintained in-house, fully open-sourced, and available on GitHub. Use it as a managed service on Nebius or deploy it yourself on any cloud.​",
+          "location": "chars 1822-1985 (exact)",
+          "deep_link": "https://nebius.com/orchestration#:~:text=Soperator%20is%20built%20and%20maintained,on%20any%20cloud.%E2%80%8B"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:53:14.085935Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 5,
+      "source_id": "S_fa6d3d3570",
+      "title": "Nebius demonstrates industry-leading AI training performance in latest MLPerf® results",
+      "url": "https://nebius.com/blog/posts/industry-leading-ai-training-performance-in-mlperf",
+      "deep_link": "https://nebius.com/blog/posts/industry-leading-ai-training-performance-in-mlperf#:~:text=we%20launched%20these%20benchmarks%20by,ML%20operational%20teams",
+      "excerpts": [
+        "we launched these benchmarks by using Soperator, our in-house Kubernetes operator for Slurm. This software enables AI clusters to run with a high level of resiliency and availability, while providing exceptional simplicity for ML operational teams",
+        "We achieved training step times of 124.5 min and 244.6 min for Llama 3.1 405B on the 128-node cluster and 64-node cluster, respectively¹"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_31bed3bd35",
+          "claim_id": "C_222dc5bc6e",
+          "claim": "Nebius launched its MLPerf benchmarks using Soperator, its in-house Kubernetes operator for Slurm, which enables AI clusters to run with high resiliency and availability and provides exceptional simplicity for ML operational teams.",
+          "stance": "supports",
+          "excerpt": "we launched these benchmarks by using Soperator, our in-house Kubernetes operator for Slurm. This software enables AI clusters to run with a high level of resiliency and availability, while providing exceptional simplicity for ML operational teams",
+          "location": "chars 4700-4947 (exact)",
+          "deep_link": "https://nebius.com/blog/posts/industry-leading-ai-training-performance-in-mlperf#:~:text=we%20launched%20these%20benchmarks%20by,ML%20operational%20teams"
+        },
+        {
+          "evidence_id": "E_248f1d3c04",
+          "claim_id": "C_1235173107",
+          "claim": "Nebius achieved a training step time of 244.6 minutes for Llama 3.1 405B on the 64-node (512 GPU) cluster in MLPerf Training v5.0.",
+          "stance": "supports",
+          "excerpt": "We achieved training step times of 124.5 min and 244.6 min for Llama 3.1 405B on the 128-node cluster and 64-node cluster, respectively¹",
+          "location": "chars 3546-3682 (exact)",
+          "deep_link": "https://nebius.com/blog/posts/industry-leading-ai-training-performance-in-mlperf#:~:text=We%20achieved%20training%20step%20times,64-node%20cluster%2C%20respectively%C2%B9"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:53:14.067756Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 6,
+      "source_id": "S_c374af6966",
+      "title": "vLLM: Advancing open-source LLM inference",
+      "url": "https://nebius.com/customer-stories/vllm",
+      "deep_link": "https://nebius.com/customer-stories/vllm#:~:text=For%20efficient%20inference%2C%20vLLM%20required,unnecessary%20redundancy%20costs",
+      "excerpts": [
+        "For efficient inference, vLLM required a high throughput storage solution to handle model weights. With Nebius’ non-replicated disks (NRD), vLLM could store large-scale model weights while maintaining high data throughput without incurring unnecessary redundancy costs"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_7cef43b6f9",
+          "claim_id": "C_167e2fefa5",
+          "claim": "Nebius provided vLLM with non-replicated disks (NRD) as a high-throughput storage solution for handling model weights, allowing large-scale model weights to be stored and quickly loaded without bottlenecks or unnecessary redundancy costs.",
+          "stance": "supports",
+          "excerpt": "For efficient inference, vLLM required a high throughput storage solution to handle model weights. With Nebius’ non-replicated disks (NRD), vLLM could store large-scale model weights while maintaining high data throughput without incurring unnecessary redundancy costs",
+          "location": "chars 6001-6269 (exact)",
+          "deep_link": "https://nebius.com/customer-stories/vllm#:~:text=For%20efficient%20inference%2C%20vLLM%20required,unnecessary%20redundancy%20costs"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:55:17.608760Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 7,
+      "source_id": "S_fbad4493ac",
+      "title": "Fault-tolerant training: How we build reliable clusters for distributed AI workloads",
+      "url": "https://nebius.com/blog/posts/how-we-build-reliable-clusters",
+      "deep_link": "https://nebius.com/blog/posts/how-we-build-reliable-clusters#:~:text=This%20system%20achieved%20a%20peak,past%20several%20weeks",
+      "excerpts": [
+        "This system achieved a peak MTBF of 56.6 hours (169,800 GPU hours), with an average of 33.0 hours over the past several weeks"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_9ab1ed2c50",
+          "claim_id": "C_0650800caa",
+          "claim": "The Nebius 3,000-GPU (375-node) cluster achieved an average MTBF of 33.0 hours over the past several weeks.",
+          "stance": "supports",
+          "excerpt": "This system achieved a peak MTBF of 56.6 hours (169,800 GPU hours), with an average of 33.0 hours over the past several weeks",
+          "location": "chars 24334-24459 (exact)",
+          "deep_link": "https://nebius.com/blog/posts/how-we-build-reliable-clusters#:~:text=This%20system%20achieved%20a%20peak,past%20several%20weeks"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:55:17.597393Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 8,
+      "source_id": "S_edd7f8f950",
+      "title": "Leveraging high-speed, rack-scale GPU interconnect with NVIDIA GB200 NVL72",
+      "url": "https://nebius.com/blog/posts/leveraging-nvidia-gb200-nvl72-gpu-interconnect",
+      "deep_link": "https://nebius.com/blog/posts/leveraging-nvidia-gb200-nvl72-gpu-interconnect#:~:text=For%20a%20large-scale%20cluster%2C%20which,sensitive%20to%20latency",
+      "excerpts": [
+        "For a large-scale cluster, which spans multiple SUs or even occupies the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small size network exchanges, which are more sensitive to latency"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_3fa4ae7f40",
+          "claim_id": "C_3c2f9e1617",
+          "claim": "Nebius states that for large-scale clusters spanning multiple SUs or the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small-size network exchanges that are more sensitive to latency.",
+          "stance": "supports",
+          "excerpt": "For a large-scale cluster, which spans multiple SUs or even occupies the whole InfiniBand fabric, leveraging topology-aware scheduling is beneficial, especially for small size network exchanges, which are more sensitive to latency",
+          "location": "chars 3658-3888 (exact)",
+          "deep_link": "https://nebius.com/blog/posts/leveraging-nvidia-gb200-nvl72-gpu-interconnect#:~:text=For%20a%20large-scale%20cluster%2C%20which,sensitive%20to%20latency"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:54:30.018833Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 9,
+      "source_id": "S_bbc080ff66",
+      "title": "MLPerf® Training 6.0: Leading NVIDIA HGX B300 and competitive NVIDIA GB300 NVL72 results on NVIDIA Blackwell Ultra systems",
+      "url": "https://nebius.com/blog/posts/mlperf-training-v6-0-results",
+      "deep_link": "https://nebius.com/blog/posts/mlperf-training-v6-0-results#:~:text=For%20MLPerf%C2%AE%20Training%206.0%2C%20we,GB300%20NVL72.%20%5B1%5D-%5B12%5D",
+      "excerpts": [
+        "For MLPerf® Training 6.0, we submitted six configurations powered by NVIDIA Blackwell Ultra systems: NVIDIA HGX B300 and NVIDIA GB300 NVL72. [1]-[12]",
+        "On the eight-node configuration, HGX B300 completed Llama-3.1-8B in 14.42 minutes, FLUX.1 in 46.71 minutes, and GPT-OSS 20B in 23.48 minutes, extending the platform’s coverage to larger training runs"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_ca977d604d",
+          "claim_id": "C_36a110c26a",
+          "claim": "For MLPerf Training 6.0, Nebius submitted six configurations powered by NVIDIA Blackwell Ultra systems: NVIDIA HGX B300 and NVIDIA GB300 NVL72.",
+          "stance": "supports",
+          "excerpt": "For MLPerf® Training 6.0, we submitted six configurations powered by NVIDIA Blackwell Ultra systems: NVIDIA HGX B300 and NVIDIA GB300 NVL72. [1]-[12]",
+          "location": "chars 377-526 (exact)",
+          "deep_link": "https://nebius.com/blog/posts/mlperf-training-v6-0-results#:~:text=For%20MLPerf%C2%AE%20Training%206.0%2C%20we,GB300%20NVL72.%20%5B1%5D-%5B12%5D"
+        },
+        {
+          "evidence_id": "E_e0e93d0b37",
+          "claim_id": "C_2146aa4a2c",
+          "claim": "On the eight-node HGX B300 configuration (64 GPUs), Nebius completed Llama-3.1-8B in 14.42 minutes, FLUX.1 in 46.71 minutes, and GPT-OSS 20B in 23.48 minutes in MLPerf Training 6.0.",
+          "stance": "supports",
+          "excerpt": "On the eight-node configuration, HGX B300 completed Llama-3.1-8B in 14.42 minutes, FLUX.1 in 46.71 minutes, and GPT-OSS 20B in 23.48 minutes, extending the platform’s coverage to larger training runs",
+          "location": "chars 3803-4002 (exact)",
+          "deep_link": "https://nebius.com/blog/posts/mlperf-training-v6-0-results#:~:text=On%20the%20eight-node%20configuration%2C%20HGX,larger%20training%20runs"
+        }
+      ],
+      "publisher": "nebius.com",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:53:58.950085Z",
+      "independent_root": "S_949fa80fe3"
+    },
+    {
+      "n": 10,
+      "source_id": "S_fca85a427d",
+      "title": "Building Models with Saturn Cloud and Deploying via Nebius Token Factory | Saturn Cloud Blog",
+      "url": "https://saturncloud.io/blog/building-models-with-saturn-cloud-and-deploying-via-nebius-token-factory",
+      "deep_link": "https://saturncloud.io/blog/building-models-with-saturn-cloud-and-deploying-via-nebius-token-factory#:~:text=Nebius%20Token%20Factory%20is%20a,NVIDIA%20Hopper%2FBlackwell%20hardware",
+      "excerpts": [
+        "Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware"
+      ],
+      "uses": [
+        {
+          "evidence_id": "E_0afba3e8e3",
+          "claim_id": "C_1f2056cccb",
+          "claim": "Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware.",
+          "stance": "supports",
+          "excerpt": "Nebius Token Factory is a managed vLLM-based serving stack running on bare-metal NVIDIA Hopper/Blackwell hardware",
+          "location": "chars 9596-9709 (exact)",
+          "deep_link": "https://saturncloud.io/blog/building-models-with-saturn-cloud-and-deploying-via-nebius-token-factory#:~:text=Nebius%20Token%20Factory%20is%20a,NVIDIA%20Hopper%2FBlackwell%20hardware"
+        }
+      ],
+      "publisher": "saturncloud.io",
+      "published_at": null,
+      "retrieved_at": "2026-10-18T15:54:30.019609Z",
+      "independent_root": "S_fca85a427d"
+    }
+  ],
+  "stats": {
+    "iterations": 3,
+    "searches": 15,
+    "extractions": 15,
+    "model_calls": 54,
+    "hypothesis": 5,
+    "requirement": 16,
+    "source": 107,
+    "claim": 166,
+    "evidence": 190,
+    "inference": 18,
+    "gap": 44,
+    "edges": 799,
+    "screened_out": 57,
+    "unverified_evidence": 5
+  }
+}

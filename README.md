@@ -21,6 +21,14 @@ LLM proposes.  Verifier checks.  Evidence vault remembers.  Probability engine u
 establish truth by itself. Confidence comes from source-grounded evidence, provenance, independence, lineage,
 study quality, verified inference, contradiction and temporal consistency, aggregated by code.
 
+**The result is a research answer, not a verdict.** The question is first classified (fact-lookup, verification,
+explanatory, comparative, causal, decision, forecast) and the answer is synthesized from the verified claims in
+the way that type demands — for a "which factors…" question, the supported factors each with their own
+confidence, and how the subject addresses them. The headline is a substantive answer plus one **confidence**
+number, computed only from the claims the answer actually uses (importance-weighted, penalized for contradiction,
+source-dependence, weak inference and thin independence). An overclaim is narrowed to its supportable form rather
+than deleted; the system says "insufficient" only when there is genuinely nothing supported to say.
+
 Ten websites repeating one press release are not ten pieces of evidence. Neither are an arXiv preprint and its
 conference and journal versions. This system detects both, shows it, and changes its confidence because of it.
 
@@ -34,7 +42,7 @@ Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 uv sync
 cp .env.example .env              # fill NEBIUS_API_KEY and TAVILY_API_KEY
 
-uv run pytest                     # 85 offline tests: stubbed model and Tavily, real pipeline
+uv run pytest                     # 94 offline tests: stubbed model and Tavily, real pipeline
 uv run python app.py --check      # live connectivity: one Token Factory call, one Tavily search + extract
 uv run streamlit run ui/streamlit_app.py          # the jury demo
 uv run jupyter lab notebooks/debug.ipynb          # developer debug view of the same engine
@@ -69,6 +77,11 @@ SQLite (`data/research.sqlite`). Without uv: `pip install -e . pytest` (or `PYTH
 ---
 
 ## Architecture
+
+![Probabilistic Evidence Deep Research architecture](docs/architecture.png)
+
+*LLMs propose semantic judgments; deterministic state, provenance, verification and probability logic control what
+becomes an accepted research answer.*
 
 A modular monolith. Each box is a module behind a narrow interface; NetworkX, SQLite and the model/search clients
 can later be swapped for Neo4j, Postgres or a queue without touching research logic.
@@ -250,10 +263,12 @@ Necessary premises get `REQUIRED_FOR` links and research priority.
 WEAK_INFERENCE, MISSING_REQUIRED_DIMENSION, OUTDATED_EVIDENCE, NO_REPLICATION, FAILED_REPLICATION,
 MISSING_METHOD_INFORMATION, INSUFFICIENT_SAMPLE, UNVERIFIED_EXTRACTION.
 
-**Stop policy:** budget → evidence sufficient with no critical contradiction → posterior convergence (< 0.03 for 2
-rounds) → diminishing returns (no new independent root) → only unresolvable gaps left → no agent bid above threshold.
-Final states: `SUPPORTED · LIKELY · CONTESTED · INSUFFICIENT_EVIDENCE · REFUTED · UNRESOLVABLE_WITH_PUBLIC_DATA`.
-"We don't know" is a valid answer.
+**Stop policy:** budget → evidence sufficient with no critical contradiction → **answer-ready** (enough verified
+evidence to answer substantively once the leader has been challenged, even with low-value gaps still open) →
+posterior convergence (< 0.03 for 2 rounds) → diminishing returns (no new independent root) → only unresolvable
+gaps left → no agent bid above threshold. Unresolved gaps never block answer generation, and budget exhaustion is
+an internal stop reason, never the answer. The internal evidence state is still labelled
+`SUPPORTED · LIKELY · CONTESTED · INSUFFICIENT_EVIDENCE · REFUTED · UNRESOLVABLE_WITH_PUBLIC_DATA` (diagnostics only).
 
 **Citation guarantee:** final statement → claim IDs → evidence IDs → exact excerpt → source. Before rendering, the
 verifier requires:
@@ -315,12 +330,12 @@ real APIs, producing metrics only.
 
 ## UI (`streamlit run ui/streamlit_app.py`)
 
-The header shows the evidence status, the truth posterior and sufficiency of the main surviving hypothesis, and
-independent roots (with URLs and families). A live trace streams while the run executes.
+The header shows the **research answer** and one **confidence** number first; the evidence status, truth posterior,
+sufficiency and independent roots move into a *Research diagnostics* expander. A live trace streams while the run executes.
 
 | tab | contents |
 |---|---|
-| Overview | **Minto pyramid**: the answer first, then MECE reasons, then the facts under each; caveats, what would change our mind, and the decision trace |
+| Overview | **Minto pyramid**: the substantive answer first, then each factor/reason with its own confidence, then the facts under each; caveats, what would change our mind, and the decision trace |
 | Citation Check | **every** cited source and **every** quote the report relies on, each link opening the page at that text; a one-click button re-fetches all pages and confirms each quote is still there |
 | Hypotheses | prior and posterior history, deletion-test results, accepted and rejected inferences |
 | Claims & Evidence | per claim: posterior, sufficiency, inference validity, raw sources vs roots, support, contradiction, missing; every evidence line with its quality dimensions |
@@ -376,7 +391,7 @@ src/evidence_research/
   observability/  events (audit trail)
   demo/           base, business, science (SYNTHETIC)
   evaluation/     baseline, benchmark
-tests/            85 offline tests
+tests/            94 offline tests
 examples/         sample questions, synthetic reports and traces, live run notes
 ```
 

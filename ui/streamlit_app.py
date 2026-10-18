@@ -86,14 +86,28 @@ hyp = {h.id: h for h in rep.hypotheses}
 if rep.synthetic:
     st.warning("SYNTHETIC DEMO RUN: fictional entities, scripted corpus and model responses. Not real-world evidence.")
 lead = hyp.get(rep.leading_hypothesis)
-st.subheader("Decision / conclusion")
-cols = st.columns(5)
-cols[0].metric("Evidence status", rep.status.value.replace("_", " "))
-cols[1].metric("Truth posterior (lead)", f"{lead.posterior:.0%}" if lead else "n/a", help="model-estimated posterior of the main surviving hypothesis")
-cols[2].metric("Evidence sufficiency", f"{lead.sufficiency:.0%}" if lead else "n/a")
-cols[3].metric("Independent evidence roots", rep.independent_root_count, f"{rep.raw_source_count} URLs · {rep.publication_family_count} families",
-               delta_color="off")
-cols[4].metric("Critical unresolved gaps", sum(1 for x in rep.gaps if x.level == "HIGH"))
+
+# The public contract (sections 1, 11): a substantive answer and one confidence number, up top.
+st.subheader("Research answer")
+st.markdown(rep.answer.answer)
+ac, qc = st.columns([1, 3])
+ac.metric("Confidence", f"{rep.answer.confidence:.0%}", help="How strongly the verified evidence used in this answer supports it. "
+          "A model-estimated evidence belief, NOT a calibrated truth probability.")
+if rep.qualification:
+    qc.info(rep.qualification)
+
+with st.expander("Research diagnostics", expanded=False):
+    cols = st.columns(5)
+    cols[0].metric("Evidence status", rep.status.value.replace("_", " "))
+    cols[1].metric("Truth posterior (lead)", f"{lead.posterior:.0%}" if lead else "n/a", help="model-estimated posterior of the main surviving hypothesis")
+    cols[2].metric("Evidence sufficiency", f"{lead.sufficiency:.0%}" if lead else "n/a")
+    cols[3].metric("Independent evidence roots", rep.independent_root_count, f"{rep.raw_source_count} URLs · {rep.publication_family_count} families",
+                   delta_color="off")
+    cols[4].metric("Critical unresolved gaps", sum(1 for x in rep.gaps if x.level == "HIGH"))
+    pen = rep.confidence_breakdown.get("penalties", [])
+    st.caption(f"Question type: `{rep.question_type}` · confidence from {rep.confidence_breakdown.get('used_claims', 0)} used claim(s), "
+               f"penalized for: {'; '.join(pen) if pen else 'nothing'}.")
+    st.caption(f"Stop reason: **{rep.stop_reason}** — {rep.stop_explanation}")
 
 TAB_NAMES = ["Overview", "Citation Check", "Hypotheses", "Claims & Evidence", "Scientific Studies", "Source Lineage", "Research Trace",
              "Evidence DAG", "Sources"]
@@ -105,9 +119,10 @@ with tabs["Overview"]:
     st.markdown(f"### {g0.text} " + "".join(f"`[{n}]`" for n in g0.citations))
     if rep.governing_is_system_summary:
         st.caption("System summary: no model-written answer passed citation verification.")
-    st.markdown("#### Why")
+    st.markdown("#### Why — each factor with its own confidence")
     for i, kl in enumerate(rep.key_lines, 1):
-        st.markdown(f"**{i}. {kl.statement.text}** " + "".join(f"`[{n}]`" for n in kl.statement.citations))
+        st.markdown(f"**{i}. {kl.statement.text}** &nbsp; `confidence {kl.confidence:.0%}` "
+                    + "".join(f"`[{n}]`" for n in kl.statement.citations))
         for sp in kl.support:
             st.markdown(f"&nbsp;&nbsp;&nbsp;&nbsp;- {sp.text} " + "".join(f"`[{n}]`" for n in sp.citations))
     if rep.rejected_statements:

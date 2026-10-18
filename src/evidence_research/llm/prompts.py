@@ -16,6 +16,15 @@ _COMMON = (
 QUESTION_ANALYZER = _COMMON + """
 TASK: Analyze a research question. Normalize it, identify the decision it serves, the key entities,
 temporal and geographic scope, hidden assumptions and the dimensions a good answer must cover.
+Classify question_type (what the question actually asks for):
+  fact_lookup   - a specific fact or number ("what is X's revenue");
+  verification  - whether a stated claim is true ("is it true that X");
+  explanatory   - which factors / mechanisms explain something ("what influences X and how");
+  comparative   - a comparison across options or dimensions ("how does X compare to Y");
+  causal        - what causes an effect ("why does X happen");
+  decision      - a recommendation ("should we do X");
+  forecast      - a prediction or range ("what will X be").
+Most open "what / how / why" questions are explanatory, comparative or causal, NOT verification.
 Do not answer the question. Make reasonable assumptions explicit in ambiguity_notes instead of asking."""
 
 HYPOTHESIS_GENERATOR = _COMMON + """
@@ -87,15 +96,35 @@ TASK: For each listed research gap, rate how much resolving it could change the 
 low | medium | high. Return a mapping from gap id to rating."""
 
 SYNTHESIZER = _COMMON + """
-TASK: Write the answer as a Minto pyramid, from the structured findings ONLY.
-1. governing_thought: ONE sentence that directly answers the question, in plain language a busy
-   executive understands at once. Lead with the answer, not the background. If evidence is
-   insufficient, say so as the answer.
+TASK: Write a SUBSTANTIVE research answer as a Minto pyramid, from the structured findings ONLY.
+Give the most useful answer the verified evidence supports. Do NOT refuse with "insufficient
+evidence" when supported claims exist: instead state what the evidence DOES establish and qualify
+what it does not. Only say the evidence is insufficient if there are essentially no supported claims.
+
+Answer in the way the question_type demands (field "question_type"):
+  fact_lookup  - state the fact and its value/period;
+  verification - say supported, refuted or uncertain, in a full sentence (not just yes/no);
+  explanatory  - name the strongest supported factors/mechanisms and how they work;
+  comparative  - give the comparison across the relevant dimensions;
+  causal       - give the best-supported causal explanation, explicitly qualified;
+  decision     - give a recommendation with its assumptions and risks;
+  forecast     - give a forecast/range with its uncertainty.
+
+1. governing_thought: ONE sentence that directly answers the question with the SUBSTANCE of the finding,
+   in plain language a busy executive understands at once. For explanatory/comparative/causal questions
+   it NAMES the supported factors/mechanisms (and, if the question asks how a subject addresses them, how).
+   It must NOT be a refusal: never make "the evidence is insufficient / cannot be ranked / no evidence"
+   the governing thought when supported claims exist — put that limitation in qualification instead.
 2. key_lines: 2-4 reasons that each directly support the governing thought. They must be MECE
-   (mutually exclusive, collectively exhaustive): no overlap, together they carry the answer.
-   Each key line is one short sentence stating a conclusion ("Retention is weaker than claimed"),
-   not a topic ("Retention").
+   (mutually exclusive, collectively exhaustive): no overlap, together they carry the answer. For a
+   factor/comparative question, make each key line ONE factor or dimension, stated as a positive
+   conclusion about what the evidence shows ("Networking: Nebius uses 800 Gbps InfiniBand"), not a topic
+   ("Networking") and not a complaint about what is missing. Prefer a narrower, fully supported claim over
+   a broad unsupported one: if the evidence shows a factor is important but not dominant, say "important".
 3. support: under each key line, 1-3 facts that prove it, with the specific numbers and periods.
+4. qualification: ONE sentence naming what the evidence does vs does not establish (e.g. "the evidence
+   shows these capabilities exist, not their relative contribution or an advantage over competitors").
+   This is the ONLY place limitations belong; keep the governing thought and key lines substantive.
 Rules: every governing thought, key line and support point lists the claim_ids it relies on in the
 claim_ids field (never write IDs in the text); anything without a supporting claim is deleted by code.
 No jargon, no hedging filler, no URLs, never invent numbers, never present model-estimated confidence

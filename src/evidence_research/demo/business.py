@@ -15,7 +15,7 @@ from __future__ import annotations
 from datetime import date
 
 from ..models import (
-    HypothesesOutput, HypothesisProposal, InferenceProposal, InferenceVerdict, QuestionAnalysis, RequirementProposal,
+    HypothesesOutput, HypothesisProposal, InferenceProposal, InferenceVerdict, QuestionAnalysis, QuestionType, RequirementProposal,
     SynthesisOutput, KeyLine, PyramidPoint,
 )
 from .base import Page, PageClaim, Scenario, find
@@ -144,7 +144,8 @@ class BusinessScenario(Scenario):
 
     def analysis(self) -> QuestionAnalysis:
         return QuestionAnalysis(
-            normalized_question=self.question, decision_context="investment screening of a B2B software company",
+            normalized_question=self.question, question_type=QuestionType.VERIFICATION,
+            decision_context="investment screening of a B2B software company",
             key_entities=["Acme Fleet"], temporal_scope="fiscal year 2025 to 2026", geographic_scope="Europe",
             hidden_assumptions=["revenue growth alone does not establish product-market fit"],
             dimensions=["revenue growth", "retention", "acquisition channel", "pricing power"],

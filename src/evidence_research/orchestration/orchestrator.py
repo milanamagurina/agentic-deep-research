@@ -240,14 +240,21 @@ class Orchestrator:
                                                                               f"{live.description}", gap_id=gid)
             history.append({**{c.id: c.truth_probability for c in self.graph.claims.values()},
                             **{h.id: h.posterior_probability for h in self.graph.hypotheses.values()}})
+            critical_ids = self._critical()
             critical = [CriticalClaim(cid, self.graph.claims[cid].evidence_sufficiency, self.beliefs.claims[cid].contested, self.graph.claims[cid].importance)
-                        for cid in self._critical() if cid in self.beliefs.claims]
+                        for cid in critical_ids if cid in self.beliefs.claims]
+            # Conservative answer-readiness: only once the leader has been adversarially challenged and
+            # most critical claims have at least one independent root. Never cuts off contradiction research.
+            answerable = sum(1 for cid in critical_ids if cid in self.beliefs.claims and self.beliefs.claims[cid].independent_roots >= 1)
+            answer_ready = (session.iteration >= 2 and self.policy_state.adversarial_done_for is not None
+                            and bool(critical_ids) and answerable >= max(2, (len(critical_ids) + 1) // 2))
             decision = decide(StopInputs(
                 iteration=session.iteration, max_iterations=self.s.budget.max_iterations,
                 exhausted_resource=exhausted or self.budget.nearly_exhausted(), critical_claims=critical,
                 posterior_history=history, new_independent_roots_last_round=new_roots,
                 researchable_gaps=len(self.gaps.ranked(self.graph)),
                 unresolvable_gaps=sum(1 for g in self.graph.gaps.values() if g.unresolvable and not g.resolved),
+                answer_ready=answer_ready,
             ), self.s.min_evidence_sufficiency, self.s.heuristics)
             if not decision.stop:
                 bids = policy.bid(self.graph, ranked, self.policy_state, self._critical())

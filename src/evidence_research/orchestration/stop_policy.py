@@ -29,6 +29,7 @@ class StopInputs:
     new_independent_roots_last_round: int = 0
     researchable_gaps: int = 0
     unresolvable_gaps: int = 0
+    answer_ready: bool = False  # enough verified evidence to answer substantively (computed conservatively upstream)
 
 
 @dataclass
@@ -54,6 +55,12 @@ def decide(x: StopInputs, min_sufficiency: float, h: Heuristics) -> StopDecision
     if x.critical_claims and not insufficient and not open_contradictions:
         return StopDecision(True, StopReason.SUCCESS,
                             f"all {len(x.critical_claims)} critical claims have sufficiency ≥ {min_sufficiency} and no open high-importance contradictions")
+
+    # Answer-readiness (section 8): we can answer substantively before every claim is fully sufficient,
+    # as long as no high-importance contradiction is still open. Unresolved low-value gaps do not block this.
+    if x.answer_ready and not open_contradictions:
+        return StopDecision(True, StopReason.SUCCESS,
+                            "enough verified evidence to give a substantive answer; remaining gaps are low-value")
 
     n = h.convergence_stable_iterations
     if len(x.posterior_history) >= n + 1:

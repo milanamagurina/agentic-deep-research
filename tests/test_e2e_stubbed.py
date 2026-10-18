@@ -133,6 +133,26 @@ def test_pyramid_and_every_citation_is_checkable(runs, name):
 
 
 @pytest.mark.parametrize("name", ["business", "science"])
+def test_public_answer_contract_is_substantive(runs, name):
+    """Sections 1, 5, 13: the headline is a substantive answer + a confidence number, never a bare
+    INSUFFICIENT_EVIDENCE verdict when supported claims exist."""
+    r, _ = runs[name]
+    rep = r.report
+    ans = rep.answer.answer
+    assert len(ans.split()) >= 12 and ans.endswith((".", "!", "?"))
+    assert "INSUFFICIENT" not in ans.upper() and "not sufficient to answer" not in ans.lower()
+    assert 0.05 <= rep.answer.confidence <= 0.95
+    assert rep.question_type in {"verification", "causal", "explanatory", "comparative", "fact_lookup", "decision", "forecast"}
+    assert rep.confidence_breakdown["used_claims"] >= 1
+    # confidence is computed only from the claims the answer uses, never every claim in the graph
+    assert rep.confidence_breakdown["used_claims"] <= len({cid for s in rep.conclusion for cid in s.claim_ids})
+    assert rep.diagnostics.stop_reason and rep.diagnostics.independent_roots >= 1
+    from evidence_research.synthesis.serializer import to_markdown
+    md = to_markdown(rep)
+    assert "## Research answer" in md and "Confidence:" in md
+
+
+@pytest.mark.parametrize("name", ["business", "science"])
 def test_live_citation_audit_finds_every_quote(runs, name):
     from evidence_research.demo import FakeSearch, get_scenario
     from evidence_research.verification.citation_audit import audit

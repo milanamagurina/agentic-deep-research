@@ -41,11 +41,49 @@ class StatementCheck:
     ok: bool
     reason: str = ""
     evidence_ids: list[str] = field(default_factory=list)
+    decision: str = "accept"            # accept | narrow | reject  (section 3)
+    supported_rewrite: str | None = None  # set when an overclaim was narrowed into a supportable form
+
+
+def _remove_unsupported_numbers(text: str, grounding: set[str]) -> str:
+    """Drop number phrases whose digits are not in the evidence, leaving the supported wording.
+    This turns an overclaim ("grew 45%") into the strongest supported form ("grew"), never invents."""
+    def keep(m: re.Match) -> str:
+        nums = [t for t in normalize_text(m.group(0)).split() if any(ch.isdigit() for ch in t)]
+        return m.group(0) if not nums or all(t in grounding for t in nums) else ""
+    cleaned = _NUMBER.sub(keep, _IDS.sub(lambda m: m.group(0), text))
+    # tidy doubled spaces and spaces left before punctuation
+    cleaned = re.sub(r"\s+([.,;:%])", r"\1", cleaned)
+    return " ".join(cleaned.split())
 
 
 class CitationVerifier:
     def __init__(self, graph: EvidenceGraph) -> None:
         self.graph = graph
+
+    def grounding_tokens(self, claim_ids: list[str]) -> set[str]:
+        grounding = " ".join(
+            normalize_text(" ".join([c.natural_language, c.object, *c.aliases] + [e.exact_excerpt for e in self.graph.evidence_for(c.id)]))
+            for c in (self.graph.claims[cid] for cid in claim_ids if cid in self.graph.claims)
+        )
+        return set(grounding.split())
+
+    def check_or_narrow(self, text: str, claim_ids: list[str]) -> StatementCheck:
+        """Accept a supported statement; narrow an overclaim into its supportable form; otherwise reject.
+        Only an unsupported FIGURE is salvageable by narrowing — an ungrounded claim or a URL is a hard reject."""
+        c = self.check(text, claim_ids)
+        if c.ok or "not found in referenced claims" not in c.reason:
+            c.decision = "accept" if c.ok else "reject"
+            return c
+        narrowed = _remove_unsupported_numbers(text, self.grounding_tokens(claim_ids))
+        if narrowed and narrowed != text and len(narrowed.split()) >= 4:
+            c2 = self.check(narrowed, claim_ids)
+            if c2.ok:
+                c2.decision, c2.supported_rewrite = "narrow", narrowed
+                c2.reason = "narrowed: removed a figure not supported by the evidence"
+                return c2
+        c.decision = "reject"
+        return c
 
     def grounded_evidence(self, claim_id: str) -> list[str]:
         """Verified evidence a statement about this claim can cite: its support, or (for a claim that only
@@ -73,11 +111,7 @@ class CitationVerifier:
             if not ok:
                 return StatementCheck(text, claim_ids, False, why)
             evidence_ids += self.grounded_evidence(cid)
-        grounding = " ".join(
-            normalize_text(" ".join([c.natural_language, c.object, *c.aliases] + [e.exact_excerpt for e in self.graph.evidence_for(c.id)]))
-            for c in (self.graph.claims[cid] for cid in claim_ids)
-        )
-        tokens = set(grounding.split())
+        tokens = self.grounding_tokens(claim_ids)
         for raw in _NUMBER.findall(_IDS.sub(" ", text)):
             nums = [t for t in normalize_text(raw).split() if any(ch.isdigit() for ch in t)]
             if nums and not all(t in tokens for t in nums):

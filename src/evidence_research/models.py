@@ -98,8 +98,20 @@ class ResearchSession(Strict):
 
 # --------------------------------------------------------------------------- question & hypotheses
 
+class QuestionType(str, Enum):
+    """What the question asks for. The synthesis strategy depends on it (no yes/no default)."""
+    FACT_LOOKUP = "fact_lookup"
+    VERIFICATION = "verification"
+    EXPLANATORY = "explanatory"
+    COMPARATIVE = "comparative"
+    CAUSAL = "causal"
+    DECISION = "decision"
+    FORECAST = "forecast"
+
+
 class QuestionAnalysis(ModelOutput):
     normalized_question: str
+    question_type: QuestionType = QuestionType.EXPLANATORY
     decision_context: str | None = None
     key_entities: list[str] = Field(default_factory=list)
     temporal_scope: str | None = None
@@ -601,6 +613,32 @@ class SynthesisOutput(ModelOutput):
     governing_thought: PyramidPoint
     key_lines: list[KeyLine]
     what_would_change_our_mind: list[str]
+    qualification: str = Field(default="", description="one sentence on what the evidence does vs does not establish")
+
+
+class VerificationResult(ModelOutput):
+    """A verifier verdict on a candidate statement: an overclaim is narrowed, not deleted (section 3)."""
+    decision: Literal["accept", "qualify", "narrow", "reject"]
+    supported_rewrite: str | None = None  # the strongest formulation the evidence supports, when narrowing/qualifying
+    reason: str = ""
+
+
+# --------------------------------------------------------------------------- public result contract
+
+class ResearchAnswer(BaseModel):
+    """What the user sees: a substantive answer and how strongly current verified evidence supports it."""
+    answer: str
+    confidence: float  # 0.0-1.0; strength of support from verified evidence, NOT a calibrated truth probability
+
+
+class ResearchDiagnostics(BaseModel):
+    """Everything else, for inspection: kept internal, surfaced only in the diagnostics view."""
+    evidence_sufficiency: float
+    inference_validity: float | None
+    independent_roots: int
+    unresolved_gaps: list[str] = Field(default_factory=list)
+    stop_reason: str = ""
+    citations: list[str] = Field(default_factory=list)
 
 
 HypothesesOutput.model_rebuild()
