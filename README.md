@@ -1,39 +1,22 @@
-# Agentic Deep Research 
+# Agentic Deep Research. 
+
+The Deep Research app deployed on Streamlit local host
+
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/d3c5b43d-2c58-44ff-96eb-db62b8d3eb99" />
+
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/e05eb095-b9f6-4139-a5be-92b405931f99" />
+
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/a11101fb-c7f9-43a4-8f25-0289a9473575" />
 
 <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/d78250e2-93fc-46d9-b7e8-d5130e6b29f1" />
 
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/1c8b96cf-3f41-4d18-92b3-59eada5f3f10" />
 
-Most deep-research agents ask:
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/27c1c589-4c12-4632-9cf7-1ecd27e4a5f5" />
 
-> "What information can I find about this question?"
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/22145a58-e97e-4c4f-8349-69acb2abd63c" />
 
-We ask:
 
-> "What do we currently believe, what evidence supports it, what would falsify it,
-> and which missing piece of evidence is most likely to change the conclusion?"
-
-An auditable research process for the Nebius × Tavily **Agentic Deep Research** challenge. Inference runs on
-**Nebius Token Factory** (OpenAI-compatible API, role-routed models, `reflection/beam` supported as the reasoning
-model) and retrieval on **Tavily** (search → screen → extract selected pages only).
-
-```
-LLM proposes.  Verifier checks.  Evidence vault remembers.  Probability engine updates.  Policy engine decides what to research next.
-```
-
-**The core thesis:** the LLM may propose hypotheses, interpretations and reasoning steps, but it is not allowed to
-establish truth by itself. Confidence comes from source-grounded evidence, provenance, independence, lineage,
-study quality, verified inference, contradiction and temporal consistency, aggregated by code.
-
-**The result is a research answer, not a verdict.** The question is first classified (fact-lookup, verification,
-explanatory, comparative, causal, decision, forecast) and the answer is synthesized from the verified claims in
-the way that type demands — for a "which factors…" question, the supported factors each with their own
-confidence, and how the subject addresses them. The headline is a substantive answer plus one **confidence**
-number, computed only from the claims the answer actually uses (importance-weighted, penalized for contradiction,
-source-dependence, weak inference and thin independence). An overclaim is narrowed to its supportable form rather
-than deleted; the system says "insufficient" only when there is genuinely nothing supported to say.
-
-Ten websites repeating one press release are not ten pieces of evidence. Neither are an arXiv preprint and its
-conference and journal versions. This system detects both, shows it, and changes its confidence because of it.
 
 ---
 
