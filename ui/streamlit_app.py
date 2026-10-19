@@ -60,10 +60,10 @@ with st.sidebar:
     )
 
 st.title("Deep Search Agentic Orchestration")
-st.caption("A **planner** sets hypotheses and evidence requirements · a **lead policy engine** bids and selects specialist agents each round "
-           "— primary-source, independence, contradiction, gap and replication researchers, plus an **adversarial critic** · "
-           "**scientific source resolution** groups preprint/conference/journal versions and weights study quality · "
-           "a **verifier** checks every claim before synthesis, and code (not the LLM) owns state, provenance and confidence.")
+st.caption("**Re-checking everything an AI tells you is a painful time sink** — especially after a hallucination, a weak model, "
+           "or a sloppy prompt. So this doesn't just answer: it **researches like a scientist** — builds a knowledge graph of what "
+           "is genuinely supported, tests each **hypothesis against its anti-hypothesis**, verifies every claim, and ties each "
+           "sentence to a real source you can click. You read the answer instead of re-checking it.")
 
 default_q = get_scenario(demo).question if demo else ""
 question = st.text_input("Research question", value=default_q, placeholder="Does Company X have strong product-market fit?",
