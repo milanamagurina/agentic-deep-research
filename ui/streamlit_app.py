@@ -21,7 +21,7 @@ from evidence_research.runtime import research  # noqa: E402
 from evidence_research.synthesis.serializer import to_markdown  # noqa: E402
 from evidence_research.verification.citation_audit import audit, summary  # noqa: E402
 
-st.set_page_config(page_title="Probabilistic Evidence Research", page_icon="🔎", layout="wide")
+st.set_page_config(page_title="Deep Search Agentic Orchestration", page_icon="🔎", layout="wide")
 load_dotenv_if_present()
 # On Streamlit Community Cloud there is no .env; let dashboard secrets fill the env Settings reads.
 # Local .env still wins (set only if unset). Without any secrets, the app runs the offline demos.
@@ -52,8 +52,11 @@ with st.sidebar:
     st.markdown("**How to read the numbers**\n\n*Posterior*, *sufficiency* and *inference validity* are model-estimated evidence "
                 "beliefs from explicit heuristic assumptions. They are **not calibrated probabilities**.")
 
-st.title("Probabilistic Evidence Research")
-st.caption("LLM proposes · verifier checks · evidence graph remembers · probability engine updates · policy engine decides what to research next")
+st.title("Deep Search Agentic Orchestration")
+st.caption("A **planner** sets hypotheses and evidence requirements · a **lead policy engine** bids and selects specialist agents each round "
+           "— primary-source, independence, contradiction, gap and replication researchers, plus an **adversarial critic** · "
+           "**scientific source resolution** groups preprint/conference/journal versions and weights study quality · "
+           "a **verifier** checks every claim before synthesis, and code (not the LLM) owns state, provenance and confidence.")
 
 default_q = get_scenario(demo).question if demo else ""
 question = st.text_input("Research question", value=default_q, placeholder="Does Company X have strong product-market fit?",

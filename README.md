@@ -1,6 +1,10 @@
-# Agentic Deep Research
+# Deep Search Agentic Orchestration
 
-The Deep Research app deployed on Streamlit local host
+A planner sets competing hypotheses and evidence requirements; a lead policy engine bids and selects specialist
+agents each round — primary-source, independence, contradiction, gap and replication researchers, plus an
+adversarial critic; scientific sources are resolved across preprint/conference/journal versions and weighted by
+study quality; a verifier checks every claim before synthesis. The LLM proposes; deterministic code owns state,
+provenance, verification and confidence.
 
 <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/d3c5b43d-2c58-44ff-96eb-db62b8d3eb99" />
 
