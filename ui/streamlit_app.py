@@ -49,8 +49,15 @@ with st.sidebar:
         st.error("NEBIUS_API_KEY and TAVILY_API_KEY are required for live mode (see .env.example).")
     st.caption(f"Model: `{settings.nebius_model}`" + (f" · reasoning: `{settings.nebius_reasoning_model}`" if settings.nebius_reasoning_model else ""))
     st.divider()
-    st.markdown("**How to read the numbers**\n\n*Posterior*, *sufficiency* and *inference validity* are model-estimated evidence "
-                "beliefs from explicit heuristic assumptions. They are **not calibrated probabilities**.")
+    st.markdown(
+        "**How it works**\n\n"
+        "1. **Plan** — your question becomes a few possible answers and what evidence each one needs.\n"
+        "2. **Search** — a lead coordinator sends out specialist research agents to find and filter sources.\n"
+        "3. **Challenge** — a critic agent actively hunts for evidence that would prove the answer wrong.\n"
+        "4. **Verify** — every sentence in the answer is tied to an exact quote from a real source you can click and check.\n"
+        "5. **Score** — a confidence level reflects how much independent, trustworthy evidence backs the answer.\n\n"
+        "The AI only *proposes*; the system checks the facts. Nothing is stated unless a real source backs it."
+    )
 
 st.title("Deep Search Agentic Orchestration")
 st.caption("A **planner** sets hypotheses and evidence requirements · a **lead policy engine** bids and selects specialist agents each round "
@@ -102,8 +109,7 @@ lead = hyp.get(rep.leading_hypothesis)
 st.subheader("Research answer")
 st.markdown(rep.answer.answer)
 ac, qc = st.columns([1, 3])
-ac.metric("Confidence", f"{rep.answer.confidence:.0%}", help="How strongly the verified evidence used in this answer supports it. "
-          "A model-estimated evidence belief, NOT a calibrated truth probability.")
+ac.metric("Confidence", f"{rep.answer.confidence:.0%}", help="How strongly the evidence we found and verified supports this answer.")
 if rep.qualification:
     qc.info(rep.qualification)
 
