@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import sys
 from pathlib import Path
 
@@ -22,6 +23,13 @@ from evidence_research.verification.citation_audit import audit, summary  # noqa
 
 st.set_page_config(page_title="Probabilistic Evidence Research", page_icon="🔎", layout="wide")
 load_dotenv_if_present()
+# On Streamlit Community Cloud there is no .env; let dashboard secrets fill the env Settings reads.
+# Local .env still wins (set only if unset). Without any secrets, the app runs the offline demos.
+try:
+    for _k, _v in st.secrets.items():
+        os.environ.setdefault(_k, str(_v))
+except Exception:
+    pass
 
 LIVE_TRACE = {EventType.HYPOTHESIS_CREATED, EventType.AGENT_SELECTED, EventType.SEARCH_EXECUTED, EventType.SOURCE_SCREENED,
               EventType.SCIENTIFIC_VERSION_RESOLVED, EventType.STUDY_ASSESSED, EventType.STUDY_RELATION_FOUND,

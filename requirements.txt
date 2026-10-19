@@ -1,0 +1,9 @@
+# Runtime dependencies for Streamlit Community Cloud (mirrors pyproject.toml [project.dependencies]).
+# The app adds src/ to sys.path, so the package itself is imported directly — no build step needed here.
+openai>=3.35.1
+tavily-python>=0.8.5
+pydantic>=2.14.1
+networkx>=3.6.1
+streamlit>=1.66.0
+pandas>=2.2.3
+python-dotenv>=1.0.1
