@@ -64,8 +64,6 @@ SQLite (`data/research.sqlite`). Without uv: `pip install -e . pytest` (or `PYTH
 
 ## Architecture
 
-![Probabilistic Evidence Deep Research architecture](docs/architecture.png)
-
 *LLMs propose semantic judgments; deterministic state, provenance, verification and probability logic control what
 becomes an accepted research answer.*
 
